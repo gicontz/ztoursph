@@ -1,10 +1,11 @@
-'use client'
+"use client";
 
-import { FullWidth, Row } from '@components/common';
-import Header from '@components/header';
-import styled from '@emotion/styled';
-import { Providers } from './providers';
-import BannerImage from '@assets/images/banner.jpg';
+import { FullWidth, Row } from "@components/commons/common";
+import Header from "@components/header";
+import styled from "@emotion/styled";
+import { Providers } from "./providers";
+import BannerImage from "@assets/images/banner.jpg";
+import MainPageBooking from "@components/booking/main-page";
 
 const Banner = styled(FullWidth)`
   position: relative;
@@ -15,23 +16,25 @@ const Banner = styled(FullWidth)`
   background-position-y: -430px;
   height: 500px;
   &::before {
-    content: '';
-    background-color: rgba(0,0,0,0.3);
+    content: "";
+    background-color: rgba(0, 0, 0, 0.3);
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
   }
+  @media screen and (max-width: 1200px) {
+    background-position: unset;
+  }
 `;
 
 const TagLine = styled.h2`
   position: relative;
-  z-index: 1;
   font-family: Source Serif Pro;
   font-weight: bold;
   font-size: 44px;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const Phrase = styled.p`
@@ -39,14 +42,13 @@ const Phrase = styled.p`
   margin-top: 20px;
   font-weight: normal;
   color: #ffffff;
-  z-index: 1;
   text-align: left;
 `;
 
 export default function Home() {
   return (
     <Providers>
-      <main className="flex flex-col">
+      <main className="relative flex flex-col overflow-hidden sm:w-[100%] h-[100vh]">
         <Row>
           <Header />
         </Row>
@@ -54,15 +56,21 @@ export default function Home() {
           <Row className="pt-24 pb-24">
             <TagLine>Seize the Zen</TagLine>
             <div className="text-right">
-              <Phrase>Embrace the nature in the magnificent waters
-                <br /> of Palawan. Experience the breathtaking 
-              <br /> views and sceneries that you can only catch 
-              <br /> here in the Philippines.
-                <br /><strong>Be You. Be Free. Be Zest.</strong></Phrase>
+              <Phrase>
+                Embrace the nature in the magnificent waters
+                <br /> of Palawan. Experience the breathtaking
+                <br /> views and sceneries that you can only catch
+                <br /> here in the Philippines.
+                <br />
+                <strong>Be You. Be Free. Be Zest.</strong>
+              </Phrase>
             </div>
           </Row>
         </Banner>
+        <FullWidth className="flex justify-center">
+          <MainPageBooking />
+        </FullWidth>
       </main>
-      </Providers>
-  )
+    </Providers>
+  );
 }

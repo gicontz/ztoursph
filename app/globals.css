@@ -1,11 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
   font-family: "Source Serif Pro";
   font-weight: bold;
   src: url(../assets/fonts/SourceSerifPro-Bold.otf);
 }
+
 @font-face {
   font-family: "Source Serif Pro";
   font-weight: normal;
