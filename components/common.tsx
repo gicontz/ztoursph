@@ -8,5 +8,9 @@ export const Row = styled.div`
 
 export const FullWidth = styled.div`
     width: 100%;
+    @media screen and (max-width: 1440px) {
+        padding-left: 30px;
+        padding-right: 30px;s
+    }
 `;
 

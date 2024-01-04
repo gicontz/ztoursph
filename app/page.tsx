@@ -23,11 +23,13 @@ const Banner = styled(FullWidth)`
     top: 0;
     left: 0;
   }
+  @media screen and (max-width: 1200px) {
+    background-position: unset;
+  }
 `;
 
 const TagLine = styled.h2`
   position: relative;
-  z-index: 1;
   font-family: Source Serif Pro;
   font-weight: bold;
   font-size: 44px;
@@ -39,14 +41,13 @@ const Phrase = styled.p`
   margin-top: 20px;
   font-weight: normal;
   color: #ffffff;
-  z-index: 1;
   text-align: left;
 `;
 
 export default function Home() {
   return (
     <Providers>
-      <main className="flex flex-col">
+      <main className="relative flex flex-col overflow-hidden sm:w-[100%] h-[100vh]">
         <Row>
           <Header />
         </Row>

@@ -2,37 +2,32 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Tooltip } from '@chakra-ui/react';
 import { MdOutlineAirplaneTicket, MdPerson } from "react-icons/md"; 
+import { MENU_LINKS } from '@constants/nav';
 import Link from 'next/link';
 
 const Container = styled.div`
   padding-top: 5px;
   padding-bottom: 5px;
-  display: flex;
   > a {
     margin-right: 35px;
     display: flex;
     align-items: center;
   }
+  @media screen and (max-width: 1024px) {
+    > a {
+        font-size: 10px;
+    }
+  }
 `;
 
 const MainNav = () => {
     return (
-        <Container>
-            <Link href="/">
-                Home
-            </Link>
-            <Link href="/">
-                Tours & Travel Packages
-            </Link>
-            <Link href="/">
-                Deals & Promos
-            </Link>
-            <Link href="/">
-                About Us
-            </Link>
-            <Link href="/">
-                Contact Us
-            </Link>
+        <Container className="hidden lg:!flex">
+            {MENU_LINKS.map(({ label, href }) => (
+                <Link href={href}>
+                    {label}
+                </Link>
+            ))}
             <Tooltip label="My Trips">
                 <Link href="/trips">
                         <MdOutlineAirplaneTicket size="2em" />
