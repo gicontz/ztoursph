@@ -6,13 +6,13 @@ const Container = styled.div`
 
 const MainPageBooking = () => {
     return (
-        <div className="flex">
+        <Container>
             <div>I want to go</div>
             <div>Check In</div>
             <div>Check Out</div>
             <div>Travellers</div>
             <div>Book</div>
-        </div>
+        </Container>
     )
 }
 
