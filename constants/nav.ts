@@ -8,6 +8,10 @@ export const MENU_LINKS = [{
     label: 'Deals & Promos',
     href: '/deals-promos'
 }, {
+    label: 'Services',
+    href: '/services'
+},
+{
     label: 'About Us',
     href: '/about-us'
 }, {
