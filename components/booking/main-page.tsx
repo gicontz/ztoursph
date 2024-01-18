@@ -6,8 +6,6 @@ import Button from "@components/commons/button";
 import { Space } from "antd";
 import styled from "@emotion/styled";
 
-
-
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 
 const ContainerCard = styled(Space)`
