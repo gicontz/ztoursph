@@ -1,9 +1,9 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const Row = styled.div`
-    max-width: 1444px;
-    width: 100%;
-    margin: 0 auto;
+  max-width: 1444px;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 export const FullWidth = styled.div`
@@ -13,4 +13,3 @@ export const FullWidth = styled.div`
         padding-right: 30px;s
     }
 `;
-
