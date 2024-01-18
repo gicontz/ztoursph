@@ -1,18 +1,9 @@
 import React, { ReactNode } from "react";
-import { Select } from "antd";
+import { Select, SelectProps } from "antd";
 import styled from "@emotion/styled";
+import { Controller } from "react-hook-form";
 
-interface DropdownProps {
-  option?: { label: string | number; value: string | number }[];
-  prefixIcon?: ReactNode;
-  onSearch?: (e: any) => void;
-  onChange?: (e: any) => void;
-  className?: string;
-  placeholder?: string;
-  isNumber?: boolean;
-}
-
-const SelectWrapper = styled.div`
+const SelectWrapper = styled.div<{ icon?: boolean }>`
   position: relative;
 
   .prefix-icon-wrapper {
@@ -25,27 +16,34 @@ const SelectWrapper = styled.div`
     justify-content: center;
   }
 
-  && .ant-select .ant-select-selector {
-    padding-left: calc(3rem - 8px);
+  .ant-select .ant-select-selector {
+    padding-left: ${(props) => (props.icon ? "calc(3rem - 8px)" : "")};
   }
 `;
 
-const StyledSelect = styled(Select)<{ isNumber?: boolean }>`
+const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
   .ant-select-selection-placeholder {
     color: black;
   }
-  width: ${(props) => (props.isNumber ? "8rem" : "15rem")};
+  width: ${(props) => (props.isnumber ? "10rem" : "18rem")};
   height: 3rem;
 `;
 
+interface DropdownProps extends SelectProps {
+  prefixIcon?: ReactNode;
+  isnumber?: boolean;
+  control: any;
+  name: string;
+  rules?: Record<string, any>;
+  placeholder: string;
+}
+
 const Dropdown: React.FC<DropdownProps> = ({
-  onChange,
-  onSearch,
-  option,
-  className,
-  isNumber,
-  placeholder,
   prefixIcon,
+  isnumber,
+  name,
+  control,
+  rules,
   ...rest
 }) => {
   const filterOption = (
@@ -54,18 +52,20 @@ const Dropdown: React.FC<DropdownProps> = ({
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
   return (
-    <SelectWrapper>
+    <SelectWrapper icon={prefixIcon ? true : false}>
       {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}
-      <StyledSelect
-        showSearch
-        placeholder={placeholder}
-        optionFilterProp="children"
-        onChange={onChange}
-        onSearch={onSearch}
-        options={option}
-        filterOption={filterOption}
-        isNumber={isNumber ?? false}
-        {...rest}
+      <Controller
+        name={name}
+        control={control}
+        rules={rules}
+        render={({ field }) => (
+          <StyledSelect
+            isnumber={isnumber}
+            filterOption={filterOption}
+            {...field}
+            {...rest}
+          />
+        )}
       />
     </SelectWrapper>
   );

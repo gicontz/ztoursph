@@ -1,23 +1,24 @@
-import React, { FormEvent, useRef } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import RangePickerComponent from "@components/commons/range-picker";
+import Dropdown from "@components/commons/dropdown";
+import Button from "@components/commons/button";
 import { Space } from "antd";
 import styled from "@emotion/styled";
 
-import Button from "@components/commons/button";
-import { MapIcon, TravellersIcons } from "@components/commons/custom-icon";
-import Datepicker from "@components/commons/date-picker";
-import Dropdown from "@components/commons/dropdown";
+
+
+import { MapIcon, TravellersIcon } from "@components/commons/icons";
 
 const ContainerCard = styled(Space)`
   display: flex;
-  padding: 10px;
+  padding: 25px 20px;
   box-shadow: 0px 0px 5px black;
   border-radius: 0.2rem;
 `;
 
 const MainPageBooking = () => {
-  const destination = useRef<string | undefined>();
-  const checkInOut = useRef<{ checkIn?: Date; checkOut?: Date }>({});
-  const headCount = useRef<number>(0);
+  const { handleSubmit, control } = useForm();
 
   const optionDest = [
     { value: "Tour A", label: "El Nido Island Tour A" },
@@ -30,39 +31,29 @@ const MainPageBooking = () => {
     value: index + 1,
   }));
 
-  const submitBook = (e: FormEvent) => {
-    e.preventDefault();
-    console.log("Destination:", destination.current);
-    console.log("Check-In/Out:", checkInOut.current);
-    console.log("Head Count:", headCount.current);
-  };
-
   return (
-    <form onSubmit={submitBook}>
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
       <ContainerCard>
         <Dropdown
-          prefixIcon={<MapIcon boxSize={5} />}
+          prefixIcon={<MapIcon />}
+          name="destination"
+          control={control}
+          rules={{ required: "Destination is needed." }}
           placeholder="I want to go"
-          onChange={(e) => (destination.current = e)}
-          option={optionDest}
+          options={optionDest}
         />
-        <Datepicker
-          onChange={(e) => {
-            const firstDate = e?.[0] as any;
-            const secondDate = e?.[1] as any;
-
-            return (checkInOut.current = {
-              checkIn: firstDate?.$d,
-              checkOut: secondDate?.$d,
-            });
-          }}
+        <RangePickerComponent
+          name="check-in-out"
+          control={control}
+          rules={{ required: "date is needed." }}
         />
         <Dropdown
-          isNumber
-          prefixIcon={<TravellersIcons boxSize={5} />}
+          isnumber
+          prefixIcon={<TravellersIcon />}
+          name="travellers"
+          control={control}
           placeholder="Travellers"
-          onChange={(e) => (headCount.current = e)}
-          option={optionTravellers}
+          options={optionTravellers}
         />
         <Button type="primary" htmlType="submit">
           Book
