@@ -3,16 +3,25 @@ import { useForm } from "react-hook-form";
 import RangePickerComponent from "@components/commons/range-picker";
 import Dropdown from "@components/commons/dropdown";
 import Button from "@components/commons/button";
-import { Space } from "antd";
 import styled from "@emotion/styled";
 
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 
-const ContainerCard = styled(Space)`
+const ContainerCard = styled.form`
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+
   display: flex;
-  padding: 25px 20px;
+  flex-direction: row;
+  gap: 0.2rem;
+
+  display: flex;
+  padding: 1.2rem 1.1rem;
   box-shadow: 0px 0px 5px black;
   border-radius: 0.2rem;
+  z-index: 10;
 `;
 
 const MainPageBooking = () => {
@@ -30,34 +39,32 @@ const MainPageBooking = () => {
   }));
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
-      <ContainerCard>
-        <Dropdown
-          prefixIcon={<MapIcon />}
-          name="destination"
-          control={control}
-          rules={{ required: "Destination is needed." }}
-          placeholder="I want to go"
-          options={optionDest}
-        />
-        <RangePickerComponent
-          name="check-in-out"
-          control={control}
-          rules={{ required: "date is needed." }}
-        />
-        <Dropdown
-          isnumber
-          prefixIcon={<TravellersIcon />}
-          name="travellers"
-          control={control}
-          placeholder="Travellers"
-          options={optionTravellers}
-        />
-        <Button type="primary" htmlType="submit">
-          Book
-        </Button>
-      </ContainerCard>
-    </form>
+    <ContainerCard onSubmit={handleSubmit((data) => console.log(data))}>
+      <Dropdown
+        prefixIcon={<MapIcon />}
+        name="destination"
+        control={control}
+        rules={{ required: "Destination is needed." }}
+        placeholder="I want to go"
+        options={optionDest}
+      />
+      <RangePickerComponent
+        name="check-in-out"
+        control={control}
+        rules={{ required: "date is needed." }}
+      />
+      <Dropdown
+        isnumber
+        prefixIcon={<TravellersIcon />}
+        name="travellers"
+        control={control}
+        placeholder="Travellers"
+        options={optionTravellers}
+      />
+      <Button type="primary" htmlType="submit">
+        Book
+      </Button>
+    </ContainerCard>
   );
 };
 

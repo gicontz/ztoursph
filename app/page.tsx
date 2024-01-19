@@ -13,7 +13,7 @@ const Banner = styled(FullWidth)`
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-y: -430px;
+  background-position: center top;
   height: 500px;
   &::before {
     content: "";
