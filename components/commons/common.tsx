@@ -13,3 +13,19 @@ export const FullWidth = styled.div`
     padding-right: 30px;
   }
 `;
+
+export const PanelSection = styled.div`
+  padding: 100px 5rem;
+
+  @media (max-width: 1200px) {
+    padding: 80px 3rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 40px 1rem;
+  }
+`;
