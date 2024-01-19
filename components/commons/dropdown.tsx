@@ -17,7 +17,7 @@ const SelectWrapper = styled.div<{ icon?: boolean }>`
   }
 
   .ant-select .ant-select-selector {
-    padding-left: ${(props) => (props.icon ? "calc(3rem - 8px)" : "")};
+    text-indent: ${(props) => (props.icon ? "calc(2rem - 8px)" : "")};
   }
 `;
 
@@ -49,7 +49,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  ) =>
+    (option?.label ?? "")
+      .toString()
+      .toLowerCase()
+      .includes(input.toLowerCase());
 
   return (
     <SelectWrapper icon={prefixIcon ? true : false}>

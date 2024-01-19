@@ -41,6 +41,7 @@ const MainPageBooking = () => {
   return (
     <ContainerCard onSubmit={handleSubmit((data) => console.log(data))}>
       <Dropdown
+        showSearch
         prefixIcon={<MapIcon />}
         name="destination"
         control={control}
@@ -54,6 +55,7 @@ const MainPageBooking = () => {
         rules={{ required: "date is needed." }}
       />
       <Dropdown
+        showSearch
         isnumber
         prefixIcon={<TravellersIcon />}
         name="travellers"
