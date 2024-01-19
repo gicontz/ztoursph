@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Select, SelectProps } from "antd";
+import { ConfigProvider, Select, SelectProps } from "antd";
 import styled from "@emotion/styled";
 import { Controller } from "react-hook-form";
 
@@ -59,12 +59,20 @@ const Dropdown: React.FC<DropdownProps> = ({
         control={control}
         rules={rules}
         render={({ field }) => (
-          <StyledSelect
-            isnumber={isnumber}
-            filterOption={filterOption}
-            {...field}
-            {...rest}
-          />
+          <ConfigProvider
+            theme={{
+              token: {
+                colorBgContainer: "#EAEAEA",
+                borderRadius: 2,
+              },
+            }}>
+            <StyledSelect
+              isnumber={isnumber}
+              filterOption={filterOption}
+              {...field}
+              {...rest}
+            />
+          </ConfigProvider>
         )}
       />
     </SelectWrapper>

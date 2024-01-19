@@ -1,7 +1,8 @@
 import React from "react";
-import { DatePicker } from "antd";
+import { ConfigProvider, DatePicker } from "antd";
 import styled from "@emotion/styled";
 import { Control, Controller, FieldValues } from "react-hook-form";
+import { ThemeConfig } from "@chakra-ui/react";
 
 const { RangePicker } = DatePicker;
 
@@ -31,7 +32,15 @@ const CheckInOut: React.FC<RangePickerProps> = ({
     control={control}
     rules={rules}
     render={({ field: { onChange } }) => (
-      <CheckInOutPicker onChange={onChange} {...rest} />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorBgContainer: "#EAEAEA",
+            borderRadius: 2,
+          },
+        }}>
+        <CheckInOutPicker onChange={onChange} {...rest} />
+      </ConfigProvider>
     )}
   />
 );

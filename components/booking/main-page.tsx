@@ -15,9 +15,9 @@ const ContainerCard = styled.form`
 
   display: flex;
   flex-direction: row;
-  gap: 0.2rem;
 
-  display: flex;
+  gap: 0.5rem;
+
   padding: 1.2rem 1.1rem;
   box-shadow: 0px 0px 5px black;
   border-radius: 0.2rem;

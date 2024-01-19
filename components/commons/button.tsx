@@ -14,6 +14,7 @@ const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
       token: {
         colorPrimary: "#233d2c",
         colorBgContainer: "#233d2c",
+        borderRadius: 3,
       },
     }}>
     <StyledButton {...rest}>{children}</StyledButton>

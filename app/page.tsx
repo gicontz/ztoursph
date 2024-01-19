@@ -67,9 +67,9 @@ export default function Home() {
             </div>
           </Row>
         </Banner>
-        <FullWidth className="flex justify-center">
+        <div className="w-screen">
           <MainPageBooking />
-        </FullWidth>
+        </div>
       </main>
     </Providers>
   );
