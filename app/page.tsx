@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { Providers } from "./providers";
 import BannerImage from "@assets/images/banner.jpg";
 import MainPageBooking from "@components/booking/main-page";
+import MainPageListing from "@components/listing/main-page";
 
 const Banner = styled(FullWidth)`
   position: relative;
@@ -48,7 +49,7 @@ const Phrase = styled.p`
 export default function Home() {
   return (
     <Providers>
-      <main className="relative flex flex-col overflow-hidden sm:w-[100%] h-[100vh]">
+      <main className="relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh]">
         <Row>
           <Header />
         </Row>
@@ -69,6 +70,9 @@ export default function Home() {
         </Banner>
         <div className="w-screen">
           <MainPageBooking />
+        </div>
+        <div className="w-screen">
+          <MainPageListing />
         </div>
       </main>
     </Providers>
