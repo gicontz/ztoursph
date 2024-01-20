@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 
-const ContainerCard = styled.form`
+const ContainerCard = styled.div`
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -39,34 +39,36 @@ const MainPageBooking = () => {
   }));
 
   return (
-    <ContainerCard onSubmit={handleSubmit((data) => console.log(data))}>
-      <Dropdown
-        showSearch
-        prefixIcon={<MapIcon />}
-        name="destination"
-        control={control}
-        rules={{ required: "Destination is needed." }}
-        placeholder="I want to go"
-        options={optionDest}
-      />
-      <RangePickerComponent
-        name="check-in-out"
-        control={control}
-        rules={{ required: "date is needed." }}
-      />
-      <Dropdown
-        showSearch
-        isnumber
-        prefixIcon={<TravellersIcon />}
-        name="travellers"
-        control={control}
-        placeholder="Travellers"
-        options={optionTravellers}
-      />
-      <Button type="primary" htmlType="submit">
-        Book
-      </Button>
-    </ContainerCard>
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <ContainerCard>
+        <Dropdown
+          showSearch
+          prefixIcon={<MapIcon />}
+          name="destination"
+          control={control}
+          rules={{ required: "Destination is needed." }}
+          placeholder="I want to go"
+          options={optionDest}
+        />
+        <RangePickerComponent
+          name="check-in-out"
+          control={control}
+          rules={{ required: "date is needed." }}
+        />
+        <Dropdown
+          showSearch
+          isnumber
+          prefixIcon={<TravellersIcon />}
+          name="travellers"
+          control={control}
+          placeholder="Travellers"
+          options={optionTravellers}
+        />
+        <Button type="primary" htmlType="submit">
+          Book
+        </Button>
+      </ContainerCard>
+    </form>
   );
 };
 

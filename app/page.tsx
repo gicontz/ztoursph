@@ -49,7 +49,7 @@ const Phrase = styled.p`
 export default function Home() {
   return (
     <Providers>
-      <main className="relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh]">
+      <main className="flex flex-col">
         <Row>
           <Header />
         </Row>
@@ -68,12 +68,8 @@ export default function Home() {
             </div>
           </Row>
         </Banner>
-        <div className="w-screen">
-          <MainPageBooking />
-        </div>
-        <div className="w-screen">
-          <MainPageListing />
-        </div>
+        <MainPageBooking />
+        <MainPageListing />
       </main>
     </Providers>
   );
