@@ -11,10 +11,11 @@ const StyledButton = styled(AntButton)<ButtonProps>`
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
   <ConfigProvider
     theme={{
-      token: {
-        colorPrimary: "#233d2c",
-        colorBgContainer: "#233d2c",
-        borderRadius: 3,
+      components: {
+        Button: {
+          colorPrimaryActive: "#23432c",
+          colorPrimaryHover: "#233d2ce6",
+        },
       },
     }}>
     <StyledButton {...rest}>{children}</StyledButton>
