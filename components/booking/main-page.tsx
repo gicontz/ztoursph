@@ -7,6 +7,11 @@ import styled from "@emotion/styled";
 
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 
+const SubmitButton = styled(Button)`
+  padding: 0 1.6rem;
+  font-weight: bold;
+`;
+
 const ContainerCard = styled.div`
   position: absolute;
   left: 50%;
@@ -53,7 +58,7 @@ const MainPageBooking = () => {
         <RangePickerComponent
           name="check-in-out"
           control={control}
-          rules={{ required: "date is needed." }}
+          rules={{ required: "Date is needed." }}
         />
         <Dropdown
           showSearch
@@ -64,12 +69,12 @@ const MainPageBooking = () => {
           placeholder="Travellers"
           options={optionTravellers}
         />
-        <Button type="primary" htmlType="submit">
+        <SubmitButton type="primary" htmlType="submit">
           Book
-        </Button>
+        </SubmitButton>
       </ContainerCard>
     </form>
   );
 };
 
-export default MainPageBooking
+export default MainPageBooking;
