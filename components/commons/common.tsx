@@ -15,7 +15,7 @@ export const FullWidth = styled.div`
 `;
 
 export const PanelSection = styled.div`
-  padding: 100px 5rem;
+  padding: 100px 10rem;
 
   @media (max-width: 1200px) {
     padding: 80px 3rem;

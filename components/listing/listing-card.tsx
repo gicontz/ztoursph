@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import React from "react";
-import banner from "../../assets/images/banner.jpg";
+import React, { useState } from "react";
 import { Rate } from "antd";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const CardContainer = styled.div`
-  height: 25rem;
-  width: 18rem;
+  position: relative;
+  height: 27rem;
+  width: 20rem;
   min-width: 12rem;
   border-radius: 5px;
   overflow: hidden;
@@ -43,7 +44,7 @@ const DetailsContainer = styled.div`
   flex-direction: column;
   padding: 0.7rem 1rem;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
 
   .location {
     color: #d7fff1;
@@ -66,11 +67,12 @@ const TitlePriceContainer = styled.div`
 `;
 
 const ReviewsContainer = styled.div`
-  font-size: 10px;
   display: flex;
+  position: absolute;
   align-items: center;
   gap: 1rem;
-
+  font-size: 0.8rem;
+  bottom: 1rem;
   .ant-rate {
     font-size: 0.8rem;
     color: white;
@@ -80,18 +82,13 @@ const ReviewsContainer = styled.div`
     }
   }
 
-  div {
-    width: fit-content;
-    height: 10px;
-  }
-
   @media (max-width: 800px) {
     font-size: 8px;
   }
 `;
 
 const DescriptionContainer = styled.h1`
-  margin: 0rem 0 1rem 0;
+  margin: 0.7rem 0 1rem 0;
   font-size: 0.75rem;
   overflow: hidden;
   display: -webkit-box;
@@ -125,28 +122,30 @@ interface ListingCard {
     price: number;
     rate: number;
     reviews: number;
+    imageUrl: string | StaticImport;
   };
 }
 
 const ListingCard: React.FC<ListingCard> = ({ data }) => {
+  const [like, setLike] = useState(false);
   return (
     <CardContainer>
       <ImageContainer>
         <Image
-          src={banner}
+          src={data.imageUrl}
           alt="Scenic Forest"
           layout="fill"
           objectFit="cover"
         />
-        <ActionButton>
-          <SVGHeart width={27} height={27} color={"white"} />
+        <ActionButton onClick={() => setLike(!like)}>
+          <SVGHeart width={20} height={20} color={like ? "red" : "white"} />
         </ActionButton>
       </ImageContainer>
       <DetailsContainer>
         <p className="location">{data.location}</p>
         <TitlePriceContainer>
           <h1>{data.title}</h1>
-          <h1>P{data.price}</h1>
+          <h1>₱ {data.price}</h1>
         </TitlePriceContainer>
         <DescriptionContainer>{data.description}</DescriptionContainer>
         <ReviewsContainer>
