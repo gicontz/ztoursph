@@ -1,10 +1,12 @@
 "use client";
 
-import { FullWidth, Row } from "@components/common";
+import { FullWidth, Row } from "@components/commons/common";
 import Header from "@components/header";
 import styled from "@emotion/styled";
 import { Providers } from "./providers";
 import BannerImage from "@assets/images/banner.jpg";
+import MainPageBooking from "@components/booking/main-page";
+import MainPageListing from "@components/listing/main-page";
 
 const Banner = styled(FullWidth)`
   position: relative;
@@ -67,6 +69,7 @@ export default function Home() {
           </Row>
         </Banner>
         <MainPageBooking />
+        <MainPageListing />
       </main>
     </Providers>
   );
