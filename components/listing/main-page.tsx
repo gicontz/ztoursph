@@ -40,7 +40,7 @@ const MainPageListing = () => {
   const data = [
     {
       location: `Tour A`,
-      title: "Some title",
+      title: "El Nido Island Tour A",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
       price: 1000,
@@ -50,7 +50,7 @@ const MainPageListing = () => {
     },
     {
       location: `Tour B`,
-      title: "Some title",
+      title: "El Nido Island Tour B",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
       price: 1000,
@@ -60,7 +60,7 @@ const MainPageListing = () => {
     },
     {
       location: `Tour C`,
-      title: "Some title",
+      title: "El Nido Island Tour C",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
       price: 1000,
