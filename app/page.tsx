@@ -1,12 +1,10 @@
 "use client";
 
-import { FullWidth, Row } from "@components/commons/common";
+import { FullWidth, Row } from "@components/common";
 import Header from "@components/header";
 import styled from "@emotion/styled";
 import { Providers } from "./providers";
 import BannerImage from "@assets/images/banner.jpg";
-import MainPageBooking from "@components/booking/main-page";
-import MainPageListing from "@components/listing/main-page";
 
 const Banner = styled(FullWidth)`
   position: relative;
@@ -49,7 +47,7 @@ const Phrase = styled.p`
 export default function Home() {
   return (
     <Providers>
-      <main className="flex flex-col">
+      <main className="relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh]">
         <Row>
           <Header />
         </Row>
@@ -69,7 +67,6 @@ export default function Home() {
           </Row>
         </Banner>
         <MainPageBooking />
-        <MainPageListing />
       </main>
     </Providers>
   );
