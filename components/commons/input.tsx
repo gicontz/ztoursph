@@ -28,14 +28,7 @@ export const CustomInput = ({
               borderRadius: 2,
             },
           }}>
-          <Input
-            {...field}
-            type={type}
-            placeholder={placeholder}
-            className={
-              fieldState.invalid ? "custom-input error" : "custom-input"
-            }
-          />
+          <Input {...field} type={type} placeholder={placeholder} />
         </ConfigProvider>
       )}
     />

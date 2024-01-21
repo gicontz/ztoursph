@@ -25,8 +25,8 @@ const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
   .ant-select-selection-placeholder {
     color: black;
   }
-  width: ${(props) => (props.isnumber ? "10rem" : "18rem")};
-  height: 3rem;
+  width: ${(props) => (props.isnumber ? "10rem" : "19rem")};
+  height: 3.5rem;
 `;
 
 interface DropdownProps extends SelectProps {
