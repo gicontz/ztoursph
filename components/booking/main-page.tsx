@@ -14,6 +14,7 @@ import TourC from "@assets/images/tour_c.jpg";
 const SubmitButton = styled(Button)`
   padding: 0 1.6rem;
   font-weight: bold;
+  height: 3.5rem;
 `;
 
 const ContainerCard = styled.div`
