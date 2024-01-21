@@ -35,7 +35,7 @@ interface DropdownProps extends SelectProps {
   control: any;
   name: string;
   rules?: Record<string, any>;
-  placeholder: string;
+  placeholder: string | number | ReactNode | boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({

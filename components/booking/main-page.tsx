@@ -6,10 +6,10 @@ import Button from "@components/commons/button";
 import styled from "@emotion/styled";
 
 import { TravellersIcon } from "@components/commons/icons";
-import SearchDestinationDropdown from "./dropdown-showcase";
 import TourA from "@assets/images/tour_a.jpg";
 import TourB from "@assets/images/tour_b.jpg";
 import TourC from "@assets/images/tour_c.jpg";
+import SearchDestinationDropdown from "@components/commons/dropdown-showcase";
 
 const SubmitButton = styled(Button)`
   padding: 0 1.6rem;

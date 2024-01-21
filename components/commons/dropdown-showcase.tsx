@@ -1,9 +1,10 @@
 import Dropdown from "@components/commons/dropdown";
 import { MapIcon } from "@components/commons/icons";
 import styled from "@emotion/styled";
-import { Tooltip } from "antd";
+import { SelectProps, Tooltip } from "antd";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import { title } from "process";
 
 const PanelSearch = styled.div`
   display: flex;
@@ -22,7 +23,20 @@ const PanelSearch = styled.div`
   }
 `;
 
-interface DestDropdownProps {
+const SummaryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-size: 0.9rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+`;
+
+interface DestDropdownProps extends SelectProps {
   data: {
     title: string;
     description: string;
@@ -33,11 +47,11 @@ interface DestDropdownProps {
 }
 
 const DropDownSearchList = ({ url, title, description }): JSX.Element => {
-  const summary = (
-    <div>
-      <p>Package Summary:</p>
+  const summary = () => (
+    <SummaryContainer>
+      <h1>{title}</h1>
       <p>{description}</p>
-    </div>
+    </SummaryContainer>
   );
   return (
     <Tooltip title={summary} placement="right">
@@ -52,6 +66,7 @@ const DropDownSearchList = ({ url, title, description }): JSX.Element => {
 const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
   data,
   control,
+  ...rest
 }) => {
   const option = data?.map((element) => {
     return {
@@ -74,12 +89,12 @@ const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
     <Dropdown
       showSearch
       filterOption={filterOption}
-      prefixIcon={<MapIcon />}
-      name="destination"
+      name={title}
       control={control}
-      placeholder="I want to go"
+      placeholder={rest?.placeholder}
       options={option}
       optionLabelProp="customLabel"
+      {...rest}
     />
   );
 };
