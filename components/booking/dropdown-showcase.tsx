@@ -5,18 +5,19 @@ import { Tooltip } from "antd";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
-const PanelSearch = styled(Tooltip)`
+const PanelSearch = styled.div`
   display: flex;
-  padding: 0.1rem;
+  padding: 0.2rem 0;
   gap: 1rem;
   align-items: center;
   width: 100%;
-  font-size: 15px;
+  font-size: 16px;
+  overflow-wrap: break-word;
 
   img {
     object-fit: cover;
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     border-radius: 3px;
   }
 `;
@@ -39,10 +40,12 @@ const DropDownSearchList = ({ url, title, description }): JSX.Element => {
     </div>
   );
   return (
-    <PanelSearch title={summary} placement="right">
-      <Image src={url} alt={title} />
-      <p>{title}</p>
-    </PanelSearch>
+    <Tooltip title={summary} placement="right">
+      <PanelSearch>
+        <Image src={url} alt={title} />
+        <p>{title}</p>
+      </PanelSearch>
+    </Tooltip>
   );
 };
 
