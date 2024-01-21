@@ -5,7 +5,7 @@ import Dropdown from "@components/commons/dropdown";
 import Button from "@components/commons/button";
 import styled from "@emotion/styled";
 
-import { TravellersIcon } from "@components/commons/icons";
+import { MapIcon, TravellersIcon } from "@components/commons/icons";
 import TourA from "@assets/images/tour_a.jpg";
 import TourB from "@assets/images/tour_b.jpg";
 import TourC from "@assets/images/tour_c.jpg";
@@ -75,7 +75,12 @@ const MainPageBooking = () => {
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <ContainerCard>
-        <SearchDestinationDropdown data={optionDest} control={control} />
+        <SearchDestinationDropdown
+          data={optionDest}
+          control={control}
+          placeholder="I want to go "
+          prefixIcon={<MapIcon />}
+        />
         <RangePickerComponent
           name="check-in-out"
           control={control}

@@ -29,13 +29,13 @@ const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
   height: 3.5rem;
 `;
 
-interface DropdownProps extends SelectProps {
+export interface DropdownProps extends SelectProps {
   prefixIcon?: ReactNode;
   isnumber?: boolean;
   control: any;
-  name: string;
+  name?: string;
   rules?: Record<string, any>;
-  placeholder: string | number | ReactNode | boolean;
+  placeholder?: string | number | ReactNode | boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({

@@ -1,7 +1,7 @@
-import Dropdown from "@components/commons/dropdown";
+import Dropdown, { DropdownProps } from "@components/commons/dropdown";
 import { MapIcon } from "@components/commons/icons";
 import styled from "@emotion/styled";
-import { SelectProps, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { title } from "process";
@@ -36,7 +36,7 @@ const SummaryContainer = styled.div`
   }
 `;
 
-interface DestDropdownProps extends SelectProps {
+interface DestDropdownProps extends DropdownProps {
   data: {
     title: string;
     description: string;
@@ -91,7 +91,6 @@ const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
       filterOption={filterOption}
       name={title}
       control={control}
-      placeholder={rest?.placeholder}
       options={option}
       optionLabelProp="customLabel"
       {...rest}
