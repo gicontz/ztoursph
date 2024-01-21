@@ -10,6 +10,7 @@ import TourA from "@assets/images/tour_a.jpg";
 import TourB from "@assets/images/tour_b.jpg";
 import TourC from "@assets/images/tour_c.jpg";
 import SearchDestinationDropdown from "@components/commons/dropdown-showcase";
+import AutoComplete from "@components/commons/autocomplete";
 
 const SubmitButton = styled(Button)`
   padding: 0 1.6rem;
@@ -86,14 +87,17 @@ const MainPageBooking = () => {
           control={control}
           rules={{ required: "Date is needed." }}
         />
-        <Dropdown
-          showSearch
-          isnumber
-          prefixIcon={<TravellersIcon />}
-          name="travellers"
-          control={control}
-          placeholder="Travellers"
+
+        <AutoComplete
+          style={{ width: 200 }}
           options={optionTravellers}
+          placeholder="Travellers"
+          control={control}
+          name="travellers"
+          prefixIcon={<TravellersIcon />}
+          filterOption={(inputValue, option) =>
+            typeof inputValue === "number" && option?.label === inputValue
+          }
         />
         <SubmitButton type="primary" htmlType="submit">
           Book
