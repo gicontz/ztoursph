@@ -32,7 +32,7 @@ const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
 export interface DropdownProps extends SelectProps {
   prefixIcon?: ReactNode;
   control: any;
-  name?: string;
+  name: string;
   rules?: Record<string, any>;
   placeholder?: string | number | ReactNode | boolean;
 }

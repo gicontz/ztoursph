@@ -1,5 +1,4 @@
 import Dropdown, { DropdownProps } from "@components/commons/dropdown";
-import { MapIcon } from "@components/commons/icons";
 import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
@@ -36,34 +35,34 @@ const SummaryContainer = styled.div`
   }
 `;
 
-interface DestDropdownProps extends DropdownProps {
-  data: {
-    title: string;
-    description: string;
-    value: string;
-    image: string | StaticImport;
-  }[];
-  control: any;
-}
-
-const DropDownSearchList = ({ url, title, description }): JSX.Element => {
+const DropDownSearchList = ({ ...data }): JSX.Element => {
   const summary = () => (
     <SummaryContainer>
-      <h1>{title}</h1>
-      <p>{description}</p>
+      <h1>{data.title}</h1>
+      <p>{data.description}</p>
     </SummaryContainer>
   );
   return (
     <Tooltip title={summary} placement="right">
       <PanelSearch>
-        <Image src={url} alt={title} />
-        <p>{title}</p>
+        <Image src={data.imageUrl} alt={data.title} />
+        <p>{data.title}</p>
       </PanelSearch>
     </Tooltip>
   );
 };
 
-const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
+interface DestDropdownProps extends DropdownProps {
+  data: {
+    title: string;
+    description: string;
+    value: string;
+    url: string | StaticImport;
+  }[];
+  control: any;
+}
+
+const DropdownShowcase: React.FC<DestDropdownProps> = ({
   data,
   control,
   ...rest
@@ -73,7 +72,7 @@ const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
       value: element.value,
       label: (
         <DropDownSearchList
-          url={element.image}
+          imageUrl={element.url}
           title={element.title}
           description={element.description}
         />
@@ -82,13 +81,9 @@ const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
     };
   });
 
-  const filterOption = (input, option) =>
-    option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-
   return (
     <Dropdown
       showSearch
-      filterOption={filterOption}
       name={title}
       control={control}
       options={option}
@@ -98,4 +93,4 @@ const SearchDestinationDropdown: React.FC<DestDropdownProps> = ({
   );
 };
 
-export default SearchDestinationDropdown;
+export default DropdownShowcase;

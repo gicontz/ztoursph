@@ -1,16 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import RangePickerComponent from "@components/commons/range-picker";
-import Dropdown from "@components/commons/dropdown";
-import Button from "@components/commons/button";
-import styled from "@emotion/styled";
 
+import RangePickerComponent from "@components/commons/range-picker";
+import Button from "@components/commons/button";
+import AutoComplete from "@components/commons/autocomplete";
+import DropdownShowcase from "@components/commons/dropdown-showcase";
+
+import styled from "@emotion/styled";
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
+
 import TourA from "@assets/images/tour_a.jpg";
 import TourB from "@assets/images/tour_b.jpg";
 import TourC from "@assets/images/tour_c.jpg";
-import SearchDestinationDropdown from "@components/commons/dropdown-showcase";
-import AutoComplete from "@components/commons/autocomplete";
 
 const SubmitButton = styled(Button)`
   padding: 0 1.6rem;
@@ -44,27 +45,27 @@ const ContainerCard = styled.div`
 const MainPageBooking = () => {
   const { handleSubmit, control } = useForm();
 
-  const optionDest = [
+  const optionDestination = [
     {
       title: "El Nido Island Tour A",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan eros in volutpat sollicitudin. ",
       value: "Tour A",
-      image: TourA,
+      url: TourA,
     },
     {
       title: "El Nido Island Tour B",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan eros in volutpat sollicitudin.  ",
       value: "Tour B",
-      image: TourB,
+      url: TourB,
     },
     {
       title: "El Nido Island Tour C",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan eros in volutpat sollicitudin.  ",
       value: "Tour C",
-      image: TourC,
+      url: TourC,
     },
   ];
 
@@ -73,13 +74,22 @@ const MainPageBooking = () => {
     value: index + 1,
   }));
 
+  const filterOption = (input: string, option): boolean =>
+    (option.props.customLabel ?? "")
+      .toLowerCase()
+      .includes(input.toLowerCase());
+
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <ContainerCard>
-        <SearchDestinationDropdown
-          data={optionDest}
+        <DropdownShowcase
+          showSearch
+          data={optionDestination}
           control={control}
-          placeholder="I want to go "
+          name="Tour"
+          optionLabelProp="customLabel"
+          placeholder="I want to go"
+          filterOption={filterOption}
           prefixIcon={<MapIcon />}
         />
         <RangePickerComponent
