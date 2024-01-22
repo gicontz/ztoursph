@@ -38,7 +38,6 @@ const SummaryContainer = styled.div`
 const DropDownSearchList = ({ ...data }): JSX.Element => {
   const summary = () => (
     <SummaryContainer>
-      <h1>{data.title}</h1>
       <p>{data.description}</p>
     </SummaryContainer>
   );
