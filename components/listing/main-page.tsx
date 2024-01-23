@@ -4,12 +4,15 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import ListingCard from "./listing-card";
+import TourA from "@assets/images/tour_a.jpg";
+import TourB from "@assets/images/tour_b.jpg";
+import TourC from "@assets/images/tour_c.jpg";
 
 const ListCardsContainer = styled.div`
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const Panel = styled(PanelSection)`
@@ -75,8 +78,8 @@ const MainPageListing = () => {
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       <ListCardsContainer>
-        {dataArray.map((datas, key) => (
-          <ListingCard key={key} data={datas} />
+        {data.map((data, key) => (
+          <ListingCard key={key} data={data} />
         ))}
       </ListCardsContainer>
     </Panel>
