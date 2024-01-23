@@ -12,7 +12,7 @@ const CheckInOutPicker = styled(RangePicker)`
   }
   color: black;
   width: 15rem;
-  height: 3rem;
+  height: 3.5rem;
 `;
 
 interface RangePickerProps {

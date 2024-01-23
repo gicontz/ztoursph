@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 const StyledButton = styled(AntButton)<ButtonProps>`
   background-color: ${(props) => (props.type === "primary" ? "#233d2c" : "")};
   width: fit-content;
-  height: 3rem;
 `;
 
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (

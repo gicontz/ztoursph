@@ -25,36 +25,25 @@ const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
   .ant-select-selection-placeholder {
     color: black;
   }
-  width: ${(props) => (props.isnumber ? "10rem" : "18rem")};
-  height: 3rem;
+  width: 19rem;
+  height: 3.5rem;
 `;
 
-interface DropdownProps extends SelectProps {
+export interface DropdownProps extends SelectProps {
   prefixIcon?: ReactNode;
-  isnumber?: boolean;
   control: any;
   name: string;
   rules?: Record<string, any>;
-  placeholder: string;
+  placeholder?: string | number | ReactNode | boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   prefixIcon,
-  isnumber,
   name,
   control,
   rules,
   ...rest
 }) => {
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) =>
-    (option?.label ?? "")
-      .toString()
-      .toLowerCase()
-      .includes(input.toLowerCase());
-
   return (
     <SelectWrapper icon={prefixIcon ? true : false}>
       {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}
@@ -70,12 +59,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 borderRadius: 2,
               },
             }}>
-            <StyledSelect
-              isnumber={isnumber}
-              filterOption={filterOption}
-              {...field}
-              {...rest}
-            />
+            <StyledSelect {...field} {...rest} />
           </ConfigProvider>
         )}
       />
