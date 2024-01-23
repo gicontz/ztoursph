@@ -4,12 +4,15 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import ListingCard from "./listing-card";
+import TourA from "@assets/images/tour_a.jpg";
+import TourB from "@assets/images/tour_b.jpg";
+import TourC from "@assets/images/tour_c.jpg";
 
 const ListCardsContainer = styled.div`
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const Panel = styled(PanelSection)`
@@ -34,17 +37,39 @@ const Description = styled.div`
 `;
 
 const MainPageListing = () => {
-  const dataArray = Array.from({ length: 3 }, (e, index) => ({
-    location: `Tour ${index + 1}`,
-    title: "Kayangan Lake",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-    price: (index + 1) * 1000,
-    rate: 5,
-    reviews: 45,
-  }));
+  const data = [
+    {
+      location: `Tour A`,
+      title: "El Nido Island Tour A",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 84,
+      imageUrl: TourA,
+    },
+    {
+      location: `Tour B`,
+      title: "El Nido Island Tour B",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 87,
+      imageUrl: TourB,
+    },
+    {
+      location: `Tour C`,
+      title: "El Nido Island Tour C",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 97,
+      imageUrl: TourC,
+    },
+  ];
 
-  console.log(dataArray);
   return (
     <Panel>
       <HeaderSection>Adventure, guided wonders await.</HeaderSection>
@@ -53,8 +78,8 @@ const MainPageListing = () => {
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       <ListCardsContainer>
-        {dataArray.map((datas, key) => (
-          <ListingCard key={key} data={datas} />
+        {data.map((data, key) => (
+          <ListingCard key={key} data={data} />
         ))}
       </ListCardsContainer>
     </Panel>
