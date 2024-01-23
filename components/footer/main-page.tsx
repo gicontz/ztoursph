@@ -48,7 +48,8 @@ const PanelMessage = styled(Panel)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    margin: 10px 0;
+    gap: 0.8rem;
     flex-wrap: nowrap;
     @media screen and (max-width: 900px) {
       flex-wrap: wrap;
