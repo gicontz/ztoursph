@@ -8,6 +8,8 @@ import BannerImage from "@assets/images/banner.jpg";
 import MainPageBooking from "@components/booking/main-page";
 import MainPageListing from "@components/listing/main-page";
 import MainPageTestimonial from "@components/testimonial/main-page";
+import MainPageFooter from "@components/footer/main-page";
+import MainPageClosing from "@components/closing/main-page";
 
 const Banner = styled(FullWidth)`
   position: relative;
@@ -72,6 +74,8 @@ export default function Home() {
         <MainPageBooking />
         <MainPageListing />
         <MainPageTestimonial />
+        <MainPageClosing />
+        <MainPageFooter />
       </main>
     </Providers>
   );
