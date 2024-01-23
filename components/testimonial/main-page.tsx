@@ -21,7 +21,10 @@ const Panel = styled(PanelSection)`
   display: flex;
   justify-content: flex-end;
   margin: 10px 3rem;
-  height: 500px;
+  height: 100%;
+  @media screen and (max-width: 700px) {
+    margin: 10px 0.5rem;
+  }
 `;
 
 const TextsContainer = styled.div`
@@ -31,13 +34,21 @@ const TextsContainer = styled.div`
   width: 43%;
 
   font-size: 0.9rem;
-  font-weight: thin;
   gap: 0.5rem;
+
+  @media screen and (max-width: 700px) {
+    padding: 1rem 0;
+    font-size: 0.7rem;
+    width: 100%;
+  }
 
   h1 {
     font-family: "Source Serif Pro";
     font-weight: bold;
     font-size: 2.4rem;
+    @media screen and (max-width: 700px) {
+      font-size: 2rem;
+    }
   }
 
   p {
