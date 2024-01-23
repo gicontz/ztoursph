@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const ClosingContainer = styled(FullWidth)`
   background: linear-gradient(
-      to right,
+      to top,
       rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0)
     ),
     url(${sunset.src});
@@ -49,7 +49,6 @@ const TextsContainer = styled.div`
     font-weight: bold;
     font-size: 2.4rem;
     @media screen and (max-width: 700px) {
-      width: 100%;
       font-size: 2rem;
     }
   }
