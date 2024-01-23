@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Box, Center, Spacer } from '@chakra-ui/react'
-import styled from '@emotion/styled';
+import { Flex, Box, Center, Spacer } from '@chakra-ui/react';
 import Image from 'next/image';
 import Logo from '@assets/images/logo.png';
 import MainNav from './navs/main';

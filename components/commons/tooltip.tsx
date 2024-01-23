@@ -9,7 +9,7 @@ interface TooltipProps extends TooltipPropsWithTitle {
 const TooltipText: React.FC<TooltipProps> = ({ text, children, ...rest }) => {
   const textTooltip = <span>{text}</span>;
   return (
-    <AntTooltip title={textTooltip} color="#233d2ccc" {...rest}>
+    <AntTooltip color="#233d2ccc" {...rest} title={textTooltip}>
       {children}
     </AntTooltip>
   );
