@@ -12,15 +12,18 @@ import {
 import Button from "@components/commons/button";
 import { CustomInput } from "@components/commons/input";
 import Link from "next/link";
+import { PanelSection } from "@components/commons/common";
 
-const FooterContainer = styled.div`
+const FooterContainer = styled(PanelSection)`
   display: flex;
+  padding-top: 1rem;
   padding-bottom: 1rem;
   flex-direction: column;
-  background-color: #0c1011;
+  background-color: rgba(12, 16, 17, 1);
   font-size: 0.7rem;
   color: white;
   justify-content: center;
+  gap: 0.9rem;
 `;
 
 const HeaderText = styled.h1`
@@ -29,7 +32,7 @@ const HeaderText = styled.h1`
 `;
 
 const Panel = styled.div`
-  margin: 10px 6rem;
+  margin: 0 6rem;
   @media screen and (max-width: 600px) {
     margin: 0 3rem;
   }
@@ -91,7 +94,7 @@ const PanelMessage = styled(Panel)`
 
 const PanelContents = styled(Panel)`
   display: grid;
-  margin-top: 4rem;
+  margin-top: 2rem;
   justify-content: center;
   justify-items: left;
   grid-template-columns: repeat(4, 1fr);
@@ -101,7 +104,6 @@ const PanelContents = styled(Panel)`
   }
 
   @media screen and (max-width: 600px) {
-    margin-top: 3rem;
     grid-template-columns: repeat(1, 1fr);
   }
 `;

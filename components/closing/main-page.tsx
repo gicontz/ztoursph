@@ -1,13 +1,14 @@
 import { FullWidth, PanelSection } from "@components/commons/common";
 import styled from "@emotion/styled";
 import sunset from "@assets/images/sunsets.jpg";
+import Button from "@components/commons/button";
 import Link from "next/link";
 
 const ClosingContainer = styled(FullWidth)`
   background: linear-gradient(
       to top,
       rgba(12, 16, 17, 1),
-      rgba(12, 16, 17, 0.4),
+      rgba(12, 16, 17, 0.2),
       rgba(0, 0, 0, 0)
     ),
     url(${sunset.src});
@@ -15,9 +16,6 @@ const ClosingContainer = styled(FullWidth)`
   background-repeat: no-repeat;
   background-position: center;
   color: white;
-  &::after {
-    content: url("");
-  }
 `;
 
 const Panel = styled(PanelSection)`
