@@ -1,7 +1,7 @@
 import { createIcon } from "@chakra-ui/icons";
 
 export default createIcon({
-  displayName: "TravellersIcons",
+  displayName: "travellers",
   viewBox: "0 0 24 24",
   path: (
     <>
