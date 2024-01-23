@@ -68,10 +68,10 @@ export default function Home() {
         </Row>
       </Banner>
       <MainPageBooking />
-      {/* <MainPageListing />
+      <MainPageListing />
       <MainPageTestimonial />
       <MainPageClosing />
-      <MainPageFooter /> */}
+      <MainPageFooter />
     </main>
   );
 }
