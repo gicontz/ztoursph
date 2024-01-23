@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -118,3 +119,7 @@ const MainPageBooking = () => {
 };
 
 export default MainPageBooking;
+
+// export default function() {
+//   return <><SubmitButton>Book</SubmitButton> <MapIcon/> </>
+// }

@@ -1,9 +1,6 @@
-"use client";
-
 import { FullWidth, Row } from "@components/commons/common";
 import Header from "@components/header";
 import styled from "@emotion/styled";
-import { Providers } from "./providers";
 import BannerImage from "@assets/images/banner.jpg";
 import MainPageBooking from "@components/booking/main-page";
 import MainPageListing from "@components/listing/main-page";
@@ -51,32 +48,30 @@ const Phrase = styled.p`
 
 export default function Home() {
   return (
-    <Providers>
-      <main className="relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh]">
-        <Row>
-          <Header />
+    <main className="relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh] App">
+      <Row>
+        <Header />
+      </Row>
+      <Banner>
+        <Row className="pt-24 pb-24">
+          <TagLine>Seize the Zen</TagLine>
+          <div className="text-right">
+            <Phrase>
+              Embrace the nature in the magnificent waters
+              <br /> of Palawan. Experience the breathtaking
+              <br /> views and sceneries that you can only catch
+              <br /> here in the Philippines.
+              <br />
+              <strong>Be You. Be Free. Be Zest.</strong>
+            </Phrase>
+          </div>
         </Row>
-        <Banner>
-          <Row className="pt-24 pb-24">
-            <TagLine>Seize the Zen</TagLine>
-            <div className="text-right">
-              <Phrase>
-                Embrace the nature in the magnificent waters
-                <br /> of Palawan. Experience the breathtaking
-                <br /> views and sceneries that you can only catch
-                <br /> here in the Philippines.
-                <br />
-                <strong>Be You. Be Free. Be Zest.</strong>
-              </Phrase>
-            </div>
-          </Row>
-        </Banner>
-        <MainPageBooking />
-        <MainPageListing />
-        <MainPageTestimonial />
-        <MainPageClosing />
-        <MainPageFooter />
-      </main>
-    </Providers>
+      </Banner>
+      <MainPageBooking />
+      <MainPageListing />
+      <MainPageTestimonial />
+      <MainPageClosing />
+      <MainPageFooter />
+    </main>
   );
 }

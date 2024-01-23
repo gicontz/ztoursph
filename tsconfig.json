@@ -23,6 +23,9 @@
       }
     ],
     "paths": {
+      "@providers/*": [
+        "./providers/*"
+      ],
       "@constants/*": [
         "./constants/*"
       ],
@@ -33,10 +36,11 @@
         "./assets/*"
       ],
       "@app/*": [
-        "./app/*"
+        "./*"
       ]
     },
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",

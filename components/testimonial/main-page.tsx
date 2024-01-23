@@ -15,7 +15,6 @@ const TestimonialContainer = styled(FullWidth)`
   background-repeat: no-repeat;
   background-position: center top;
   color: white;
-  margin-bottom: 5rem;
 `;
 
 const Panel = styled(PanelSection)`

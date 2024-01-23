@@ -83,11 +83,11 @@ const DropdownShowcase: React.FC<DestDropdownProps> = ({
   return (
     <Dropdown
       showSearch
-      name={title}
       control={control}
       options={option}
       optionLabelProp="customLabel"
       {...rest}
+      name={title}
     />
   );
 };
