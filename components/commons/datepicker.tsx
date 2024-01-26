@@ -1,25 +1,26 @@
 import { ConfigProvider, DatePicker, DatePickerProps } from "antd";
-import { DatePickerType, RangePickerProps } from "antd/es/date-picker";
+import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
-import { ReactNode } from "react";
 import { Controller } from "react-hook-form";
 
-interface Props extends DatePickerType {
+interface Props {
   control: any;
   name: string;
   rules?: Record<string, any>;
-  placeholder?: string | number | ReactNode | boolean;
+  className: string;
 }
 
 const Datepicker: React.FC<Props> = ({
   name,
   control,
   rules,
+  className,
   ...rest
 }) => {
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     return current && current < dayjs().endOf("day");
   };
+
   return (
     <Controller
       name={name}
@@ -34,7 +35,7 @@ const Datepicker: React.FC<Props> = ({
             },
           }}>
           <DatePicker
-            format="YYYY-MM-DD"
+            className={className}
             disabledDate={disabledDate}
             {...field}
             {...rest}

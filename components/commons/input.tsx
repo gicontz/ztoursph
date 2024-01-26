@@ -5,8 +5,8 @@ import { ConfigProvider, Input } from "antd";
 export interface CustomInputProps {
   control: any;
   name: string;
-  rules: Record<string, any>;
-  placeholder: string;
+  rules?: Record<string, any>;
+  placeholder?: string;
   type: string;
 }
 
@@ -20,7 +20,7 @@ export const CustomInput = ({
       name={rest.name}
       control={rest.control}
       rules={rest.rules}
-      render={({ field, fieldState }) => (
+      render={({ field }) => (
         <ConfigProvider
           theme={{
             token: {
