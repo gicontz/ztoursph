@@ -2,8 +2,9 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
+import Link from "next/link";
 
-const CardContainer = styled.div`
+const CardContainer = styled(Link)`
   position: relative;
   height: 27rem;
   width: 20rem;
@@ -121,14 +122,14 @@ interface ListingCard {
     price: number;
     rate: number;
     reviews: number;
-    imageUrl: React.ComponentProps<typeof Image>['src'];
+    imageUrl: React.ComponentProps<typeof Image>["src"];
   };
 }
 
 const ListingCard: React.FC<ListingCard> = ({ data }) => {
   const [like, setLike] = useState(false);
   return (
-    <CardContainer>
+    <CardContainer href={`/tours/${data.title}`}>
       <ImageContainer>
         <Image
           src={data.imageUrl}

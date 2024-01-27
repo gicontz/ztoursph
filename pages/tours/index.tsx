@@ -2,60 +2,127 @@ import MainPageHeader from "@components/tours/main-page";
 import TestImageA from "@assets/images/tour_a.jpg";
 import TestImageB from "@assets/images/tour_b.jpg";
 import TestImageC from "@assets/images/tour_c.jpg";
+import styled from "@emotion/styled";
+import HeaderSection from "@components/commons/header-section";
+import ListingCard from "@components/listing/listing-card";
+import { PanelSection } from "@components/commons/common";
+import Layout from "@components/pages/layout";
+import Button from "@components/commons/button";
+
+const ListCardsContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const Panel = styled(PanelSection)`
+  display: flex;
+  width: fit-content;
+  margin-top: 1rem;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const Description = styled.div`
+  font-size: 0.9rem;
+  display: flex;
+  color: #596363;
+  justify-content: space-between;
+
+  a {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.6rem;
+  }
+`;
+
+const LoadMoreButton = styled(Button)`
+  margin: auto;
+`;
 
 export default function Tours() {
-  const dummyData = [
+  const data = [
     {
-      src: TestImageA,
-      alt: "ImageTest",
+      location: `Tour A`,
+      title: "El Nido Island Tour A",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 84,
+      imageUrl: TestImageA,
     },
     {
-      src: TestImageB,
-      alt: "ImageTest",
+      location: `Tour B`,
+      title: "El Nido Island Tour B",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 87,
+      imageUrl: TestImageB,
     },
     {
-      src: TestImageC,
-      alt: "ImageTest",
+      location: `Tour C`,
+      title: "El Nido Island Tour C",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 97,
+      imageUrl: TestImageC,
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png",
-      alt: "ImageTest",
+      location: `Tour A`,
+      title: "Cebu Tour A",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 84,
+      imageUrl:
+        "https://i0.wp.com/wanderlustyle.com/wp-content/uploads/2017/12/boy-swims-w-whale-shark.jpg?fit=1600%2C970&ssl=1",
     },
     {
-      src: "https://i.imgur.com/fsyrScY.jpg",
-      alt: "ImageTest",
+      location: `Tour B`,
+      title: "Cebu Tour B",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 87,
+      imageUrl:
+        "https://www.islandtrektours.com/wp-content/uploads/2023/09/whale-shark-watching-from-the-boat-in-Oslob-cebu.jpg",
     },
     {
-      src: "https://i.imgur.com/fsyrScY.jpg",
-      alt: "ImageTest",
-    },
-    {
-      src: "https://i.imgur.com/fsyrScY.jpg",
-      alt: "ImageTest",
-    },
-    {
-      src: TestImageB,
-      alt: "ImageTest",
-    },
-    {
-      src: TestImageC,
-      alt: "ImageTest",
+      location: `Tour C`,
+      title: "Cebu Tour C",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
+      price: 1000,
+      rate: 5,
+      reviews: 97,
+      imageUrl:
+        "https://myhouse.ph/wp-content/uploads/2022/12/mactan-banner.jpg-1170x0-c-center.webp",
     },
   ];
-
-  const Inclusion = [
-    "Labore et dolore",
-    "Sed do eiusmod tempor ",
-    "Ullamco laboris",
-  ];
-
-  const data = {
-    title: "El Nido Tour A",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-    inclusion: Inclusion,
-    price: 1000,
-    images: dummyData,
-  };
-  return <MainPageHeader data={data} />;
+  return (
+    <Layout>
+      <Panel>
+        <HeaderSection>Adventure, guided wonders await.</HeaderSection>
+        <Description>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Description>
+        <ListCardsContainer>
+          {data.map((data, key) => (
+            <ListingCard key={key} data={data} />
+          ))}
+        </ListCardsContainer>
+        <LoadMoreButton type="primary">Load More</LoadMoreButton>
+      </Panel>
+    </Layout>
+  );
 }
