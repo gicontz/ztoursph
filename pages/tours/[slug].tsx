@@ -10,10 +10,19 @@ import { Divider } from "antd";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 
+const DevBorder = styled.div`
+  * {
+    // border: 1px solid blue;
+  }
+`;
+
 const PackageDetail = styled.div`
-  width: 50rem;
   font-size: 1rem;
   gap: 10rem;
+
+  p {
+    width: 100%;
+  }
 
   ul {
     list-style-type: none;
@@ -107,31 +116,33 @@ export default function Tours() {
     );
   return (
     <Layout>
-      <FullWidth>
-        <PageTitle title={data.title} bgImage={data.bannerImage} />
-      </FullWidth>
-      <Row>
-        <div>
-          <p className="text-xl font-semibold">Package Details</p>
-          <p className="font-semibold">₱{data.price}</p>
-        </div>
-        <PackageDetail>
-          <p>{data.description}</p>
-          {InclusionContent}
-        </PackageDetail>
-      </Row>
-      <Row>
-        <h4 className="font-bold text-2xl mb-8 mt-8">Gallery</h4>
-      </Row>
-      <FullWidth>
-        <ImageTemplate data={data.images} />
-      </FullWidth>
-      <Divider />
-      <Row className="!max-w-3xl">
-        <h4 className="font-bold text-2xl">Book This Tour</h4>
-        <TourBookingForm />
-      </Row>
-      <br />
+      <DevBorder>
+        <FullWidth>
+          <PageTitle title={data.title} bgImage={data.bannerImage} />
+        </FullWidth>
+        <Row>
+          <div className="mx-10 mt-2 flex flex-col gap-1">
+            <p className="text-2xl font-semibold ">Package Details</p>
+            <p className="font-semibold">₱{data.price}</p>
+          </div>
+          <PackageDetail className="px-10">
+            <p>{data.description}</p>
+            {InclusionContent}
+          </PackageDetail>
+        </Row>
+        <Row>
+          <h4 className="font-bold text-2xl my-8 mx-10">Gallery</h4>
+        </Row>
+        <FullWidth>
+          <ImageTemplate data={data.images} />
+        </FullWidth>
+        <Divider />
+        <Row className="!max-w-3xl">
+          <h4 className="font-bold text-2xl">Book This Tour</h4>
+          <TourBookingForm />
+        </Row>
+        <br />
+      </DevBorder>
     </Layout>
   );
 }

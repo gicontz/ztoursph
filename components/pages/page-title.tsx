@@ -14,24 +14,21 @@ const TextHeader = styled.h1`
 `;
 
 const HeaderContainer = styled.div<{ bgImg: string }>`
-  background-image: url(${({ bgImg }) => bgImg});    
+  background-image: url(${({ bgImg }) => bgImg});
   padding: 150px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 `;
 
-const PageTitle:React.FC<Props> = ({
-  bgImage,
-  title
-}) => {
+const PageTitle: React.FC<Props> = ({ bgImage, title }) => {
   return (
     <HeaderContainer bgImg={bgImage}>
       <TextHeader className="text-white">
         <strong>{title}</strong>
       </TextHeader>
     </HeaderContainer>
-  )
-}
+  );
+};
 
 export default PageTitle;
