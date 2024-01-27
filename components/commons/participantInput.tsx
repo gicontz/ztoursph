@@ -13,10 +13,21 @@ const IndividualNameContainer = styled.div`
   padding: 0.9rem;
   border-radius: 3px;
   margin: 5px 0;
+  background-color: rgba(234, 234, 234, 0.5);
+`;
+
+const AddParticipant = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  height: 100%;
 `;
 
 const StyledInput = styled(Input)`
   padding: 0.7rem;
+`;
+
+const StyleButton = styled(Button)`
+  height: 2.9rem;
 `;
 
 interface ParticipantInputProps {
@@ -55,26 +66,25 @@ const ParticipantInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
   return (
     <>
       {nameList}
-      <ConfigProvider
-        theme={{
-          token: {
-            colorBgContainer: "#EAEAEA",
-            borderRadius: 2,
-          },
-        }}>
-        <StyledInput
-          value={participant}
-          onChange={handleInputChange}
-          type="text"
-          placeholder="Enter Participants Name"
-        />
-      </ConfigProvider>
-      <Button
-        className="w-full mt-2"
-        type="primary"
-        onClick={handleAddParticipantClick}>
-        Add Participant
-      </Button>
+      <AddParticipant>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: "#EAEAEA",
+              borderRadius: 2,
+            },
+          }}>
+          <StyledInput
+            value={participant}
+            onChange={handleInputChange}
+            type="text"
+            placeholder="Enter Participants Name"
+          />
+        </ConfigProvider>
+        <StyleButton type="primary" onClick={handleAddParticipantClick}>
+          Add Participant
+        </StyleButton>
+      </AddParticipant>
     </>
   );
 };

@@ -10,11 +10,7 @@ import { Divider } from "antd";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 
-const DevBorder = styled.div`
-  * {
-    // border: 1px solid blue;
-  }
-`;
+const DevBorder = styled.div``;
 
 const PackageDetail = styled.div`
   font-size: 1rem;
