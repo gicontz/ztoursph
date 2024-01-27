@@ -4,3 +4,4 @@ export { default as FacebookIcon } from "./facebook";
 export { default as InstagramIcon } from "./instagram";
 export { default as LinkedInIcon } from "./linkedin";
 export { default as TelephoneIcon } from "./telephone";
+export { default as TrashIcon } from "./trash";
