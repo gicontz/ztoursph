@@ -121,7 +121,7 @@ interface ListingCard {
     price: number;
     rate: number;
     reviews: number;
-    imageUrl: string;
+    imageUrl: React.ComponentProps<typeof Image>['src'];
   };
 }
 

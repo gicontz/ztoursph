@@ -55,7 +55,7 @@ interface DestDropdownProps extends DropdownProps {
     title: string;
     description: string;
     value: string;
-    url: string;
+    url: React.ComponentProps<typeof Image>['src'];
   }[];
   control: any;
 }
