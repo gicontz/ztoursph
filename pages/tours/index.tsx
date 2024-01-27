@@ -1,4 +1,4 @@
-import MainPageHeader from "@components/tour-header/main-page";
+import MainPageHeader from "@components/tours/main-page";
 import TestImageA from "@assets/images/tour_a.jpg";
 import TestImageB from "@assets/images/tour_b.jpg";
 import TestImageC from "@assets/images/tour_c.jpg";

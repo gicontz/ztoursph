@@ -4,14 +4,15 @@ import Image from "next/image";
 import styled from "@emotion/styled";
 
 const ImageGridContainer = styled.div`
-  width: fit-content;
+  width: 100%;
 `;
 
 const ImagesShow = styled.div`
-  columns: 3;
-  column-gap: 1rem;
-  img {
-    margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  > img {
+    flex-grow: 1;
+    width: 33%;
   }
 `;
 
@@ -39,7 +40,10 @@ const ImageTemplate: React.FC<ImageTemplateProps> = ({ data }) => {
       alt={e.alt}
       onClick={() => openBoxOnSlide(index)}
       width={250}
-      height={250}
+      height={350}
+      className="cursor-pointer w-[250px] h-[350px] transition-transform 
+      ease-linear duration-200 delay-100 
+      hover:opacity-95 hover:transform hover:scale-105 hover:shadow-sm"
     />
   ));
 

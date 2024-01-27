@@ -7,6 +7,7 @@ import MainPageListing from "@components/listing/main-page";
 import MainPageTestimonial from "@components/testimonial/main-page";
 import MainPageFooter from "@components/footer/main-page";
 import MainPageClosing from "@components/closing/main-page";
+import Layout from "@components/pages/layout";
 
 const Banner = styled(FullWidth)`
   position: relative;
@@ -48,10 +49,7 @@ const Phrase = styled.p`
 
 export default function Home() {
   return (
-    <main className="relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh] App">
-      <Row>
-        <Header />
-      </Row>
+    <Layout>
       <Banner>
         <Row className="pt-24 pb-24">
           <TagLine>Seize the Zen</TagLine>
@@ -71,7 +69,6 @@ export default function Home() {
       <MainPageListing />
       <MainPageTestimonial />
       <MainPageClosing />
-      <MainPageFooter />
-    </main>
+    </Layout>
   );
 }

@@ -70,7 +70,7 @@ const ParticipantInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
         />
       </ConfigProvider>
       <Button
-        className="w-full"
+        className="w-full mt-2"
         type="primary"
         onClick={handleAddParticipantClick}>
         Add Participant
