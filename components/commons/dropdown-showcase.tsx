@@ -1,7 +1,6 @@
 import Dropdown, { DropdownProps } from "@components/commons/dropdown";
 import styled from "@emotion/styled";
 import { Tooltip } from "antd";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { title } from "process";
 
@@ -56,7 +55,7 @@ interface DestDropdownProps extends DropdownProps {
     title: string;
     description: string;
     value: string;
-    url: string | StaticImport;
+    url: string;
   }[];
   control: any;
 }
