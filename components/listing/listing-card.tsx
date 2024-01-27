@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const CardContainer = styled.div`
   position: relative;
@@ -122,7 +121,7 @@ interface ListingCard {
     price: number;
     rate: number;
     reviews: number;
-    imageUrl: string | StaticImport;
+    imageUrl: React.ComponentProps<typeof Image>['src'];
   };
 }
 
