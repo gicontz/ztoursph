@@ -1,14 +1,17 @@
 import styled from "@emotion/styled";
-import { Button } from "antd";
+import { Button, Divider } from "antd";
 import React, { useState } from "react";
 import Datepicker from "./datepicker";
 import { useForm } from "react-hook-form";
 import ParticipantInput from "./participantInput";
+import CustomDropDown from "./custom-dropdown";
 
 const BookingContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  * {
+  }
 
   .expand {
     width: 100%;
@@ -19,6 +22,8 @@ const BookingContainer = styled.div`
 const LabelHeader = styled.p`
   display: flex;
   color: rgba(12, 16, 17, 0.6);
+  font-size: 0.6rem;
+  font-weight: bold;
   &::before {
     content: "* ";
     color: red;
@@ -31,25 +36,40 @@ const LabelHeader = styled.p`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.5rem;
   width: 100%;
 `;
 
 const TourBookingForm = () => {
   const { handleSubmit, control } = useForm();
-  const [participant, setParticipant] = useState<string[]>();
-  const onSubmitFunc = (e) => {
-    console.log(e, participant);
+  const [participantArray, setParticipantArray] = useState<string[]>();
+  const onSubmitFunc = (formData) => {
+    formData.participants = participantArray;
+    formData.numberOfParticipants = participantArray?.length;
+    console.log(formData);
   };
 
   return (
     <BookingContainer>
+      <Divider />
       <Form onSubmit={handleSubmit(onSubmitFunc)}>
-        <LabelHeader className="text-sm font-bold mt-4">Date of Tour</LabelHeader>
+        <LabelHeader>Date of Tour</LabelHeader>
         <Datepicker className="expand" control={control} name="Date" />
-        <LabelHeader className="text-sm font-bold mt-4">Participants</LabelHeader>
-        <ParticipantInput onChange={(e) => setParticipant(e)} />
-        <Button htmlType="submit" className="mt-4">Submit</Button>
+        <LabelHeader>Participants</LabelHeader>
+        <ParticipantInput onChange={(e) => setParticipantArray(e)} />
+        <LabelHeader>Pick up location</LabelHeader>
+        <CustomDropDown
+          DropdownPlaceholder="Add location"
+          placeholder="Enter pick up location"
+          className="expand"
+          defaultOption={["To be Provided"]}
+          names={"PickUp"}
+          control={control}
+          rules={{ require: "Location must be provided." }}
+        />
+        <Button className="h-10" htmlType="submit">
+          Submit
+        </Button>
       </Form>
     </BookingContainer>
   );
