@@ -10,9 +10,10 @@ const ImageGridContainer = styled.div`
 const ImagesShow = styled.div`
   display: flex;
   flex-wrap: wrap;
+  gap: 1.1rem;
   > img {
     flex-grow: 1;
-    width: 33%;
+    width: 30%;
   }
 `;
 

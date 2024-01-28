@@ -112,33 +112,33 @@ export default function Tours() {
     );
   return (
     <Layout>
-      <DevBorder>
-        <FullWidth>
-          <PageTitle title={data.title} bgImage={data.bannerImage} />
-        </FullWidth>
-        <Row>
-          <div className="mx-10 mt-2 flex flex-col gap-1">
-            <p className="text-2xl font-semibold ">Package Details</p>
-            <p className="font-semibold">₱{data.price}</p>
-          </div>
-          <PackageDetail className="px-10">
-            <p>{data.description}</p>
-            {InclusionContent}
-          </PackageDetail>
-        </Row>
-        <Row>
-          <h4 className="font-bold text-2xl my-8 mx-10">Gallery</h4>
-        </Row>
-        <FullWidth>
-          <ImageTemplate data={data.images} />
-        </FullWidth>
-        <Divider />
-        <Row className="!max-w-3xl">
-          <h4 className="font-bold text-2xl">Book This Tour</h4>
-          <TourBookingForm />
-        </Row>
-        <br />
-      </DevBorder>
+      <PageTitle title={data.title} bgImage={data.bannerImage} />
+      <Row>
+        <div className="mx-10 mt-2 flex flex-col gap-2">
+          <p className="text-2xl font-semibold font-['Source_Serif_Pro']">
+            Package Details
+          </p>
+          <p className="text-xl px-2 py-2 font-semibold w-full bg-slate-100">
+            ₱{data.price}
+          </p>
+        </div>
+        <PackageDetail className="px-10 text-justify">
+          <p>{data.description}</p>
+          {InclusionContent}
+        </PackageDetail>
+      </Row>
+      <Row>
+        <h4 className="font-bold text-2xl my-8 mx-10">Gallery</h4>
+      </Row>
+      <FullWidth>
+        <ImageTemplate data={data.images} />
+      </FullWidth>
+      <Divider />
+      <Row className="!max-w-3xl">
+        <h4 className="font-bold text-2xl">Book This Tour</h4>
+        <TourBookingForm />
+      </Row>
+      <br />
     </Layout>
   );
 }
