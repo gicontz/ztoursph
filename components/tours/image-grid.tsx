@@ -10,10 +10,11 @@ const ImageGridContainer = styled.div`
 const ImagesShow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 1.1rem;
+  gap: 0.5rem;
   > img {
     flex-grow: 1;
-    width: 30%;
+    width: 20rem;
+    height: 20rem;
   }
 `;
 
@@ -40,9 +41,9 @@ const ImageTemplate: React.FC<ImageTemplateProps> = ({ data }) => {
       src={typeof e.src === "string" ? e.src : e.src.src}
       alt={e.alt}
       onClick={() => openBoxOnSlide(index)}
-      width={250}
+      width={1000}
       height={350}
-      className="cursor-pointer w-[250px] h-[350px] transition-transform 
+      className="cursor-pointer object- object-center transition-transform 
       ease-linear duration-200 delay-100 
       hover:opacity-95 hover:transform hover:scale-105 hover:shadow-sm"
     />

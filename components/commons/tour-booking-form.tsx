@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
-import { Button, Divider } from "antd";
+import { Divider } from "antd";
 import React, { useState } from "react";
 import Datepicker from "./datepicker";
 import { useForm } from "react-hook-form";
 import ParticipantInput from "./participantInput";
 import CustomDropDown from "./custom-dropdown";
+import Button from "./button";
 
 const BookingContainer = styled.div`
   display: flex;
@@ -34,6 +35,7 @@ const LabelHeader = styled.p`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.5rem;
   width: 100%;
 `;
@@ -65,8 +67,10 @@ const TourBookingForm = () => {
           control={control}
           rules={{ require: "Location must be provided." }}
         />
-        <Button className="h-10" htmlType="submit">
-          Submit
+        <Button
+          htmlType="submit"
+          className="bg-[#23432C] text-white font-semibold h-[3rem]">
+          Add Tour
         </Button>
       </Form>
     </BookingContainer>

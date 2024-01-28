@@ -11,11 +11,16 @@ const TextHeader = styled.h1`
   width: 100%;
   font-family: "Source Serif Pro";
   font-size: 4rem;
+  white-space: nowrap;
+
+  @media screen and (max-width: 740px) {
+    font-size: 3rem;
+  }
 `;
 
 const HeaderContainer = styled.div<{ bgImg: string }>`
   background-image: url(${({ bgImg }) => bgImg});
-  padding: 150px;
+  padding: 3rem;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -24,9 +29,9 @@ const HeaderContainer = styled.div<{ bgImg: string }>`
 const PageTitle: React.FC<Props> = ({ bgImage, title }) => {
   return (
     <HeaderContainer bgImg={bgImage}>
-      <TextHeader className="text-white">
-        <strong>{title}</strong>
-      </TextHeader>
+      <strong>
+        <TextHeader className="text-white">{title}</TextHeader>
+      </strong>
     </HeaderContainer>
   );
 };

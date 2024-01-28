@@ -10,7 +10,13 @@ import { Divider } from "antd";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 
-const DevBorder = styled.div``;
+const Panel = styled.div`
+  margin: 0 7rem;
+
+  @media screen and (max-width: 740px) {
+    margin: 0 4rem;
+  }
+`;
 
 const PackageDetail = styled.div`
   font-size: 1rem;
@@ -110,34 +116,54 @@ export default function Tours() {
     ) : (
       ""
     );
+  //[(₱1250 - ₱1000) / ₱1250] * 100
+
+  const discount = { previous: 1250, current: 1000 };
+
+  const priceContent = discount ? (
+    <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
+      <p className="text-sm line-through">₱{discount.previous}</p>
+      <p className="text-2xl">₱{discount.current}</p>
+      <div className="text-xs px-1 bg-[#23432C] text-white">
+        {((discount.previous - discount.current) / discount.current) * 100}%
+      </div>
+    </div>
+  ) : (
+    <p className="text-2xl px-2 py-2 font-semibold w-full bg-gray-100">
+      ₱{data.price}
+    </p>
+  );
   return (
     <Layout>
-      <PageTitle title={data.title} bgImage={data.bannerImage} />
-      <Row>
-        <div className="mx-10 mt-2 flex flex-col gap-2">
-          <p className="text-2xl font-semibold font-['Source_Serif_Pro']">
-            Package Details
-          </p>
-          <p className="text-xl px-2 py-2 font-semibold w-full bg-slate-100">
-            ₱{data.price}
-          </p>
-        </div>
-        <PackageDetail className="px-10 text-justify">
+      <div className="mt-[5rem]">
+        <PageTitle title={data.title} bgImage={data.bannerImage} />
+      </div>
+      <Panel className="mx-[10rem]">
+        <Row>
+          <div className="mt-[2rem] flex flex-col gap-2">
+            <p className="text-2xl font-semibold font-['Source_Serif_Pro']">
+              Package Details
+            </p>
+            {priceContent}
+          </div>
+        </Row>
+        <PackageDetail className="text-justify">
           <p>{data.description}</p>
           {InclusionContent}
         </PackageDetail>
-      </Row>
-      <Row>
-        <h4 className="font-bold text-2xl my-8 mx-10">Gallery</h4>
-      </Row>
-      <FullWidth>
-        <ImageTemplate data={data.images} />
-      </FullWidth>
-      <Divider />
-      <Row className="!max-w-3xl">
-        <h4 className="font-bold text-2xl">Book This Tour</h4>
-        <TourBookingForm />
-      </Row>
+
+        <Row>
+          <h4 className="font-bold text-2xl my-8">Gallery</h4>
+        </Row>
+        <FullWidth>
+          <ImageTemplate data={data.images} />
+        </FullWidth>
+        <Divider />
+        <Row className="!max-w-3xl">
+          <h4 className="font-bold text-2xl">Book This Tour</h4>
+          <TourBookingForm />
+        </Row>
+      </Panel>
       <br />
     </Layout>
   );
