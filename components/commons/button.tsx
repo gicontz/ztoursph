@@ -8,13 +8,14 @@ const StyledButton = styled(AntButton)<ButtonProps>`
   &:active {
     color: #23432c;
   }
-  &:hover {
-    color: #233d2ce6;
+  &.ant-btn-primary:hover {
+    background-color: #23432c !important;
+    color: white !important;
   }
 `;
 
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
-    <StyledButton {...rest}>{children}</StyledButton>
+  <StyledButton {...rest}>{children}</StyledButton>
 );
 
 export default Button;

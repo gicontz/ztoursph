@@ -3,7 +3,7 @@ import { Divider } from "antd";
 import React, { useState } from "react";
 import Datepicker from "./datepicker";
 import { useForm } from "react-hook-form";
-import ParticipantInput from "./participantInput";
+import TravelersInput from "./travelerInput";
 import CustomDropDown from "./custom-dropdown";
 import Button from "./button";
 
@@ -18,17 +18,15 @@ const BookingContainer = styled.div`
   }
 `;
 
-const LabelHeader = styled.p`
+const LabelHeader = styled.div`
   display: flex;
-  color: rgba(12, 16, 17, 0.6);
-  font-size: 0.6rem;
-  font-weight: bold;
-  &::before {
-    content: "* ";
-    color: red;
-    font-size: 0.6rem;
+  flex-direction: column;
+  font-size: 0.8rem;
+  h3 {
+    font-family: "Source_Serif_Pro";
+    font-size: 1.2rem;
     font-weight: bold;
-    margin-right: 4px;
+    color: #23432c;
   }
 `;
 
@@ -40,38 +38,63 @@ const Form = styled.form`
   width: 100%;
 `;
 
-const TourBookingForm = () => {
+const StyledDivider = styled(Divider)`
+  border-top: 1px solid #23432c;
+  margin: 10px 0;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  height: 2.6rem;
+  font-weight: 800;
+`;
+
+const TourBookingForm = ({ onSubmit }) => {
   const { handleSubmit, control } = useForm();
-  const [participantArray, setParticipantArray] = useState<string[]>();
+  const [travellersArray, setTravellersArray] = useState<string[]>();
   const onSubmitFunc = (formData) => {
-    formData.participants = participantArray;
-    formData.numberOfParticipants = participantArray?.length;
-    console.log(formData);
+    formData.Travelers = travellersArray;
+    formData.numberOfTravelers = travellersArray?.length;
+    onSubmit(formData);
   };
 
   return (
     <BookingContainer>
-      <Divider />
       <Form onSubmit={handleSubmit(onSubmitFunc)}>
-        <LabelHeader>Date of Tour</LabelHeader>
-        <Datepicker className="expand" control={control} name="Date" />
-        <LabelHeader>Participants</LabelHeader>
-        <ParticipantInput onChange={(e) => setParticipantArray(e)} />
-        <LabelHeader>Pick up location</LabelHeader>
+        <LabelHeader>
+          <h3>Date of Tour</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </LabelHeader>
+        <Datepicker
+          className="expand"
+          control={control}
+          name="Date"
+          rules={{ required: true }}
+        />
+        <StyledDivider />
+        <LabelHeader>
+          <h3>Participants</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </LabelHeader>
+        <TravelersInput onChange={(e) => setTravellersArray(e)} />
+        <StyledDivider />
+        <LabelHeader>
+          <h3>Pick up location</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </LabelHeader>
         <CustomDropDown
-          DropdownPlaceholder="Add location"
+          buttonName="Add location"
+          dropdownPlaceholder="Add location"
           placeholder="Enter pick up location"
           className="expand"
           defaultOption={["To be Provided"]}
           names={"PickUp"}
           control={control}
-          rules={{ require: "Location must be provided." }}
+          rules={{ required: true }}
         />
-        <Button
-          htmlType="submit"
-          className="bg-[#23432C] text-white font-semibold h-[3rem]">
+        <StyledButton htmlType="submit" type="primary">
           Add Tour
-        </Button>
+        </StyledButton>
       </Form>
     </BookingContainer>
   );
