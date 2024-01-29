@@ -1,6 +1,6 @@
-import { FullWidth, PanelSection, Row } from "@components/commons/common";
+import { Row } from "@components/commons/common";
 import styled from "@emotion/styled";
-import ImageTemplate from "@components/tours/image-grid";
+import ImageTemplate from "@components/tours/image-template";
 import TourBookingForm from "@components/commons/tour-booking-form";
 import TestImageA from "@assets/images/tour_a.jpg";
 import TestImageB from "@assets/images/tour_b.jpg";
@@ -10,21 +10,32 @@ import { Divider } from "antd";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 
-const Panel = styled.div`
-  margin: 0 7rem;
+const Panel = styled(Row)`
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+  gap: 0.5rem;
+  line-height: 1.7rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  width: 50rem;
 
+  h2 {
+    color: #23432c;
+    font-family: "Source_Serif_Pro";
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 2rem;
+  }
   @media screen and (max-width: 740px) {
-    margin: 0 4rem;
+    width: 90%;
   }
 `;
 
 const PackageDetail = styled.div`
-  font-size: 1rem;
-  gap: 10rem;
-
-  p {
-    width: 100%;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   ul {
     list-style-type: none;
@@ -32,16 +43,20 @@ const PackageDetail = styled.div`
   }
 
   li {
-    margin: 5px 0;
+    margin: 2px 0;
   }
 
   li::marker {
     content: "• ";
     color: black;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 15px;
     margin-right: 10px;
   }
+`;
+
+const StyledDivider = styled(Divider)`
+  border-top: 1px solid #23432c;
+  margin: 10px 0;
 `;
 
 export default function Tours() {
@@ -88,25 +103,28 @@ export default function Tours() {
   ];
 
   const Inclusion = [
-    "Labore et dolore",
-    "Sed do eiusmod tempor ",
-    "Ullamco laboris",
+    "5 Island Destinations",
+    "Licensed Tour Guide ",
+    "Picnic/Buffet Lunch",
+    "Life Vest ",
+    "Comfortable Boat",
   ];
 
   const data = {
-    title: "El Nido Tour A",
+    title: "El Nido Island Tour A",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     inclusion: Inclusion,
     price: 1000,
     bannerImage: "https://i.imgur.com/fsyrScY.jpg",
     images: dummyData,
+    discount: { previous: 1250, current: 1000 },
   };
 
   const InclusionContent =
     data.inclusion && data.inclusion.length !== 0 ? (
       <>
-        <p className="text-lg mt-4 font-semibold">Inclusion : </p>
+        <h2>Inclusion</h2>
         <ul>
           {data.inclusion?.map((e, index) => (
             <li key={index}>{e}</li>
@@ -116,16 +134,21 @@ export default function Tours() {
     ) : (
       ""
     );
-  //[(₱1250 - ₱1000) / ₱1250] * 100
 
-  const discount = { previous: 1250, current: 1000 };
-
-  const priceContent = discount ? (
+  const priceContent = data.discount ? (
     <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
-      <p className="text-sm line-through">₱{discount.previous}</p>
-      <p className="text-2xl">₱{discount.current}</p>
+      <p className=" text-[1rem] line-through opacity-90">
+        ₱{data.discount.previous}
+      </p>
+      <p className="text-2xl ">₱{data.discount.current}</p>
       <div className="text-xs px-1 bg-[#23432C] text-white">
-        {((discount.previous - discount.current) / discount.current) * 100}%
+        -
+        {Math.floor(
+          ((data.discount.previous - data.discount.current) /
+            data.discount.current) *
+            100
+        )}
+        %
       </div>
     </div>
   ) : (
@@ -135,33 +158,39 @@ export default function Tours() {
   );
   return (
     <Layout>
-      <div className="mt-[5rem]">
+      <div className="mt-[6rem] ">
         <PageTitle title={data.title} bgImage={data.bannerImage} />
       </div>
-      <Panel className="mx-[10rem]">
+      <Panel>
         <Row>
           <div className="mt-[2rem] flex flex-col gap-2">
-            <p className="text-2xl font-semibold font-['Source_Serif_Pro']">
-              Package Details
-            </p>
+            <h2>Package Details</h2>
             {priceContent}
           </div>
         </Row>
-        <PackageDetail className="text-justify">
-          <p>{data.description}</p>
-          {InclusionContent}
-        </PackageDetail>
+        <Row>
+          <div>
+            <PackageDetail className="text-justify">
+              <div>
+                <h2>Tour Details</h2>
+                <p>{data.description}</p>
+              </div>
+              <div>{InclusionContent}</div>
+            </PackageDetail>
+          </div>
+        </Row>
+        <Row>
+          <h2 className="mb-1">Gallery</h2>
+          <ImageTemplate data={data.images} />
+        </Row>
 
         <Row>
-          <h4 className="font-bold text-2xl my-8">Gallery</h4>
-        </Row>
-        <FullWidth>
-          <ImageTemplate data={data.images} />
-        </FullWidth>
-        <Divider />
-        <Row className="!max-w-3xl">
-          <h4 className="font-bold text-2xl">Book This Tour</h4>
-          <TourBookingForm />
+          <div>
+            <h2>Book This Tour</h2>
+            <StyledDivider />
+          </div>
+
+          <TourBookingForm onSubmit={(e) => console.log(e)} />
         </Row>
       </Panel>
       <br />
