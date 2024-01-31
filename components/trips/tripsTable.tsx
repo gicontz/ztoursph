@@ -1,16 +1,26 @@
 import styled from "@emotion/styled";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Row, StyledDivider } from "@components/commons/common";
 import Button from "@components/commons/button";
 import PackageCard from "./packageCard";
 
+import { Source_Serif_4 } from "next/font/google";
+
+const SourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["500"],
+});
+
 const Panel = styled(Row)`
+  * {
+    // border: 1px solid blue;
+  }
   width: 60rem;
+  margin: auto;
   h2 {
     width: 100%;
     color: #23432c;
     font-size: 1.3rem;
-    font-weight: 600;
   }
 `;
 
@@ -55,7 +65,6 @@ const CheckoutSection = styled.div`
 const StyledButton = styled(Button)`
   width: 100%;
   height: 2.5rem;
-  font-family: "Source_Serif_Pro";
   font-size: 1.1rem;
 `;
 
@@ -71,6 +80,7 @@ interface TripsTableProps {
 }
 
 const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
+  console.log(SourceSerif.className);
   const content = data.map((e, i) => (
     <PackageCard
       key={i}
@@ -110,7 +120,9 @@ const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
               <h2 className="w-fit text-right">₱{3000}</h2>
             </div>
           </div>
-          <StyledButton type="primary" className="w-full">
+          <StyledButton
+            type="primary"
+            className={`w-full ${SourceSerif.className}`}>
             Proceed Checkout
           </StyledButton>
         </div>

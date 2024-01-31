@@ -1,5 +1,11 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { Source_Serif_4 } from "next/font/google";
+
+const SourceSans = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["900"],
+});
 
 interface Props {
   title: string;
@@ -11,7 +17,6 @@ const TextHeader = styled.h1`
   display: flex;
   justify-content: center;
   width: 740px;
-  font-family: "Source Serif Pro";
   font-size: 4rem;
   margin: auto;
 
@@ -51,7 +56,9 @@ const PageTitle: React.FC<Props> = ({ bgImage, title }) => {
   return (
     <HeaderContainer bgImg={bgImage}>
       <strong>
-        <TextHeader className="text-white">{title}</TextHeader>
+        <TextHeader className={`text-white ${SourceSans.className} `}>
+          {title}
+        </TextHeader>
       </strong>
     </HeaderContainer>
   );

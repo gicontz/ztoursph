@@ -25,7 +25,7 @@ const CardDetail = styled.div`
 
   img {
     width: 10rem;
-    height: 8rem;
+    height: 7rem;
     object-fit: cover;
     border-radius: 3px;
   }
@@ -33,6 +33,7 @@ const CardDetail = styled.div`
   .package {
     padding: 0 10px;
     text-align: left;
+    gap: 0.5rem;
   }
   .tour {
     font-size: 0.9rem;
