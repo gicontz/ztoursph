@@ -1,4 +1,4 @@
-import { Row } from "@components/commons/common";
+import { Row, StyledDivider } from "@components/commons/common";
 import styled from "@emotion/styled";
 import ImageTemplate from "@components/tours/image-template";
 import TourBookingForm from "@components/commons/tour-booking-form";
@@ -53,12 +53,6 @@ const PackageDetail = styled.div`
     margin-right: 10px;
   }
 `;
-
-const StyledDivider = styled(Divider)`
-  border-top: 1px solid #23432c;
-  margin: 10px 0;
-`;
-
 export default function Tours() {
   const router = useRouter();
   const slug = router.query.slug;
@@ -158,7 +152,7 @@ export default function Tours() {
   );
   return (
     <Layout>
-      <div className="mt-[6rem] ">
+      <div className="mt-[6rem]">
         <PageTitle title={data.title} bgImage={data.bannerImage} />
       </div>
       <Panel>
