@@ -7,7 +7,7 @@ import MobileNavs from './navs/mobile';
 
 const Header = () => {
     return (
-        <Flex w="100%" gap={4} className="p-4">
+        <Flex w="100%" gap={4} className="p-4 fixed top-0 left-0 w-full bg-white z-10">
             <Box p='2' className="flex items-center">
                 <Image src={Logo} width={150} height={100} alt="logo" />
                 <h1 className="hidden">Z Tours PH</h1>

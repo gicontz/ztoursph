@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
+import Link from "next/link";
 
 const CardContainer = styled.div`
   position: relative;
@@ -12,6 +13,11 @@ const CardContainer = styled.div`
   overflow: hidden;
   background-color: #2b3030;
   font-size: 16px;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
 
   @media (max-width: 800px) {
     height: 20rem;
@@ -121,7 +127,7 @@ interface ListingCard {
     price: number;
     rate: number;
     reviews: number;
-    imageUrl: React.ComponentProps<typeof Image>['src'];
+    imageUrl: React.ComponentProps<typeof Image>["src"];
   };
 }
 
@@ -130,28 +136,27 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
   return (
     <CardContainer>
       <ImageContainer>
-        <Image
-          src={data.imageUrl}
-          alt="Scenic Forest"
-          layout="fill"
-          objectFit="cover"
-        />
+        <Link href={`/tours/${data.title}`}>
+          <Image src={data.imageUrl} alt="Scenic Forest" layout="fill" />
+        </Link>
         <ActionButton onClick={() => setLike(!like)}>
           <SVGHeart width={20} height={20} color={like ? "red" : "white"} />
         </ActionButton>
       </ImageContainer>
-      <DetailsContainer>
-        <p className="location">{data.location}</p>
-        <TitlePriceContainer>
-          <h1>{data.title}</h1>
-          <h1>₱ {data.price}</h1>
-        </TitlePriceContainer>
-        <DescriptionContainer>{data.description}</DescriptionContainer>
-        <ReviewsContainer>
-          <Rate disabled defaultValue={data.rate} />
-          <p>{data.reviews} Reviews</p>
-        </ReviewsContainer>
-      </DetailsContainer>
+      <Link href={`/tours/${data.title}`}>
+        <DetailsContainer>
+          <p className="location">{data.location}</p>
+          <TitlePriceContainer>
+            <h1>{data.title}</h1>
+            <h1>₱ {data.price}</h1>
+          </TitlePriceContainer>
+          <DescriptionContainer>{data.description}</DescriptionContainer>
+          <ReviewsContainer>
+            <Rate disabled defaultValue={data.rate} />
+            <p>{data.reviews} Reviews</p>
+          </ReviewsContainer>
+        </DetailsContainer>
+      </Link>
     </CardContainer>
   );
 };
