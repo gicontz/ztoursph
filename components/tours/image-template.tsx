@@ -10,9 +10,29 @@ const ImageGridContainer = styled.div`
 const ImagesShow = styled.div`
   display: flex;
   flex-wrap: wrap;
+  gap: 0.5rem;
+
   > img {
     flex-grow: 1;
-    width: 33%;
+    width: 15rem;
+    height: 15rem;
+    cursor: pointer;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 200ms ease-in, box-shadow 200ms ease-in,
+      filter 200ms ease-in;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    @media screen and (max-width: 740px) {
+      width: 48%;
+    }
+
+    &:hover {
+      transform: scale(1.01) translate(-0.5%, -0.5%);
+      box-shadow: 0 4px 3px rgba(0, 0, 0, 0.5);
+      filter: brightness(1.1);
+    }
   }
 `;
 
@@ -39,7 +59,7 @@ const ImageTemplate: React.FC<ImageTemplateProps> = ({ data }) => {
       src={typeof e.src === "string" ? e.src : e.src.src}
       alt={e.alt}
       onClick={() => openBoxOnSlide(index)}
-      width={250}
+      width={1000}
       height={350}
       loading="lazy"
       className="cursor-pointer w-[250px] h-[350px] transition-transform 
