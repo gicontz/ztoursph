@@ -11,6 +11,7 @@ const TextHeader = styled.h1`
   width: 100%;
   font-family: "Source Serif Pro";
   font-size: 4rem;
+  font-weight: bold;
 `;
 
 const HeaderContainer = styled.div<{ bgImg: string }>`
@@ -27,9 +28,7 @@ const PageTitle:React.FC<Props> = ({
 }) => {
   return (
     <HeaderContainer bgImg={bgImage}>
-      <TextHeader className="text-white">
-        <strong>{title}</strong>
-      </TextHeader>
+      <TextHeader className="text-white">{title}</TextHeader>
     </HeaderContainer>
   )
 }
