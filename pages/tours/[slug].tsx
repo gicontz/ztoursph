@@ -1,4 +1,4 @@
-import { Row } from "@components/commons/common";
+import { FullWidth, Row } from "@components/commons/common";
 import styled from "@emotion/styled";
 import ImageTemplate from "@components/tours/image-template";
 import TourBookingForm from "@components/commons/tour-booking-form";
@@ -9,28 +9,6 @@ import Layout from "@components/pages/layout";
 import React from "react";
 import { TTourResponse } from "./types";
 import { getTourBySlug } from "@app/services/tours";
-
-const Panel = styled(Row)`
-  display: flex;
-  flex-direction: column;
-  font-size: 1.1rem;
-  gap: 0.5rem;
-  line-height: 1.7rem;
-  margin: 0 auto;
-  margin-bottom: 1rem;
-  width: 50rem;
-
-  h2 {
-    color: #23432c;
-    font-family: "Source_Serif_Pro";
-    font-size: 1.5rem;
-    font-weight: 900;
-    line-height: 2rem;
-  }
-  @media screen and (max-width: 740px) {
-    width: 90%;
-  }
-`;
 
 const PackageDetail = styled.div`
     width: 100%;
@@ -121,10 +99,10 @@ export default function Tours() {
                     </div>
                 }
             </FullWidth>
-            <Divider />
+            <StyledDivider />
             <Row className="!max-w-3xl">
                 <h4 className="font-bold text-2xl">Book This Tour</h4>
-                <TourBookingForm />
+                <TourBookingForm onSubmit={() => {}}/>
             </Row>
             <br />
         </Layout>
