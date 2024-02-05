@@ -8,6 +8,7 @@ import React from "react";
 import { TToursResponse } from "./types";
 import { getTours } from "@app/services/tours";
 import { truncate } from "fs/promises";
+import Loading from "@components/commons/loading";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -82,7 +83,6 @@ export default function Tours() {
     })();
   }, []);
 
-  console.log(state);
   return (
     <Layout>
       <Panel>
@@ -95,9 +95,13 @@ export default function Tours() {
           </p>
         </Description>
         <ListCardsContainer>
-          {state.data?.map((data, key) => (
-            <ListingCard key={key} data={data} />
-          ))}
+          {!state.isLoading && state.data ? (
+            state.data?.map((data, key) => (
+              <ListingCard key={key} data={data} />
+            ))
+          ) : (
+            <Loading />
+          )}
         </ListCardsContainer>
         <LoadMoreButton
           onClick={() => console.log("Load More Tours")}

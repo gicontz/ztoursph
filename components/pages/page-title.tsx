@@ -29,6 +29,7 @@ const HeaderContainer = styled.div<HeaderContainerProps>`
   position: relative;
   padding: 1rem 3rem;
   height: fit-content;
+  font-weight: bold;
 
   &::before {
     content: "";

@@ -9,6 +9,7 @@ import TourB from "@assets/images/tour_b.jpg";
 import TourC from "@assets/images/tour_c.jpg";
 import { getTours } from "@app/services/tours";
 import { TToursResponse } from "@app/pages/tours/types";
+import Loading from "@components/commons/loading";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -61,9 +62,11 @@ const MainPageListing = () => {
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       <ListCardsContainer>
-        {state.data?.map((data, key) => (
-          <ListingCard key={key} data={data} />
-        ))}
+        {!state.isLoading && state.data ? (
+          state.data?.map((data, key) => <ListingCard key={key} data={data} />)
+        ) : (
+          <Loading />
+        )}
       </ListCardsContainer>
     </Panel>
   );
