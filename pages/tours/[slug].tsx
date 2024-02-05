@@ -129,11 +129,7 @@ export default function Tours() {
         <Row>
           <PackageDetail>
             {parsedPackageDetails && !state.isLoading ? (
-              <div>
-                {parsedPackageDetails.childNodes.map((child, index) => (
-                  <div key={index}>{child.toString()}</div>
-                ))}
-              </div>
+              <div dangerouslySetInnerHTML={{ __html: parsedPackageDetails }} />
             ) : (
               <>
                 <Skeleton times={1} className="h-5" />
