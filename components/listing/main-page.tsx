@@ -54,6 +54,7 @@ const MainPageListing = () => {
       }
     })();
   }, []);
+
   return (
     <Panel>
       <HeaderSection>Adventure, guided wonders await.</HeaderSection>
@@ -63,7 +64,9 @@ const MainPageListing = () => {
       </Description>
       <ListCardsContainer>
         {!state.isLoading && state.data ? (
-          state.data?.map((data, key) => <ListingCard key={key} data={data} />)
+          state.data
+            ?.slice(0, 3)
+            .map((data, key) => <ListingCard key={key} data={data} />)
         ) : (
           <Loading />
         )}
