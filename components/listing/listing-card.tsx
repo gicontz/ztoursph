@@ -68,6 +68,7 @@ const DetailsContainer = styled.div`
 
 const TitlePriceContainer = styled.div`
   font-weight: bold;
+  font-size: 20px;
   display: flex;
   justify-content: space-between;
 `;
@@ -133,7 +134,7 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
           <Image
             src={data.tour_banner_image}
             alt="Scenic Forest"
-            loa
+            loading="lazy"
             layout="fill"
           />
         </Link>
@@ -147,7 +148,7 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
           {/*<------- */}
           <TitlePriceContainer>
             <h1>{data.tour_title}</h1>
-            <h1>₱ {data.price}</h1>
+            <h1 className="whitespace-nowrap">₱ {data.price}</h1>
           </TitlePriceContainer>
           <DescriptionContainer>{data.package_details}</DescriptionContainer>
           <ReviewsContainer>
