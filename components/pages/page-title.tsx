@@ -50,9 +50,7 @@ const HeaderContainer = styled.div<HeaderContainerProps>`
 const PageTitle: React.FC<Props> = ({ bgImage, title }) => {
   return (
     <HeaderContainer bgImg={bgImage}>
-      <strong>
-        <TextHeader className="text-white">{title}</TextHeader>
-      </strong>
+      <TextHeader className="text-white">{title}</TextHeader>
     </HeaderContainer>
   );
 };

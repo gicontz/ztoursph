@@ -61,12 +61,16 @@ const ImageTemplate: React.FC<ImageTemplateProps> = ({ data }) => {
       onClick={() => openBoxOnSlide(index)}
       width={1000}
       height={350}
+      loading="lazy"
+      className="cursor-pointer w-[250px] h-[350px] transition-transform 
+      ease-linear duration-200 delay-100 
+      hover:opacity-95 hover:transform hover:scale-105 hover:shadow-sm"
     />
   ));
 
   return (
     <ImageGridContainer>
-      <FsLightbox toggler={toggler} slide={slide} sources={src} />
+      <FsLightbox toggler={toggler} slide={slide} sources={src} type={'image'} />
       <ImagesShow>{contentImage}</ImagesShow>
     </ImageGridContainer>
   );

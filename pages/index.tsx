@@ -17,6 +17,7 @@ const Banner = styled(FullWidth)`
   background-repeat: no-repeat;
   background-position: center top;
   height: 500px;
+  padding-top: 100px;
   &::before {
     content: "";
     background-color: rgba(0, 0, 0, 0.3);
