@@ -85,10 +85,10 @@ export default function Tours() {
   const priceContent = state.data?.discount ? (
     <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
       <p className=" text-[1rem] line-through opacity-90">
-        ₱{state.data.price}
+        ₱ {state.data.price}
       </p>
       <p className="text-2xl ">
-        ₱{state.data.price - (state.data?.discount / 100) * state.data.price}
+        ₱ {state.data.price - (state.data?.discount / 100) * state.data.price}
       </p>
       <div className="text-xs px-1 bg-[rgb(35,67,44)] text-white">
         -{state.data.discount}%
