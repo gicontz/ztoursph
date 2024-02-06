@@ -5,7 +5,7 @@ import { Row } from "@components/commons/common";
 import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React from "react";
-import { TToursResponse } from "./types";
+import { TToursResponse } from "@app/modules/tours/types";
 import { getTours } from "@app/services/tours";
 import { truncate } from "fs/promises";
 import Loading from "@components/commons/loading";
@@ -76,9 +76,9 @@ export default function Tours() {
   React.useEffect(() => {
     (async () => {
       setState((s) => ({ ...s, isLoading: true }));
-      const { data } = await getTours();
-      if (data) {
-        setState({ data: Object.values(data), isLoading: false });
+      const res = await getTours();
+      if (res?.data) {
+        setState({ data: Object.values(res.data), isLoading: false });
       }
     })();
   }, []);

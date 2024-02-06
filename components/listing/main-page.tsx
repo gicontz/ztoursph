@@ -4,9 +4,6 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import ListingCard from "./listing-card";
-import TourA from "@assets/images/tour_a.jpg";
-import TourB from "@assets/images/tour_b.jpg";
-import TourC from "@assets/images/tour_c.jpg";
 import { getTours } from "@app/services/tours";
 import { TToursResponse } from "@app/pages/tours/types";
 import Loading from "@components/commons/loading";
@@ -48,9 +45,10 @@ const MainPageListing = () => {
   React.useEffect(() => {
     (async () => {
       setState((s) => ({ ...s, isLoading: true }));
-      const { data } = await getTours();
-      if (data) {
-        setState({ data: Object.values(data), isLoading: false });
+      const res = await getTours();
+      console.log(res);
+      if (res?.data) {
+        setState({ data: Object.values(res.data), isLoading: false });
       }
     })();
   }, []);

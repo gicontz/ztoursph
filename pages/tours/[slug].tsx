@@ -7,7 +7,7 @@ import { Divider } from "antd";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 import React from "react";
-import { TTourResponse } from "./types";
+import { TTourResponse } from "@app/modules/tours/types";
 import { getTourBySlug } from "@app/services/tours";
 import { parse } from "node-html-parser";
 import Skeleton from "@components/commons/skeleton";
