@@ -93,21 +93,22 @@ export default function Tours() {
             non sodales tellus nulla nec est.
           </p>
         </Description>
-        <ListCardsContainer>
-          {!state.isLoading && state.data ? (
-            state.data?.map((data, key) => (
-              <ListingCard key={key} data={data} />
-            ))
-          ) : (
-            <Loading />
-          )}
-        </ListCardsContainer>
-        {!state.isLoading && (
-          <LoadMoreButton
-            onClick={() => console.log("Load More Tours")}
-            type="primary">
-            Load More Tours
-          </LoadMoreButton>
+
+        {!state.isLoading && state.data ? (
+          <>
+            <ListCardsContainer>
+              {state.data?.map((data, key) => (
+                <ListingCard key={key} data={data} />
+              ))}
+            </ListCardsContainer>
+            <LoadMoreButton
+              onClick={() => console.log("Load More Tours")}
+              type="primary">
+              Load More Tours
+            </LoadMoreButton>
+          </>
+        ) : (
+          <Loading />
         )}
       </Panel>
     </Layout>
