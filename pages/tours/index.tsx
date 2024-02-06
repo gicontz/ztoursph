@@ -7,7 +7,6 @@ import Button from "@components/commons/button";
 import React from "react";
 import { TToursResponse } from "./types";
 import { getTours } from "@app/services/tours";
-import { truncate } from "fs/promises";
 import Loading from "@components/commons/loading";
 
 const ListCardsContainer = styled.div`
@@ -103,11 +102,13 @@ export default function Tours() {
             <Loading />
           )}
         </ListCardsContainer>
-        <LoadMoreButton
-          onClick={() => console.log("Load More Tours")}
-          type="primary">
-          Load More Tours
-        </LoadMoreButton>
+        {!state.isLoading && (
+          <LoadMoreButton
+            onClick={() => console.log("Load More Tours")}
+            type="primary">
+            Load More Tours
+          </LoadMoreButton>
+        )}
       </Panel>
     </Layout>
   );
