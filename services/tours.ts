@@ -1,4 +1,4 @@
-import { TTourResponse } from '@app/pages/tours/types';
+import { TTourResponse } from '@app/modules/tours/types';
 import { handleResponse } from '@app/utils/helpers';
 
 const getTours = () => {

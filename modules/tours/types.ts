@@ -7,4 +7,15 @@ export type TTourResponse = {
     price: number;
     discount: number;
     gallery: string[];
-}
+  };
+  
+  export type TToursResponse = {
+    tour_slug: string;
+    tour_title: string;
+    package_details: string;
+    price: number;
+    discount: number;
+    tour_banner_image: string;
+    gallery: [];
+  };
+  
