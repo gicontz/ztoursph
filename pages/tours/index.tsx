@@ -108,12 +108,6 @@ export default function Tours() {
           type="primary">
           Load More Tours
         </LoadMoreButton>
-        {/* <ListCardsContainer>
-          {state.data.map((data, key) => (
-            <ListingCard key={key} data={data} />
-          ))}
-        </ListCardsContainer>
-        */}
       </Panel>
     </Layout>
   );

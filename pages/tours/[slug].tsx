@@ -9,14 +9,14 @@ import Layout from "@components/pages/layout";
 import React from "react";
 import { TTourResponse } from "./types";
 import { getTourBySlug } from "@app/services/tours";
-import { parse } from "node-html-parser";
+import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
 
 const Panel = styled(Row)`
   display: flex;
   flex-direction: column;
   font-size: 1.1rem;
-  gap: 0.5rem;
+  gap: 1rem;
   line-height: 1.7rem;
   margin: 0 auto;
   margin-bottom: 1rem;
@@ -27,7 +27,7 @@ const Panel = styled(Row)`
     font-family: "Source_Serif_Pro";
     font-size: 1.5rem;
     font-weight: 900;
-    line-height: 2rem;
+    line-height: 1rem;
   }
   @media screen and (max-width: 740px) {
     width: 90%;
@@ -82,9 +82,16 @@ export default function Tours() {
       }
     })();
   }, [slug]);
-  const parsedPackageDetails = state.data
-    ? parse(state.data.package_details)
-    : null;
+
+  const parsedPackageDetails = state.data ? (
+    parse(state.data.package_details)
+  ) : (
+    <>
+      <Skeleton times={1} className="h-5" />
+      <Skeleton times={3} className="h-3 w-11/12" />
+      <Skeleton times={4} className="h-4 w-9/12" />
+    </>
+  );
 
   const priceContent =
     state.data?.discount && !state.isLoading ? (
@@ -129,7 +136,7 @@ export default function Tours() {
         <Row>
           <PackageDetail>
             {parsedPackageDetails && !state.isLoading ? (
-              <div dangerouslySetInnerHTML={{ __html: parsedPackageDetails }} />
+              parsedPackageDetails
             ) : (
               <>
                 <Skeleton times={1} className="h-5" />
@@ -139,8 +146,8 @@ export default function Tours() {
             )}
           </PackageDetail>
         </Row>
-        <Row>
-          <h2 className="mb-1">Gallery</h2>
+        <Row className="flex flex-col gap-[1rem]">
+          <h2>Gallery</h2>
           {state.data && !state.isLoading ? (
             <ImageTemplate
               data={state.data.gallery.map((src, i) => ({
