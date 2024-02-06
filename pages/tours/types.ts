@@ -15,6 +15,9 @@ export type TToursResponse = {
   package_details: string;
   price: number;
   discount: number;
+  numberReviews: number;
+  reviews: number;
+  location: string;
   tour_banner_image: string;
   gallery: [];
 };
