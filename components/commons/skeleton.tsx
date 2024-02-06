@@ -9,7 +9,7 @@ const Skeleton = ({ times, className }) => {
       return (
         <div
           key={index}
-          className={` bg-gray-200 dark:bg-gray-700 w-full mt-2 ${className}`}
+          className={` bg-gray-200 dark:bg-gray-700 w-full rounded mt-2 ${className}`}
         />
       );
     });
