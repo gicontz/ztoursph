@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import ListingCard from "./listing-card";
 import { getTours } from "@app/services/tours";
-import { TToursResponse } from "@app/pages/tours/types";
+import { TToursResponse } from "@app/modules/tours/types";
 import Loading from "@components/commons/loading";
 
 const ListCardsContainer = styled.div`
