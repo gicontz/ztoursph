@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Divider } from "antd";
 
 export const Row = styled.div`
   max-width: 1444px;
@@ -28,4 +29,9 @@ export const PanelSection = styled.div`
   @media (max-width: 480px) {
     padding: 40px 1rem;
   }
+`;
+
+export const StyledDivider = styled(Divider)`
+  border-top: 1px solid #23432c;
+  margin: 10px 0;
 `;

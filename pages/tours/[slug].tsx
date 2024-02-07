@@ -1,9 +1,8 @@
-import { FullWidth, Row } from "@components/commons/common";
+import { Row, StyledDivider } from "@components/commons/common";
 import styled from "@emotion/styled";
 import ImageTemplate from "@components/tours/image-template";
 import TourBookingForm from "@components/commons/tour-booking-form";
 import { useRouter } from "next/router";
-import { Divider } from "antd";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 import React from "react";
@@ -55,12 +54,6 @@ const PackageDetail = styled.div`
     margin-right: 10px;
   }
 `;
-
-const StyledDivider = styled(Divider)`
-  border-top: 1px solid #23432c;
-  margin: 10px 0;
-`;
-
 export default function Tours() {
   const router = useRouter();
   const slug = router.query.slug;
