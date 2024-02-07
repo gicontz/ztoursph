@@ -21,6 +21,7 @@
     "fslightbox-react": "^1.7.6",
     "next": "13.4.7",
     "next-auth": "^4.24.5",
+    "node-html-parser": "^6.1.12",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",

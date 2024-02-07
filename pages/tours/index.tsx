@@ -1,12 +1,14 @@
-import TestImageA from "@assets/images/tour_a.jpg";
-import TestImageB from "@assets/images/tour_b.jpg";
-import TestImageC from "@assets/images/tour_c.jpg";
 import styled from "@emotion/styled";
 import HeaderSection from "@components/commons/header-section";
 import ListingCard from "@components/listing/listing-card";
-import { PanelSection, Row } from "@components/commons/common";
+import { Row } from "@components/commons/common";
 import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
+import React from "react";
+import { TToursResponse } from "@app/modules/tours/types";
+import { getTours } from "@app/services/tours";
+import { truncate } from "fs/promises";
+import Loading from "@components/commons/loading";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -66,71 +68,21 @@ const LoadMoreButton = styled(Button)`
 `;
 
 export default function Tours() {
-  const data = [
-    {
-      location: `Tour A`,
-      title: "El Nido Island Tour A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 84,
-      imageUrl: TestImageA,
-    },
-    {
-      location: `Tour B`,
-      title: "El Nido Island Tour B",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 87,
-      imageUrl: TestImageB,
-    },
-    {
-      location: `Tour C`,
-      title: "El Nido Island Tour C",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 97,
-      imageUrl: TestImageC,
-    },
-    {
-      location: `Tour D`,
-      title: "Cebu Tour D",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 84,
-      imageUrl:
-        "https://i0.wp.com/wanderlustyle.com/wp-content/uploads/2017/12/boy-swims-w-whale-shark.jpg?fit=1600%2C970&ssl=1",
-    },
-    {
-      location: `Tour E`,
-      title: "Cebu Tour E",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 87,
-      imageUrl:
-        "https://www.islandtrektours.com/wp-content/uploads/2023/09/whale-shark-watching-from-the-boat-in-Oslob-cebu.jpg",
-    },
-    {
-      location: `Tour F`,
-      title: "Cebu Tour F",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 97,
-      imageUrl:
-        "https://myhouse.ph/wp-content/uploads/2022/12/mactan-banner.jpg-1170x0-c-center.webp",
-    },
-  ];
+  const [state, setState] = React.useState<
+    { data?: TToursResponse[] | undefined } & { isLoading: boolean }
+  >({
+    isLoading: true,
+  });
+  React.useEffect(() => {
+    (async () => {
+      setState((s) => ({ ...s, isLoading: true }));
+      const res = await getTours();
+      if (res?.data) {
+        setState({ data: Object.values(res.data), isLoading: false });
+      }
+    })();
+  }, []);
+
   return (
     <Layout>
       <Panel>
@@ -143,15 +95,25 @@ export default function Tours() {
           </p>
         </Description>
         <ListCardsContainer>
-          {data.map((data, key) => (
-            <ListingCard key={key} data={data} />
-          ))}
+          {!state.isLoading && state.data ? (
+            state.data?.map((data, key) => (
+              <ListingCard key={key} data={data} />
+            ))
+          ) : (
+            <Loading />
+          )}
         </ListCardsContainer>
         <LoadMoreButton
           onClick={() => console.log("Load More Tours")}
           type="primary">
           Load More Tours
         </LoadMoreButton>
+        {/* <ListCardsContainer>
+          {state.data.map((data, key) => (
+            <ListingCard key={key} data={data} />
+          ))}
+        </ListCardsContainer>
+        */}
       </Panel>
     </Layout>
   );
