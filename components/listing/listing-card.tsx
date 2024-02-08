@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
 import Link from "next/link";
-import { TToursResponse } from "@app/pages/tours/types";
+import { TToursResponse } from "@app/modules/tours/types";
 
 const CardContainer = styled.div`
   position: relative;
