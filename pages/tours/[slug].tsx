@@ -6,10 +6,9 @@ import { useRouter } from "next/router";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
 import React from "react";
-import { TTourResponse } from "@app/modules/tours/types";
-import { getTourBySlug } from "@app/services/tours";
 import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
+import { getTourBySlug, useTours } from "@app/modules/tours/actions";
 
 const Panel = styled(Row)`
   display: flex;
@@ -57,27 +56,14 @@ const PackageDetail = styled.div`
 export default function Tours() {
   const router = useRouter();
   const slug = router.query.slug;
-  const [state, setState] = React.useState<
-    { data?: TTourResponse } & { isLoading: boolean }
-  >({
-    isLoading: true,
-  });
+  const [store, dispatch] = useTours();
 
   React.useEffect(() => {
-    (async () => {
-      setState((s) => ({ ...s, isLoading: true }));
-      if (slug) {
-        const res = await getTourBySlug(slug);
-        setState({
-          data: { ...res },
-          isLoading: false,
-        });
-      }
-    })();
+    if (typeof slug === 'string') getTourBySlug(dispatch, slug);
   }, [slug]);
 
-  const parsedPackageDetails = state.data ? (
-    parse(state.data.package_details)
+  const parsedPackageDetails = store.selectedTour ? (
+    parse(store.selectedTour.package_details)
   ) : (
     <>
       <Skeleton times={1} className="h-5" />
@@ -87,21 +73,21 @@ export default function Tours() {
   );
 
   const priceContent =
-    state.data?.discount && !state.isLoading ? (
+    store.selectedTour?.discount && !store.isLoading ? (
       <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
         <p className=" text-[1rem] line-through opacity-90">
-          ₱ {state.data.price}
+          ₱ {store.selectedTour.price}
         </p>
         <p className="text-2xl ">
-          ₱ {state.data.price - (state.data?.discount / 100) * state.data.price}
+          ₱ {store.selectedTour.price - (store.selectedTour?.discount / 100) * store.selectedTour.price}
         </p>
         <div className="text-xs px-1 bg-[rgb(35,67,44)] text-white">
-          -{state.data.discount}%
+          -{store.selectedTour.discount}%
         </div>
       </div>
-    ) : state.data?.price && !state.isLoading ? (
+    ) : store.selectedTour?.price && !store.isLoading ? (
       <p className="text-2xl px-2 py-2 font-semibold w-full bg-gray-100">
-        ₱{state.data?.price}
+        ₱{store.selectedTour?.price}
       </p>
     ) : (
       <Skeleton times={1} className="h-[2.5rem]" />
@@ -110,10 +96,10 @@ export default function Tours() {
   return (
     <Layout>
       <div>
-        {state.data && !state.isLoading ? (
+        {store.selectedTour && !store.isLoading ? (
           <PageTitle
-            title={state.data.tour_title}
-            bgImage={state.data.tour_banner_image}
+            title={store.selectedTour.tour_title}
+            bgImage={store.selectedTour.tour_banner_image}
           />
         ) : (
           <Skeleton times={1} className="h-[350px]" />
@@ -128,7 +114,7 @@ export default function Tours() {
         </Row>
         <Row>
           <PackageDetail>
-            {parsedPackageDetails && !state.isLoading ? (
+            {parsedPackageDetails && !store.isLoading ? (
               parsedPackageDetails
             ) : (
               <>
@@ -141,9 +127,9 @@ export default function Tours() {
         </Row>
         <Row className="flex flex-col gap-[1rem]">
           <h2>Gallery</h2>
-          {state.data && !state.isLoading ? (
+          {store.selectedTour && !store.isLoading ? (
             <ImageTemplate
-              data={state.data.gallery.map((src, i) => ({
+              data={store.selectedTour.gallery.map((src, i) => ({
                 src,
                 alt: `${slug}-image-${i + 1}`,
               }))}

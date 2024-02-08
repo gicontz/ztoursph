@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
 import Link from "next/link";
+import parse from 'html-react-parser';
 import { TToursResponse } from "@app/modules/tours/types";
 
 const CardContainer = styled.div`
@@ -132,7 +133,7 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
       <ImageContainer>
         <Link href={`/tours/${data.tour_slug}`}>
           <Image
-            src={data.tour_banner_image}
+            src={data.thumbnail}
             alt="Scenic Forest"
             loading="lazy"
             layout="fill"
@@ -149,7 +150,7 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
             <h1>{data.tour_title}</h1>
             <h1 className="whitespace-nowrap">₱ {data.price}</h1>
           </TitlePriceContainer>
-          <DescriptionContainer>{data.package_details}</DescriptionContainer>
+          <DescriptionContainer>{parse(data.package_details)}</DescriptionContainer>
           <ReviewsContainer>
             <Rate disabled defaultValue={data.reviews} />
             <p>{data.numberReviews} Reviews</p>

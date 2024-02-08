@@ -6,8 +6,8 @@ import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React from "react";
 import { TToursResponse } from "@app/modules/tours/types";
-import { getTours } from "@app/services/tours";
 import Loading from "@components/commons/loading";
+import { getTours, useTours } from "@app/modules/tours/actions";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -67,19 +67,10 @@ const LoadMoreButton = styled(Button)`
 `;
 
 export default function Tours() {
-  const [state, setState] = React.useState<
-    { data?: TToursResponse[] | undefined } & { isLoading: boolean }
-  >({
-    isLoading: true,
-  });
+  const [store, dispatch] = useTours();
+
   React.useEffect(() => {
-    (async () => {
-      setState((s) => ({ ...s, isLoading: true }));
-      const res = await getTours();
-      if (res?.data) {
-        setState({ data: Object.values(res.data), isLoading: false });
-      }
-    })();
+    getTours(dispatch, { pageNumber: 1, pageSize: 9 });
   }, []);
 
   return (
@@ -94,10 +85,10 @@ export default function Tours() {
           </p>
         </Description>
 
-        {!state.isLoading && state.data ? (
+        {!store.isLoading && store.tours ? (
           <>
             <ListCardsContainer>
-              {state.data?.map((data, key) => (
+              {store.tours?.map((data, key) => (
                 <ListingCard key={key} data={data} />
               ))}
             </ListCardsContainer>
