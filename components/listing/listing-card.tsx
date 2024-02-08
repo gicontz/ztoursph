@@ -144,17 +144,15 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
       </ImageContainer>
       <Link href={`/tours/${data.tour_slug}`}>
         <DetailsContainer>
-          <p className="location">{"none"}</p>
-          {/*<------- */}
+          <p className="location">{data.location}</p>
           <TitlePriceContainer>
             <h1>{data.tour_title}</h1>
             <h1 className="whitespace-nowrap">₱ {data.price}</h1>
           </TitlePriceContainer>
           <DescriptionContainer>{data.package_details}</DescriptionContainer>
           <ReviewsContainer>
-            <Rate disabled defaultValue={5} />
-            {/*<------- */}
-            <p>{54} Reviews</p> {/*<------- */}
+            <Rate disabled defaultValue={data.reviews} />
+            <p>{data.numberReviews} Reviews</p>
           </ReviewsContainer>
         </DetailsContainer>
       </Link>

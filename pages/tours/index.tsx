@@ -7,7 +7,6 @@ import Button from "@components/commons/button";
 import React from "react";
 import { TToursResponse } from "@app/modules/tours/types";
 import { getTours } from "@app/services/tours";
-import { truncate } from "fs/promises";
 import Loading from "@components/commons/loading";
 
 const ListCardsContainer = styled.div`
@@ -94,26 +93,23 @@ export default function Tours() {
             non sodales tellus nulla nec est.
           </p>
         </Description>
-        <ListCardsContainer>
-          {!state.isLoading && state.data ? (
-            state.data?.map((data, key) => (
-              <ListingCard key={key} data={data} />
-            ))
-          ) : (
-            <Loading />
-          )}
-        </ListCardsContainer>
-        <LoadMoreButton
-          onClick={() => console.log("Load More Tours")}
-          type="primary">
-          Load More Tours
-        </LoadMoreButton>
-        {/* <ListCardsContainer>
-          {state.data.map((data, key) => (
-            <ListingCard key={key} data={data} />
-          ))}
-        </ListCardsContainer>
-        */}
+
+        {!state.isLoading && state.data ? (
+          <>
+            <ListCardsContainer>
+              {state.data?.map((data, key) => (
+                <ListingCard key={key} data={data} />
+              ))}
+            </ListCardsContainer>
+            <LoadMoreButton
+              onClick={() => console.log("Load More Tours")}
+              type="primary">
+              Load More Tours
+            </LoadMoreButton>
+          </>
+        ) : (
+          <Loading />
+        )}
       </Panel>
     </Layout>
   );
