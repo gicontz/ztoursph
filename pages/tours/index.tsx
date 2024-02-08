@@ -77,7 +77,13 @@ export default function Tours() {
       setState((s) => ({ ...s, isLoading: true }));
       const res = await getTours();
       if (res?.data) {
-        setState({ data: Object.values(res.data), isLoading: false });
+        setState({
+          data: (Object.values(res.data) as any[]).map((d) => ({
+            ...d,
+            tour_banner_image: `/tours/tour-${d.id}/thumbnail.png`,
+          })),
+          isLoading: false,
+        });
       }
     })();
   }, []);

@@ -127,6 +127,7 @@ interface ListingCard {
 
 const ListingCard: React.FC<ListingCard> = ({ data }) => {
   const [like, setLike] = useState(false);
+
   return (
     <CardContainer>
       <ImageContainer>
