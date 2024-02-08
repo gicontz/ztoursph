@@ -1,4 +1,5 @@
 import Dropdown, { DropdownProps } from "@components/commons/dropdown";
+import { blurImageData } from "@constants/image";
 import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import Image from "next/image";
@@ -43,7 +44,7 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
   return (
     <Tooltip title={summary} placement="right">
       <PanelSearch>
-        <Image src={data.imageUrl} alt={data.title} />
+        <Image src={data.imageUrl} alt={data.title} blurDataURL={blurImageData} />
         <p>{data.title}</p>
       </PanelSearch>
     </Tooltip>

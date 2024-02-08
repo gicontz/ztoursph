@@ -5,6 +5,7 @@ import { Rate } from "antd";
 import Link from "next/link";
 import parse from 'html-react-parser';
 import { TToursResponse } from "@app/modules/tours/types";
+import { blurImageData } from "@constants/image";
 
 const CardContainer = styled.div`
   position: relative;
@@ -135,7 +136,7 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
           <Image
             src={data.thumbnail}
             alt="Scenic Forest"
-            loading="lazy"
+            blurDataURL={blurImageData}
             layout="fill"
           />
         </Link>

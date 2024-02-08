@@ -2,6 +2,7 @@ import FsLightbox from "fslightbox-react";
 import { useState } from "react";
 import Image from "next/image";
 import styled from "@emotion/styled";
+import { blurImageData } from "@constants/image";
 
 const ImageGridContainer = styled.div`
   width: 100%;
@@ -56,11 +57,12 @@ const ImageTemplate: React.FC<ImageTemplateProps> = ({ data }) => {
   const contentImage = data.map((e, index) => (
     <Image
       key={index}
-      src={typeof e.src === "string" ? e.src : e.src.src}
+      src={typeof e?.src === "string" ? e.src : e.src.src}
       alt={e.alt}
       onClick={() => openBoxOnSlide(index)}
       width={500}
       height={350}
+      blurDataURL={blurImageData}
       loading="lazy"
     />
   ));

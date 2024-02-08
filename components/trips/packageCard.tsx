@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React, { useState } from "react";
 import Image from "next/image";
 import IncreaseCount from "./increaseCount";
+import { blurImageData } from "@constants/image";
 
 const Rows = styled.div`
   display: grid;
@@ -78,6 +79,7 @@ const PackageCard = ({
           alt={title}
           width={1000}
           height={250}
+          blurDataURL={blurImageData}
         />
         <div className="flex flex-col justify-between package">
           <h2>{title}</h2>
