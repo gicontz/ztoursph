@@ -4,9 +4,9 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import ListingCard from "./listing-card";
-import { getTours } from "@app/services/tours";
 import { TToursResponse } from "@app/modules/tours/types";
 import Loading from "@components/commons/loading";
+import { getTours, useTours } from "@app/modules/tours/actions";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -37,20 +37,10 @@ const Description = styled.div`
 `;
 
 const MainPageListing = () => {
-  const [state, setState] = React.useState<
-    { data?: TToursResponse[] | undefined } & { isLoading: boolean }
-  >({
-    isLoading: true,
-  });
+  const [store, dispatch] = useTours();
+
   React.useEffect(() => {
-    (async () => {
-      setState((s) => ({ ...s, isLoading: true }));
-      const res = await getTours();
-      console.log(res);
-      if (res?.data) {
-        setState({ data: Object.values(res.data), isLoading: false });
-      }
-    })();
+    getTours(dispatch, { pageNumber: 1, pageSize: 3 });
   }, []);
 
   return (
@@ -61,8 +51,8 @@ const MainPageListing = () => {
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       <ListCardsContainer>
-        {!state.isLoading && state.data ? (
-          state.data
+        {!store.isLoading && store.tours ? (
+          store.tours
             ?.slice(0, 3)
             .map((data, key) => <ListingCard key={key} data={data} />)
         ) : (
