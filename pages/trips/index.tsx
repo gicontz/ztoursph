@@ -9,12 +9,6 @@ import TourC from "@assets/images/tour_c.jpg";
 import styled from "@emotion/styled";
 import TripsTable from "@components/trips/tripsTable";
 
-const DevGrid = styled.div`
-  * {
-    // border: blue 1px solid;
-  }
-`;
-
 const Panel = styled(Row)`
   margin: 2rem auto;
   width: 100%;
@@ -50,15 +44,11 @@ export default function Trips() {
     },
   ];
   return (
-    <DevGrid>
-      <Layout>
-        <div className="mt-[6rem]">
-          <PageTitle title="My Trips" bgImage={BannerImage} />{" "}
-        </div>
-        <Panel>
-          <TripsTable data={PackageDetail} />
-        </Panel>
-      </Layout>
-    </DevGrid>
+    <Layout>
+    <PageTitle title="My Trips" bgImage={BannerImage} />
+      <Panel>
+        <TripsTable data={PackageDetail} />
+      </Panel>
+    </Layout>
   );
 }

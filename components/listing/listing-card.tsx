@@ -3,6 +3,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
 import Link from "next/link";
+import parse from 'html-react-parser';
+import { TToursResponse } from "@app/modules/tours/types";
 
 const CardContainer = styled.div`
   position: relative;
@@ -67,6 +69,7 @@ const DetailsContainer = styled.div`
 
 const TitlePriceContainer = styled.div`
   font-weight: bold;
+  font-size: 20px;
   display: flex;
   justify-content: space-between;
 `;
@@ -120,15 +123,7 @@ const SVGHeart = ({ width, height, color }) => (
 );
 
 interface ListingCard {
-  data: {
-    location: string;
-    title: string;
-    description: string;
-    price: number;
-    rate: number;
-    reviews: number;
-    imageUrl: React.ComponentProps<typeof Image>["src"];
-  };
+  data: TToursResponse;
 }
 
 const ListingCard: React.FC<ListingCard> = ({ data }) => {
@@ -136,24 +131,29 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
   return (
     <CardContainer>
       <ImageContainer>
-        <Link href={`/tours/${data.title}`}>
-          <Image src={data.imageUrl} alt="Scenic Forest" layout="fill" />
+        <Link href={`/tours/${data.tour_slug}`}>
+          <Image
+            src={data.thumbnail}
+            alt="Scenic Forest"
+            loading="lazy"
+            layout="fill"
+          />
         </Link>
         <ActionButton onClick={() => setLike(!like)}>
           <SVGHeart width={20} height={20} color={like ? "red" : "white"} />
         </ActionButton>
       </ImageContainer>
-      <Link href={`/tours/${data.title}`}>
+      <Link href={`/tours/${data.tour_slug}`}>
         <DetailsContainer>
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
-            <h1>{data.title}</h1>
-            <h1>₱ {data.price}</h1>
+            <h1>{data.tour_title}</h1>
+            <h1 className="whitespace-nowrap">₱ {data.price}</h1>
           </TitlePriceContainer>
-          <DescriptionContainer>{data.description}</DescriptionContainer>
+          <DescriptionContainer>{parse(data.package_details)}</DescriptionContainer>
           <ReviewsContainer>
-            <Rate disabled defaultValue={data.rate} />
-            <p>{data.reviews} Reviews</p>
+            <Rate disabled defaultValue={data.reviews} />
+            <p>{data.numberReviews} Reviews</p>
           </ReviewsContainer>
         </DetailsContainer>
       </Link>

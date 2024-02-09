@@ -34,6 +34,7 @@ const HeaderContainer = styled.div<HeaderContainerProps>`
   position: relative;
   padding: 1rem 3rem;
   height: fit-content;
+  font-weight: bold;
 
   &::before {
     content: "";
@@ -55,11 +56,7 @@ const HeaderContainer = styled.div<HeaderContainerProps>`
 const PageTitle: React.FC<Props> = ({ bgImage, title }) => {
   return (
     <HeaderContainer bgImg={bgImage}>
-      <strong>
-        <TextHeader className={`text-white ${SourceSans.className} `}>
-          {title}
-        </TextHeader>
-      </strong>
+      <TextHeader className={`text-white ${SourceSans.className}`}>{title}</TextHeader>
     </HeaderContainer>
   );
 };
