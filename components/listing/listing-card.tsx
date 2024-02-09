@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
 import Link from "next/link";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import { TToursResponse } from "@app/modules/tours/types";
 import { blurImageData } from "@constants/image";
 
@@ -73,6 +73,9 @@ const TitlePriceContainer = styled.div`
   font-size: 20px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 800px) {
+    font-size: 15px;
+  }
 `;
 
 const ReviewsContainer = styled.div`
@@ -151,7 +154,9 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
             <h1>{data.tour_title}</h1>
             <h1 className="whitespace-nowrap">₱ {data.price}</h1>
           </TitlePriceContainer>
-          <DescriptionContainer>{parse(data.package_details)}</DescriptionContainer>
+          <DescriptionContainer>
+            {parse(data.package_details)}
+          </DescriptionContainer>
           <ReviewsContainer>
             <Rate disabled defaultValue={data.reviews} />
             <p>{data.numberReviews} Reviews</p>
