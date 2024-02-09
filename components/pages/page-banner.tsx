@@ -29,6 +29,7 @@ const TextDescription = styled.h2`
 `;
 
 const Panel = styled.div<{ bannerImage: string | { src: string } }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: fit-content;
@@ -40,11 +41,23 @@ const Panel = styled.div<{ bannerImage: string | { src: string } }>`
       rgba(12, 16, 17, 0.1),
       rgba(0, 0, 0, 0)
     ),
-    url(${({ bannerImage }) =>
-      typeof bannerImage === "string" ? bannerImage : bannerImage.src});
+    ${({ bannerImage }) =>
+      typeof bannerImage === "string"
+        ? `url(${bannerImage})`
+        : `url(${bannerImage.src})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  transition: background-color 0.3s ease; /* Added transition for background-color */
+
+  &:hover {
+    background-color: rgba(
+      255,
+      255,
+      255,
+      0.1
+    ); /* Change the background color on hover */
+  }
 
   @media screen and (max-width: 700px) {
     padding: 3rem;
