@@ -2,8 +2,8 @@ import { PanelSection } from "@components/commons/common";
 import {
   MapIcon,
   EmailIcon,
-  FacebookIconDark,
-  InstagramIconDark,
+  FacebookDarkIcon,
+  InstagramDarkIcon,
 } from "@components/commons/icons";
 
 import Layout from "@components/pages/layout";
@@ -117,14 +117,14 @@ const Contact = () => {
               <ul>
                 <li>
                   <TextWithIcon
-                    icon={<FacebookIconDark boxSize={5} />}
+                    icon={<FacebookDarkIcon boxSize={5} />}
                     text={"ZTours.Ph"}
                     link="https://www.facebook.com/ZTours.Ph"
                   />
                 </li>
                 <li>
                   <TextWithIcon
-                    icon={<InstagramIconDark boxSize={5} />}
+                    icon={<InstagramDarkIcon boxSize={5} />}
                     text={"ZTours"}
                   />
                 </li>
