@@ -140,7 +140,7 @@ export default function Tours() {
                 {[...Array(9)].map((v, i) => (
                   <svg
                     key={`${slug}-skeleton-img-${i}`}
-                    className="mt-1 w-1/3 h-[350px] text-gray-200 dark:text-gray-600"
+                    className="mt-1 w-1/3 px-1 h-[350px] text-gray-200 dark:text-gray-600"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
