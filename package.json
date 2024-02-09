@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@types/fslightbox-react": "^1.7.7",
+    "@types/google-map-react": "^2.1.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
