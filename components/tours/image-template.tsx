@@ -59,14 +59,20 @@ const ImageTemplate: React.FC<ImageTemplateProps> = ({ data }) => {
       src={typeof e.src === "string" ? e.src : e.src.src}
       alt={e.alt}
       onClick={() => openBoxOnSlide(index)}
-      width={1000}
+      width={500}
       height={350}
+      loading="lazy"
     />
   ));
 
   return (
     <ImageGridContainer>
-      <FsLightbox toggler={toggler} slide={slide} sources={src} />
+      <FsLightbox
+        toggler={toggler}
+        slide={slide}
+        sources={src}
+        type={"image"}
+      />
       <ImagesShow>{contentImage}</ImagesShow>
     </ImageGridContainer>
   );

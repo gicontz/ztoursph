@@ -4,9 +4,9 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import ListingCard from "./listing-card";
-import TourA from "@assets/images/tour_a.jpg";
-import TourB from "@assets/images/tour_b.jpg";
-import TourC from "@assets/images/tour_c.jpg";
+import { TToursResponse } from "@app/modules/tours/types";
+import Loading from "@components/commons/loading";
+import { getTours, useTours } from "@app/modules/tours/actions";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -37,38 +37,11 @@ const Description = styled.div`
 `;
 
 const MainPageListing = () => {
-  const data = [
-    {
-      location: `Tour A`,
-      title: "El Nido Island Tour A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 84,
-      imageUrl: TourA,
-    },
-    {
-      location: `Tour B`,
-      title: "El Nido Island Tour B",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 87,
-      imageUrl: TourB,
-    },
-    {
-      location: `Tour C`,
-      title: "El Nido Island Tour C",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eu aliquam ligula. Pellentesque ut nunc consequat, dapibus nisi vitae, euismod velit. Pellentesque sit amet enim elit.",
-      price: 1000,
-      rate: 5,
-      reviews: 97,
-      imageUrl: TourC,
-    },
-  ];
+  const [store, dispatch] = useTours();
+
+  React.useEffect(() => {
+    getTours(dispatch, { pageNumber: 1, pageSize: 3 });
+  }, []);
 
   return (
     <Panel>
@@ -78,9 +51,13 @@ const MainPageListing = () => {
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       <ListCardsContainer>
-        {data.map((data, key) => (
-          <ListingCard key={key} data={data} />
-        ))}
+        {!store.isLoading && store.tours ? (
+          store.tours
+            ?.slice(0, 3)
+            .map((data, key) => <ListingCard key={key} data={data} />)
+        ) : (
+          <Loading />
+        )}
       </ListCardsContainer>
     </Panel>
   );
