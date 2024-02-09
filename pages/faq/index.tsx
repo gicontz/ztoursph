@@ -17,7 +17,6 @@ const Panel = styled.div`
   * {
     // border: 1px solid blue;
   }
-  margin-top: 6rem;
   display: flex;
   flex-direction: column;
 `;
