@@ -4,7 +4,7 @@ import ListingCard from "@components/listing/listing-card";
 import { Row } from "@components/commons/common";
 import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
-import React from "react";
+import React, { useState } from "react";
 import { TToursResponse } from "@app/modules/tours/types";
 import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
@@ -18,19 +18,6 @@ const ListCardsContainer = styled.div`
   margin: auto;
   width: 100%;
   @media (max-width: 1085px) {
-    width: 90%;
-  }
-`;
-
-const Panel = styled(Row)`
-  display: flex;
-  width: 67rem;
-  margin: auto;
-  margin-bottom: 1rem;
-  flex-direction: column;
-  gap: 10px;
-  @media (max-width: 1000px) {
-    font-size: 0.6rem;
     width: 90%;
   }
 `;
@@ -66,16 +53,35 @@ const LoadMoreButton = styled(Button)`
 `;
 
 export default function Tours() {
+  const pageSize = 9;
+  const [state, setState] = useState({
+    pageNumber: 1,
+    totalItems: 0,
+  });
   const [store, dispatch] = useTours();
 
   React.useEffect(() => {
-    getTours(dispatch, { pageNumber: 1, pageSize: 9 });
+    const { pageNumber } = state;
+    console.log('get')
+    getTours(dispatch, { pageNumber, pageSize });
   }, []);
 
+  const handleLoadMore = () => {
+    if (store.totalRecords > state.totalItems) {
+      const { pageNumber } = state;
+      getTours(dispatch, { pageNumber: pageNumber + 1, pageSize });
+      setState(s => ({ ...s, pageNumber: s.pageNumber + 1, totalItems: s.totalItems + pageSize }));
+    }
+  }
+
+  console.log(store)
+
   return (
-    <Layout>
-      <Panel>
+    <Layout contained>
+      <Row className="!mt-10">
         <HeaderSection>Our Tour Collection</HeaderSection>
+      </Row>
+      <Row className="!mt-5 !mb-10">
         <Description>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
@@ -83,24 +89,29 @@ export default function Tours() {
             non sodales tellus nulla nec est.
           </p>
         </Description>
+      </Row>
 
-        {!store.isLoading && store?.tours.length !== 0 && store.tours ? (
+      <Row>
+        {store?.tours.length !== 0 && store.tours && (
           <>
             <ListCardsContainer>
               {store.tours?.map((data, key) => (
                 <ListingCard key={key} data={data} />
               ))}
             </ListCardsContainer>
+          </>
+        )}
+      </Row>
+      <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
+        { store.isLoading && <Loading /> }
+          { (store.tours.length > 0 && store.tours.length !== store.totalRecords) && 
             <LoadMoreButton
-              onClick={() => console.log("Load More Tours")}
+              onClick={handleLoadMore}
               type="primary">
               Load More Tours
             </LoadMoreButton>
-          </>
-        ) : (
-          <Loading />
-        )}
-      </Panel>
+          }
+      </Row>
     </Layout>
   );
 }

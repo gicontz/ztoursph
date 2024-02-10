@@ -12,7 +12,7 @@ export const tours  = (state: ToursState, action: ToursTypes): ToursState => {
             return {
                 ...state,
                 isLoading: false,
-                tours: [...action.payload!.records],
+                tours: [...state.tours, ...action.payload!.records],
                 totalRecords: action.payload!.totalRecords,
             }
         }

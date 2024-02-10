@@ -112,6 +112,16 @@ const DescriptionContainer = styled.h1`
   }
 `;
 
+const TourTitle = styled.h1`
+  overflow: hidden;
+  max-width: 180px;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
+
 const SVGHeart = ({ width, height, color }) => (
   <svg
     width={width}
@@ -151,7 +161,7 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
         <DetailsContainer>
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
-            <h1>{data.tour_title}</h1>
+            <TourTitle>{data.tour_title}</TourTitle>
             <h1 className="whitespace-nowrap">₱ {data.price}</h1>
           </TitlePriceContainer>
           <DescriptionContainer>

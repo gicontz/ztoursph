@@ -10,7 +10,7 @@ const defaultFont = Poppins({
   subsets: ["latin"],
 });
 
-const Layout = ({ children }) => {
+const Layout = ({ contained = false, children }) => {
   const { ref, inView } = useInView({ threshold: 0 });
 
   return (
@@ -29,9 +29,12 @@ const Layout = ({ children }) => {
         }`}>
         <Header />
       </Row>
-
-      {children}
-
+      { contained ? (
+        <div className="grow">
+          {children}
+        </div>) :
+        children
+      }
       <MainPageFooter />
     </main>
   );
