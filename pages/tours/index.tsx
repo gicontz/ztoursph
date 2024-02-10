@@ -26,7 +26,6 @@ const Panel = styled(Row)`
   display: flex;
   width: 67rem;
   margin: auto;
-  margin-top: 7rem;
   margin-bottom: 1rem;
   flex-direction: column;
   gap: 10px;
@@ -85,7 +84,7 @@ export default function Tours() {
           </p>
         </Description>
 
-        {!store.isLoading && store.tours ? (
+        {!store.isLoading && store?.tours.length !== 0 && store.tours ? (
           <>
             <ListCardsContainer>
               {store.tours?.map((data, key) => (

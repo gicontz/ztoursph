@@ -5,7 +5,6 @@ import BannerImage from "@assets/images/banner.jpg";
 import MainPageBooking from "@components/booking/main-page";
 import MainPageListing from "@components/listing/main-page";
 import MainPageTestimonial from "@components/testimonial/main-page";
-import MainPageFooter from "@components/footer/main-page";
 import MainPageClosing from "@components/closing/main-page";
 import Layout from "@components/pages/layout";
 
@@ -52,7 +51,7 @@ export default function Home() {
   return (
     <Layout>
       <Banner>
-        <Row className="pt-24 pb-24">
+        <Row className="pb-24">
           <TagLine>Seize the Zen</TagLine>
           <div className="text-right">
             <Phrase>

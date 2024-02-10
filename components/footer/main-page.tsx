@@ -148,6 +148,15 @@ const Icons = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  transition: font-weight 0.1s ease, font-size 0.1s ease, color 0.1s ease;
+  color: inherit;
+
+  &:hover {
+    color: #c5fbd8;
+  }
+`;
+
 const MainPageFooter = () => {
   const { handleSubmit, control } = useForm();
 
@@ -161,8 +170,12 @@ const MainPageFooter = () => {
         <Contents>
           <HeaderText>Content</HeaderText>
           <ul>
-            <li>About us</li>
-            <li>Our history</li>
+            <li>
+              <StyledLink href="/about-us">About us</StyledLink>
+            </li>
+            <li>
+              <StyledLink href="/faq">FAQ</StyledLink>
+            </li>
             <li>Why us?</li>
           </ul>
         </Contents>
