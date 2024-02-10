@@ -24,7 +24,7 @@ export const getTours = async (dispatch: Dispatch<ToursTypes>, options?: { pageN
                 const { data } = await getToursApi({ pageNumber, pageSize, searchText });
                 dispatch({ type: Actions.GET_TOURS_FULFILLED, payload: { records: [...data.records], totalRecords: data.totalRecords }});
             } catch (e) {
-                console.log(e);
+                console.log('Error', e);
                 dispatch({ type: Actions.GET_TOURS_FAILED });
             }
         }
