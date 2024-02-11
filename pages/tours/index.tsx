@@ -10,8 +10,8 @@ import TourCard from "@components/listing/tours-card";
 
 const ListCardsContainer = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: space-around;
 `;

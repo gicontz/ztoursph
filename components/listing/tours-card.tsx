@@ -10,8 +10,8 @@ import { blurImageData } from "@constants/image";
 const CardContainer = styled.div`
   position: relative;
   height: 27rem;
-  width: 100%;
-  min-width: 18rem;
+  width: 20rem;
+  min-width: 12rem;
   border-radius: 5px;
   overflow: hidden;
   background-color: #2b3030;
@@ -24,6 +24,7 @@ const CardContainer = styled.div`
 
   @media (max-width: 800px) {
     height: 20rem;
+    width: 15rem;
     font-size: 8px;
   }
 `;

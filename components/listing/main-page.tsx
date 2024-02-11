@@ -9,10 +9,13 @@ import Skeleton from "@components/commons/skeleton";
 
 const ListCardsContainer = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: nowrap;
   gap: 0.5rem;
   justify-content: space-around;
+  @media (max-width: 1000px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const Panel = styled(PanelSection)`
