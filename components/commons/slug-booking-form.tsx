@@ -49,7 +49,12 @@ const StyledButton = styled(Button)`
   font-weight: 800;
 `;
 
-const TourBookingForm = ({ onSubmit }) => {
+type SlugBookingFormProps = {
+  onSubmit: (d: any) => void
+  type: string;
+}
+
+const SlugBookingForm: React.FC<SlugBookingFormProps> = ({ onSubmit, type}) => {
   const { handleSubmit, control } = useForm();
   const [travellersArray, setTravellersArray] = useState<string[]>();
   const onSubmitFunc = (formData) => {
@@ -62,7 +67,7 @@ const TourBookingForm = ({ onSubmit }) => {
     <BookingContainer>
       <Form onSubmit={handleSubmit(onSubmitFunc)}>
         <LabelHeader>
-          <h3>Date of Tour</h3>
+          <h3>Date of {type}</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </LabelHeader>
         <Datepicker
@@ -93,11 +98,11 @@ const TourBookingForm = ({ onSubmit }) => {
           rules={{ required: true }}
         />
         <StyledButton htmlType="submit" type="primary">
-          Add Tour
+          Add {type}
         </StyledButton>
       </Form>
     </BookingContainer>
   );
 };
 
-export default TourBookingForm;
+export default SlugBookingForm;

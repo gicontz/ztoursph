@@ -1,7 +1,5 @@
 import { Row, StyledDivider } from "@components/commons/common";
 import styled from "@emotion/styled";
-import ImageTemplate from "@components/tours/image-template";
-import TourBookingForm from "@components/commons/tour-booking-form";
 import { useRouter } from "next/router";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
@@ -9,6 +7,8 @@ import React from "react";
 import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
 import { getTourBySlug, useTours } from "@app/modules/tours/actions";
+import SlugBookingForm from "@components/commons/slug-booking-form";
+import ImageTemplate from "@components/commons/image-template";
 
 const Panel = styled(Row)`
   display: flex;
@@ -59,7 +59,7 @@ export default function Tours() {
   const [store, dispatch] = useTours();
 
   React.useEffect(() => {
-    if (typeof slug === 'string') getTourBySlug(dispatch, slug);
+    if (typeof slug === "string") getTourBySlug(dispatch, slug);
   }, [slug]);
 
   const parsedPackageDetails = store.selectedTour ? (
@@ -79,7 +79,9 @@ export default function Tours() {
           ₱ {store.selectedTour.price}
         </p>
         <p className="text-2xl ">
-          ₱ {store.selectedTour.price - (store.selectedTour?.discount / 100) * store.selectedTour.price}
+          ₱{" "}
+          {store.selectedTour.price -
+            (store.selectedTour?.discount / 100) * store.selectedTour.price}
         </p>
         <div className="text-xs px-1 bg-[rgb(35,67,44)] text-white">
           -{store.selectedTour.discount}%
@@ -159,7 +161,7 @@ export default function Tours() {
             <StyledDivider />
           </div>
 
-          <TourBookingForm onSubmit={(e) => console.log(e)} />
+          <SlugBookingForm onSubmit={(e) => console.log(e)} type="tour" />
         </Row>
       </Panel>
       <br />

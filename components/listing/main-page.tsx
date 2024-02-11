@@ -3,15 +3,15 @@ import HeaderSection from "@components/commons/header-section";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
-import ListingCard from "./listing-card";
-import { TToursResponse } from "@app/modules/tours/types";
-import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
+import TourCard from "./tours-card";
+import Skeleton from "@components/commons/skeleton";
 
 const ListCardsContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
   justify-content: space-around;
 `;
 
@@ -50,15 +50,23 @@ const MainPageListing = () => {
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
-      <ListCardsContainer>
-        {!store.isLoading && store.tours ? (
-          store.tours
-            ?.slice(0, 3)
-            .map((data, key) => <ListingCard key={key} data={data} />)
-        ) : (
-          <Loading />
-        )}
-      </ListCardsContainer>
+      {!store.isLoading && store.tours ? (
+        <ListCardsContainer>
+          {store.tours?.slice(0, 4).map((data, key) => (
+            <TourCard key={key} data={data} />
+          ))}
+        </ListCardsContainer>
+      ) : (
+        <ListCardsContainer>
+          {Array.from({ length: 4 }).map((_, key) => (
+            <Skeleton
+              key={key}
+              className="h-[24rem] w-[80rem]"
+              times={undefined}
+            />
+          ))}
+        </ListCardsContainer>
+      )}
     </Panel>
   );
 };

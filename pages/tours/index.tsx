@@ -1,25 +1,19 @@
 import styled from "@emotion/styled";
 import HeaderSection from "@components/commons/header-section";
-import ListingCard from "@components/listing/listing-card";
 import { Row } from "@components/commons/common";
 import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React, { useState } from "react";
-import { TToursResponse } from "@app/modules/tours/types";
 import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
+import TourCard from "@components/listing/tours-card";
 
 const ListCardsContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 1000px;
-  margin: auto;
   width: 100%;
-  @media (max-width: 1085px) {
-    width: 90%;
-  }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  justify-content: space-around;
 `;
 
 const Description = styled.div`
@@ -62,7 +56,7 @@ export default function Tours() {
 
   React.useEffect(() => {
     const { pageNumber } = state;
-    console.log('get')
+    console.log("get");
     getTours(dispatch, { pageNumber, pageSize });
   }, []);
 
@@ -70,11 +64,15 @@ export default function Tours() {
     if (store.totalRecords > state.totalItems) {
       const { pageNumber } = state;
       getTours(dispatch, { pageNumber: pageNumber + 1, pageSize });
-      setState(s => ({ ...s, pageNumber: s.pageNumber + 1, totalItems: s.totalItems + pageSize }));
+      setState((s) => ({
+        ...s,
+        pageNumber: s.pageNumber + 1,
+        totalItems: s.totalItems + pageSize,
+      }));
     }
-  }
+  };
 
-  console.log(store)
+  console.log(store);
 
   return (
     <Layout contained>
@@ -96,21 +94,20 @@ export default function Tours() {
           <>
             <ListCardsContainer>
               {store.tours?.map((data, key) => (
-                <ListingCard key={key} data={data} />
+                <TourCard key={key} data={data} />
               ))}
             </ListCardsContainer>
           </>
         )}
       </Row>
       <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
-        { store.isLoading && <Loading /> }
-          { (store.tours.length > 0 && store.tours.length !== store.totalRecords) && 
-            <LoadMoreButton
-              onClick={handleLoadMore}
-              type="primary">
+        {store.isLoading && <Loading />}
+        {store.tours.length > 0 &&
+          store.tours.length !== store.totalRecords && (
+            <LoadMoreButton onClick={handleLoadMore} type="primary">
               Load More Tours
             </LoadMoreButton>
-          }
+          )}
       </Row>
     </Layout>
   );

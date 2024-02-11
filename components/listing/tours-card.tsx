@@ -10,8 +10,8 @@ import { blurImageData } from "@constants/image";
 const CardContainer = styled.div`
   position: relative;
   height: 27rem;
-  width: 20rem;
-  min-width: 12rem;
+  width: 100%;
+  min-width: 18rem;
   border-radius: 5px;
   overflow: hidden;
   background-color: #2b3030;
@@ -24,7 +24,6 @@ const CardContainer = styled.div`
 
   @media (max-width: 800px) {
     height: 20rem;
-    width: 15rem;
     font-size: 8px;
   }
 `;
@@ -140,7 +139,7 @@ interface ListingCard {
   data: TToursResponse;
 }
 
-const ListingCard: React.FC<ListingCard> = ({ data }) => {
+const TourCard: React.FC<ListingCard> = ({ data }) => {
   const [like, setLike] = useState(false);
   return (
     <CardContainer>
@@ -177,4 +176,4 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
   );
 };
 
-export default ListingCard;
+export default TourCard;
