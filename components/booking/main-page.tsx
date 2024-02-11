@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -9,10 +8,7 @@ import DropdownShowcase from "@components/commons/dropdown-showcase";
 
 import styled from "@emotion/styled";
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
-
-import TourA from "@assets/images/tour_a.jpg";
-import TourB from "@assets/images/tour_b.jpg";
-import TourC from "@assets/images/tour_c.jpg";
+import { getPackages, usePackages } from "@app/modules/packages/actions";
 
 const SubmitButton = styled(Button)`
   padding: 0 1.6rem;
@@ -45,30 +41,18 @@ const ContainerCard = styled.div`
 
 const MainPageBooking = () => {
   const { handleSubmit, control } = useForm();
+  const [store, dispatch] = usePackages();
 
-  const optionDestination = [
-    {
-      title: "El Nido Island Tour A",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan eros in volutpat sollicitudin. ",
-      value: "Tour A",
-      url: TourA,
-    },
-    {
-      title: "El Nido Island Tour B",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan eros in volutpat sollicitudin.  ",
-      value: "Tour B",
-      url: TourB,
-    },
-    {
-      title: "El Nido Island Tour C",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan eros in volutpat sollicitudin.  ",
-      value: "Tour C",
-      url: TourC,
-    },
-  ];
+  React.useEffect(() => {
+    getPackages(dispatch, { pageNumber: 1, pageSize: 9 });
+  }, []);
+
+  const option = store?.packages.map((e) => ({
+    title: e.package_title,
+    description: e.package_details,
+    slug: e.package_slug,
+    url: e.thumbnail,
+  }));
 
   const optionTravellers = Array.from({ length: 5 }, (_, index) => ({
     label: index + 1,
@@ -84,8 +68,9 @@ const MainPageBooking = () => {
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <ContainerCard>
         <DropdownShowcase
+          loading={store.isLoading}
           showSearch
-          data={optionDestination}
+          data={option}
           control={control}
           name="Tour"
           optionLabelProp="customLabel"
@@ -119,7 +104,3 @@ const MainPageBooking = () => {
 };
 
 export default MainPageBooking;
-
-// export default function() {
-//   return <><SubmitButton>Book</SubmitButton> <MapIcon/> </>
-// }

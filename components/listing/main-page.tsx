@@ -40,7 +40,7 @@ const MainPageListing = () => {
   const [store, dispatch] = useTours();
 
   React.useEffect(() => {
-    getTours(dispatch, { pageNumber: 1, pageSize: 3 });
+    getTours(dispatch, { pageNumber: 1, pageSize: 4 });
   }, []);
 
   return (
