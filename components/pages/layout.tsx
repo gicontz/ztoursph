@@ -15,7 +15,7 @@ const Layout = ({ contained = false, children }) => {
 
   return (
     <main
-      className={`relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh] App ${defaultFont.className}`}>
+      className={`relative flex flex-col justify-between  overflow-x-hidden sm:w-[100%] h-[100vh] App ${defaultFont.className}`}>
       <Row
         ref={ref}
         className={`top-0 left-0 w-full absolute !max-w-full bg-white z-10`}>
@@ -29,12 +29,7 @@ const Layout = ({ contained = false, children }) => {
         }`}>
         <Header />
       </Row>
-      { contained ? (
-        <div className="grow">
-          {children}
-        </div>) :
-        children
-      }
+      {contained ? <div className="grow">{children}</div> : children}
       <MainPageFooter />
     </main>
   );
