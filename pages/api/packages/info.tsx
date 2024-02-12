@@ -4,7 +4,7 @@ const APIUri = process.env.API_SERVER;
 
 const __ = async (req: NextApiRequest, res: NextApiResponse) => {
   const result = await fetch(
-    `${APIUri}/tours/info?tour_slug=${req.query.tour_slug}`,
+    `${APIUri}/packages/info?package_slug=${req.query.package_slug}`,
     { method: "GET" }
   );
   if (result.status !== 200) {

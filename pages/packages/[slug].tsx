@@ -6,9 +6,9 @@ import Layout from "@components/pages/layout";
 import React from "react";
 import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
-import { getTourBySlug, useTours } from "@app/modules/tours/actions";
-import SlugBookingForm from "@components/commons/slug-booking-form";
+import { getPackageBySlug, usePackages } from "@app/modules/packages/actions";
 import ImageTemplate from "@components/commons/image-template";
+import SlugBookingForm from "@components/commons/slug-booking-form";
 
 const Panel = styled(Row)`
   display: flex;
@@ -53,17 +53,19 @@ const PackageDetail = styled.div`
     margin-right: 10px;
   }
 `;
-export default function Tours() {
+export default function Packages() {
   const router = useRouter();
   const slug = router.query.slug;
-  const [store, dispatch] = useTours();
+  const [store, dispatch] = usePackages();
 
   React.useEffect(() => {
-    if (typeof slug === "string") getTourBySlug(dispatch, slug);
+    if (typeof slug === "string") getPackageBySlug(dispatch, slug);
   }, [slug]);
 
-  const parsedPackageDetails = store.selectedTour ? (
-    parse(store.selectedTour.package_details)
+  console.log(store.selectedPackage);
+
+  const parsedPackageDetails = store.selectedPackage ? (
+    parse(store.selectedPackage.package_details)
   ) : (
     <>
       <Skeleton times={1} className="h-5" />
@@ -73,23 +75,24 @@ export default function Tours() {
   );
 
   const priceContent =
-    store.selectedTour?.discount && !store.isLoading ? (
+    store.selectedPackage?.discount && !store.isLoading ? (
       <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
         <p className=" text-[1rem] line-through opacity-90">
-          ₱ {store.selectedTour.price}
+          ₱ {store.selectedPackage.price}
         </p>
         <p className="text-2xl ">
           ₱{" "}
-          {store.selectedTour.price -
-            (store.selectedTour?.discount / 100) * store.selectedTour.price}
+          {store.selectedPackage.price -
+            (store.selectedPackage?.discount / 100) *
+              store.selectedPackage.price}
         </p>
         <div className="text-xs px-1 bg-[rgb(35,67,44)] text-white">
-          -{store.selectedTour.discount}%
+          -{store.selectedPackage.discount}%
         </div>
       </div>
-    ) : store.selectedTour?.price && !store.isLoading ? (
+    ) : store.selectedPackage?.price && !store.isLoading ? (
       <p className="text-2xl px-2 py-2 font-semibold w-full bg-gray-100">
-        ₱{store.selectedTour?.price}
+        ₱{store.selectedPackage?.price}
       </p>
     ) : (
       <Skeleton times={1} className="h-[2.5rem]" />
@@ -98,10 +101,10 @@ export default function Tours() {
   return (
     <Layout>
       <div>
-        {store.selectedTour && !store.isLoading ? (
+        {store.selectedPackage && !store.isLoading ? (
           <PageTitle
-            title={store.selectedTour.tour_title}
-            bgImage={store.selectedTour.tour_banner_image}
+            title={store.selectedPackage.package_title}
+            bgImage={store.selectedPackage.package_banner_image}
           />
         ) : (
           <Skeleton times={1} className="h-[350px]" />
@@ -129,9 +132,9 @@ export default function Tours() {
         </Row>
         <Row className="flex flex-col gap-[1rem]">
           <h2>Gallery</h2>
-          {store.selectedTour && !store.isLoading ? (
+          {store.selectedPackage && !store.isLoading ? (
             <ImageTemplate
-              data={store.selectedTour.gallery.map((src, i) => ({
+              data={store.selectedPackage.gallery.map((src, i) => ({
                 src,
                 alt: `${slug}-image-${i + 1}`,
               }))}
@@ -157,11 +160,11 @@ export default function Tours() {
 
         <Row>
           <div>
-            <h2>Book This Tour</h2>
+            <h2>Book This Package</h2>
             <StyledDivider />
           </div>
 
-          <SlugBookingForm onSubmit={(e) => console.log(e)} type="tour" />
+          <SlugBookingForm onSubmit={(e) => console.log(e)} type="package" />
         </Row>
       </Panel>
       <br />

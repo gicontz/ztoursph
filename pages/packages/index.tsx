@@ -5,15 +5,20 @@ import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React, { useState } from "react";
 import Loading from "@components/commons/loading";
-import { getTours, useTours } from "@app/modules/tours/actions";
-import TourCard from "@components/listing/tours-card";
+import { getPackages, usePackages } from "@app/modules/packages/actions";
+import PackageCard from "@components/listing/packages-card";
 
 const ListCardsContainer = styled.div`
-  width: 100%;
   display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: space-around;
+  justify-content: center;
+  max-width: 1000px;
+  margin: auto;
+  width: 100%;
+  @media (max-width: 1085px) {
+    width: 90%;
+  }
 `;
 
 const Description = styled.div`
@@ -52,18 +57,18 @@ export default function Tours() {
     pageNumber: 1,
     totalItems: 0,
   });
-  const [store, dispatch] = useTours();
+  const [store, dispatch] = usePackages();
 
   React.useEffect(() => {
     const { pageNumber } = state;
     console.log("get");
-    getTours(dispatch, { pageNumber, pageSize });
+    getPackages(dispatch, { pageNumber, pageSize });
   }, []);
 
   const handleLoadMore = () => {
     if (store.totalRecords > state.totalItems) {
       const { pageNumber } = state;
-      getTours(dispatch, { pageNumber: pageNumber + 1, pageSize });
+      getPackages(dispatch, { pageNumber: pageNumber + 1, pageSize });
       setState((s) => ({
         ...s,
         pageNumber: s.pageNumber + 1,
@@ -77,7 +82,7 @@ export default function Tours() {
   return (
     <Layout contained>
       <Row className="!mt-10">
-        <HeaderSection>Our Tour Collection</HeaderSection>
+        <HeaderSection>Our Package Collection</HeaderSection>
       </Row>
       <Row className="!mt-5 !mb-10">
         <Description>
@@ -90,11 +95,11 @@ export default function Tours() {
       </Row>
 
       <Row>
-        {store?.tours.length !== 0 && store.tours && (
+        {store?.packages.length !== 0 && store.packages && (
           <>
             <ListCardsContainer>
-              {store.tours?.map((data, key) => (
-                <TourCard key={key} data={data} />
+              {store.packages?.map((data, key) => (
+                <PackageCard key={key} data={data} />
               ))}
             </ListCardsContainer>
           </>
@@ -102,8 +107,8 @@ export default function Tours() {
       </Row>
       <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
         {store.isLoading && <Loading />}
-        {store.tours.length > 0 &&
-          store.tours.length !== store.totalRecords && (
+        {store.packages.length > 0 &&
+          store.packages.length !== store.totalRecords && (
             <LoadMoreButton onClick={handleLoadMore} type="primary">
               Load More Tours
             </LoadMoreButton>

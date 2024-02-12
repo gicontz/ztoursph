@@ -140,7 +140,7 @@ interface ListingCard {
   data: TToursResponse;
 }
 
-const ListingCard: React.FC<ListingCard> = ({ data }) => {
+const TourCard: React.FC<ListingCard> = ({ data }) => {
   const [like, setLike] = useState(false);
   return (
     <CardContainer>
@@ -177,4 +177,4 @@ const ListingCard: React.FC<ListingCard> = ({ data }) => {
   );
 };
 
-export default ListingCard;
+export default TourCard;
