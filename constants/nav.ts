@@ -8,6 +8,10 @@ export const MENU_LINKS = [
     href: "/tours",
   },
   {
+    label: "Packages",
+    href: "/packages",
+  },
+  {
     label: "Deals & Promos",
     href: "/deals-promos",
   },

@@ -4,15 +4,23 @@ import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import Image from "next/image";
 import { title } from "process";
+import React from "react";
+import { useInView } from "react-intersection-observer";
+import { StyledDivider } from "./common";
 
 const PanelSearch = styled.div`
   display: flex;
   padding: 0.2rem 0;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
   width: 100%;
-  font-size: 16px;
-  overflow-wrap: break-word;
+  font-size: 17px;
+
+  p {
+    overflow: hidden;
+    white-space: wrap;
+    width: 10rem;
+  }
 
   img {
     object-fit: cover;
@@ -35,6 +43,12 @@ const SummaryContainer = styled.div`
   }
 `;
 
+const StyledSelect = styled(Dropdown)`
+  .rc-virtual-list-scrollbar {
+    display: hidden;
+  }
+`;
+
 const DropDownSearchList = ({ ...data }): JSX.Element => {
   const summary = () => (
     <SummaryContainer>
@@ -42,9 +56,15 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
     </SummaryContainer>
   );
   return (
-    <Tooltip title={summary} placement="right">
+    <Tooltip title={summary} placement="right" mouseEnterDelay={0.6}>
       <PanelSearch>
-        <Image src={data.imageUrl} alt={data.title} blurDataURL={blurImageData} />
+        <Image
+          src={data.imageUrl}
+          alt={data.title}
+          blurDataURL={blurImageData}
+          width={320}
+          height={216}
+        />
         <p>{data.title}</p>
       </PanelSearch>
     </Tooltip>
@@ -55,8 +75,8 @@ interface DestDropdownProps extends DropdownProps {
   data: {
     title: string;
     description: string;
-    value: string;
-    url: React.ComponentProps<typeof Image>['src'];
+    slug: string;
+    url: React.ComponentProps<typeof Image>["src"];
   }[];
   control: any;
 }
@@ -66,22 +86,33 @@ const DropdownShowcase: React.FC<DestDropdownProps> = ({
   control,
   ...rest
 }) => {
-  const option = data?.map((element) => {
+  const [dataCotent, setDataCotent] = React.useState(data);
+  const { ref, inView } = useInView({ threshold: 0 });
+
+  React.useEffect(() => {
+    setDataCotent((d) => [...d, ...data]);
+  }, [inView, rest?.loading]);
+
+  const option = (dataCotent || data)?.map((element, index) => {
+    const isLastItem = index === dataCotent?.length - 1;
+    const isEndOfGroup = (index + 1) % data?.length === 0;
     return {
-      value: element.value,
+      value: element.slug,
       label: (
-        <DropDownSearchList
-          imageUrl={element.url}
-          title={element.title}
-          description={element.description}
-        />
+        <div ref={index === dataCotent?.length - 1 ? ref : null}>
+          <DropDownSearchList
+            imageUrl={element.url}
+            title={element.title}
+            description={element.description}
+          />
+        </div>
       ),
       customLabel: element.title,
     };
   });
 
   return (
-    <Dropdown
+    <StyledSelect
       showSearch
       control={control}
       options={option}

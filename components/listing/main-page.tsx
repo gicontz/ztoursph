@@ -3,16 +3,19 @@ import HeaderSection from "@components/commons/header-section";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
-import ListingCard from "./listing-card";
-import { TToursResponse } from "@app/modules/tours/types";
-import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
+import TourCard from "./tours-card";
+import Skeleton from "@components/commons/skeleton";
 
 const ListCardsContainer = styled.div`
+  width: 100%;
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
   justify-content: space-around;
+  @media (max-width: 1000px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const Panel = styled(PanelSection)`
@@ -40,7 +43,7 @@ const MainPageListing = () => {
   const [store, dispatch] = useTours();
 
   React.useEffect(() => {
-    getTours(dispatch, { pageNumber: 1, pageSize: 3 });
+    getTours(dispatch, { pageNumber: 1, pageSize: 4 });
   }, []);
 
   return (
@@ -50,15 +53,23 @@ const MainPageListing = () => {
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
-      <ListCardsContainer>
-        {!store.isLoading && store.tours ? (
-          store.tours
-            ?.slice(0, 3)
-            .map((data, key) => <ListingCard key={key} data={data} />)
-        ) : (
-          <Loading />
-        )}
-      </ListCardsContainer>
+      {!store.isLoading && store.tours ? (
+        <ListCardsContainer>
+          {store.tours?.slice(0, 4).map((data, key) => (
+            <TourCard key={key} data={data} />
+          ))}
+        </ListCardsContainer>
+      ) : (
+        <ListCardsContainer>
+          {Array.from({ length: 4 }).map((_, key) => (
+            <Skeleton
+              key={key}
+              className="h-[24rem] w-[80rem]"
+              times={undefined}
+            />
+          ))}
+        </ListCardsContainer>
+      )}
     </Panel>
   );
 };
