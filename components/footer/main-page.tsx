@@ -176,6 +176,9 @@ const MainPageFooter = () => {
             <li>
               <StyledLink href="/faq">FAQ</StyledLink>
             </li>
+            <li>
+              <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
+            </li>
             <li>Why us?</li>
           </ul>
         </Contents>
