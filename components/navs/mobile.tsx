@@ -11,6 +11,7 @@ const Container = styled.div`
   background-color: #ffffff;
   color: #533557;
   padding: 0 10px;
+  z-index: 10;
 `;
 
 const LabelMenuBtn = styled.label`
@@ -70,7 +71,7 @@ const Hamburger = styled.div`
   height: 2px;
   background-color: #533557;
   border-radius: 5px;
-  z-index: 10;
+  z-index: 20;
   transition: all 0.5s ease;
   &:before,
   &:after {

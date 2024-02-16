@@ -1,6 +1,6 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Image from "next/image";
-import { ConfigProvider, Divider } from "antd";
+import { ConfigProvider, Divider, Input } from "antd";
 import styled from "@emotion/styled";
 import Logo from "@assets/images/logo.png";
 import {
@@ -10,7 +10,6 @@ import {
   TelephoneIcon,
 } from "@components/commons/icons";
 import Button from "@components/commons/button";
-import { CustomInput } from "@components/commons/input";
 import Link from "next/link";
 import { PanelSection } from "@components/commons/common";
 
@@ -220,14 +219,20 @@ const MainPageFooter = () => {
             }
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <CustomInput
-              control={control}
+            <Controller
               name="email"
-              placeholder="ztoursph@gmail.com"
-              type="email"
-              rules={{ required: "Email is needed." }}
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  className="h-10"
+                  placeholder="ztoursph@gmail.com"
+                  type="email"
+                />
+              )}
             />
-            <Button type="primary" htmlType="submit">
+
+            <Button className="h-10" type="primary" htmlType="submit">
               Submit
             </Button>
           </form>
