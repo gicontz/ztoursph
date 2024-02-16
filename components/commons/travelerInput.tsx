@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import Button from "./button";
-import { ConfigProvider, Input } from "antd";
+import { Input } from "antd";
 import styled from "@emotion/styled";
 import { TrashIcon } from "./icons";
+import { Poppins } from "next/font/google";
+
+const Font = Poppins({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const IndividualNameContainer = styled.div`
   display: flex;
   font-size: 0.8rem;
+  align-items: center;
   justify-content: space-between;
   border: solid rgba(0, 0, 0, 1) 1px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -88,20 +95,13 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
     <>
       {nameList}
       <AddParticipant>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorBgContainer: "#EAEAEA",
-              borderRadius: 2,
-            },
-          }}>
-          <StyledInput
-            value={participant}
-            onChange={handleInputChange}
-            type="text"
-            placeholder="Enter Travelers Name"
-          />
-        </ConfigProvider>
+        <StyledInput
+          className={Font.className}
+          value={participant}
+          onChange={handleInputChange}
+          type="text"
+          placeholder="Enter Travelers Name"
+        />
         <StyledButton type="primary" onClick={handleAddParticipantClick}>
           Add Participant
         </StyledButton>

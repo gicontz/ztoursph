@@ -1,21 +1,24 @@
 import React, { useState, useRef } from "react";
 import { PlusOutlined } from "@ant-design/icons";
-import { ConfigProvider, Input, Select } from "antd";
+import { Input, Select } from "antd";
 import Button from "./button";
 import type { InputRef, SelectProps } from "antd";
-import { Controller } from "react-hook-form";
 import styled from "@emotion/styled";
+import { Poppins } from "next/font/google";
 
 interface CustomDropDownProps extends SelectProps {
   defaultOption: string[];
-  names: string;
-  control: any;
-  rules?: any;
   dropdownPlaceholder?: string;
   buttonName?: string;
+  toAddItemPlaceholder?: string;
 }
 
-const CustomInput = styled.div`
+const Font = Poppins({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const InputContainer = styled.div`
   display: flex;
   gap: 0.6rem;
   font-size: 1rem;
@@ -44,9 +47,7 @@ const CustomDropDown: React.FC<CustomDropDownProps> = ({
   defaultOption = [""],
   dropdownPlaceholder = "Please enter item",
   buttonName = "Add Item",
-  names,
-  control,
-  rules,
+  toAddItemPlaceholder,
   ...rest
 }) => {
   const [items, setItems] = useState(defaultOption);
@@ -67,47 +68,31 @@ const CustomDropDown: React.FC<CustomDropDownProps> = ({
     }
   };
   return (
-    <Controller
-      name={names}
-      control={control}
-      rules={rules}
-      render={({ field }) => {
-        return (
-          <ConfigProvider
-            theme={{
-              token: {
-                colorBgContainer: "#EAEAEA",
-                borderRadius: 2,
-              },
-            }}>
-            <Select
-              {...field}
-              {...rest}
-              dropdownRender={(menu) => (
-                <>
-                  {menu}
-                  <CustomInput>
-                    <Input
-                      placeholder={dropdownPlaceholder}
-                      ref={inputRef}
-                      value={name}
-                      onChange={onNameChange}
-                      onKeyDown={(e) => e.stopPropagation()}
-                    />
-                    <StyledButton
-                      onClick={addItem}
-                      type="primary"
-                      icon={<PlusOutlined />}>
-                      {buttonName}
-                    </StyledButton>
-                  </CustomInput>
-                </>
-              )}
-              options={items.map((item) => ({ label: item, value: item }))}
+    <Select
+      {...rest}
+      className={`${Font.className} ${rest?.className}`}
+      dropdownRender={(menu) => (
+        <>
+          <div className={Font.className}>{menu}</div>
+          <InputContainer>
+            <Input
+              ref={inputRef}
+              className={Font.className}
+              value={name}
+              onChange={onNameChange}
+              placeholder={toAddItemPlaceholder}
+              onKeyDown={(e) => e.stopPropagation()}
             />
-          </ConfigProvider>
-        );
-      }}
+            <StyledButton
+              onClick={addItem}
+              type="primary"
+              icon={<PlusOutlined />}>
+              {buttonName}
+            </StyledButton>
+          </InputContainer>
+        </>
+      )}
+      options={items.map((item) => ({ label: item, value: item }))}
     />
   );
 };

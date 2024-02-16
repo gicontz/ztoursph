@@ -1,11 +1,9 @@
 import React, { ReactNode } from "react";
-import { ConfigProvider, Select, SelectProps } from "antd";
+import { Select, SelectProps } from "antd";
 import styled from "@emotion/styled";
-import { Controller } from "react-hook-form";
 
 const SelectWrapper = styled.div<{ icon?: boolean }>`
   position: relative;
-
   .prefix-icon-wrapper {
     position: absolute;
     z-index: 1;
@@ -19,50 +17,32 @@ const SelectWrapper = styled.div<{ icon?: boolean }>`
   .ant-select .ant-select-selector {
     text-indent: ${(props) => (props.icon ? "calc(2rem - 8px)" : "")};
   }
-`;
+  @media screen and (max-width: 821px) {
+    width: 100%;
+  }
 
-const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
   .ant-select-selection-placeholder {
     color: black;
   }
+`;
+
+const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
   width: 19rem;
   height: 3.5rem;
+  @media screen and (max-width: 821px) {
+    width: 100%;
+  }
 `;
 
 export interface DropdownProps extends SelectProps {
   prefixIcon?: ReactNode;
-  control: any;
-  name: string;
-  rules?: Record<string, any>;
-  placeholder?: string | number | ReactNode | boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
-  prefixIcon,
-  name,
-  control,
-  rules,
-  ...rest
-}) => {
+const Dropdown: React.FC<DropdownProps> = ({ prefixIcon, ...rest }) => {
   return (
     <SelectWrapper icon={prefixIcon ? true : false}>
       {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}
-      <Controller
-        name={name}
-        control={control}
-        rules={rules}
-        render={({ field }) => (
-          <ConfigProvider
-            theme={{
-              token: {
-                colorBgContainer: "#EAEAEA",
-                borderRadius: 2,
-              },
-            }}>
-            <StyledSelect {...field} {...rest} />
-          </ConfigProvider>
-        )}
-      />
+      <StyledSelect {...rest} />
     </SelectWrapper>
   );
 };
