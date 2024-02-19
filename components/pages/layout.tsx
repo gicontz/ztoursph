@@ -29,6 +29,7 @@ const Layout = ({ contained = false, children }) => {
         }`}>
         <Header />
       </Row>
+      {contained ? <div className="grow">{children}</div> : children}
       {contained ? <div className="grow px-3">{children}</div> : children}
       <MainPageFooter />
     </main>

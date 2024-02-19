@@ -82,7 +82,7 @@ export default function Tours() {
   return (
     <Layout contained>
       <Row className="!mt-10">
-        <HeaderSection>Our Package Collection</HeaderSection>
+        <HeaderSection underline>Our Package Collection</HeaderSection>
       </Row>
       <Row className="!mt-5 !mb-10">
         <Description>
