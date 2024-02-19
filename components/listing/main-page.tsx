@@ -48,7 +48,7 @@ const MainPageListing = () => {
 
   return (
     <Panel>
-      <HeaderSection>Adventure, guided wonders await.</HeaderSection>
+      <HeaderSection underline>Adventure, guided wonders await.</HeaderSection>
       <Description>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         <Link href={"/tours"}>View All Tours</Link>
