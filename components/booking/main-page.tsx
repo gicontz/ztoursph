@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import RangePickerComponent from "@components/commons/range-picker";
@@ -40,12 +40,27 @@ const ContainerCard = styled.div`
 `;
 
 const MainPageBooking = () => {
+  const pageSize = 3;
   const { handleSubmit, control } = useForm();
   const [store, dispatch] = usePackages();
+  const [state, setState] = useState({ pageNumber: 1, totalItems: 0 });
 
   React.useEffect(() => {
-    getPackages(dispatch, { pageNumber: 1, pageSize: 9 });
+    const { pageNumber } = state;
+    getPackages(dispatch, { pageNumber, pageSize });
   }, []);
+
+  const HandleLoadPackage = (d: boolean) => {
+    if (store.totalRecords > state.totalItems && d) {
+      const { pageNumber } = state;
+      getPackages(dispatch, { pageNumber: pageNumber, pageSize });
+      setState((prev) => ({
+        ...prev,
+        pageNumber: prev.pageNumber + 1,
+        totalItems: pageSize,
+      }));
+    }
+  };
 
   const option = store?.packages.map((e) => ({
     title: e.package_title,
@@ -64,12 +79,15 @@ const MainPageBooking = () => {
       .toLowerCase()
       .includes(input.toLowerCase());
 
+  const isLoadingData = React.useMemo(() => store.isLoading, [store.isLoading]);
+
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
       <ContainerCard>
         <DropdownShowcase
-          loading={store.isLoading}
           showSearch
+          loading={isLoadingData}
+          loadMore={isLoadingData}
           data={option}
           control={control}
           name="Tour"
@@ -77,6 +95,7 @@ const MainPageBooking = () => {
           placeholder="I want to go"
           filterOption={filterOption}
           prefixIcon={<MapIcon />}
+          view={HandleLoadPackage}
         />
         <RangePickerComponent
           name="check-in-out"
