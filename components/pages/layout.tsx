@@ -4,6 +4,7 @@ import Header from "@components/header";
 import React, { useRef } from "react";
 import { Poppins } from "next/font/google";
 import { useInView } from "react-intersection-observer";
+import CookiesPopUp from "@components/cookies/cookies-popup";
 
 const defaultFont = Poppins({
   weight: "400",
@@ -29,6 +30,7 @@ const Layout = ({ contained = false, children }) => {
         }`}>
         <Header />
       </Row>
+      <CookiesPopUp />
       {contained ? <div className="grow px-3">{children}</div> : children}
       <MainPageFooter />
     </main>
