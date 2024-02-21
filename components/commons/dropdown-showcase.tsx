@@ -95,43 +95,25 @@ interface DestDropdownProps extends DropdownProps {
     slug: string;
     url: React.ComponentProps<typeof Image>["src"];
   }[];
-  view?: ((d: boolean) => void) | undefined;
   loadMore?: boolean;
 }
 
 const DropdownShowcase: React.FC<DestDropdownProps> = ({
   data,
-  view,
   loadMore,
   ...rest
 }) => {
-  const [dropdownOptions, setDropdownOptions] =
-    React.useState<typeof data>(data);
-  const { ref, inView } = useInView({ threshold: 1 });
-
-  React.useEffect(() => {
-    setDropdownOptions(data);
-  }, [data]);
-
-  React.useMemo(() => {
-    if (view) {
-      view(inView);
-    }
-  }, [inView]);
-
-  const option = dropdownOptions?.map((element, index) => {
+  const option = data?.map((element, index) => {
     return {
       value: element.slug,
       label: (
-        <div
-          key={index}
-          ref={index === dropdownOptions?.length - 1 ? ref : null}>
+        <div key={index}>
           <DropDownSearchList
             imageUrl={element.url}
             title={element.title}
             description={element.description}
           />
-          {index === dropdownOptions?.length - 1 && loadMore ? (
+          {index === data?.length - 1 && loadMore ? (
             <div className="mx-auto w-fit mt-5">
               <Loading />
             </div>

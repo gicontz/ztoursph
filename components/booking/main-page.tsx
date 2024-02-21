@@ -48,20 +48,22 @@ const MainPageBooking = () => {
   const { handleSubmit, control } = useForm();
   const [store, dispatch] = usePackages();
   const [state, setState] = React.useState({ pageNumber: 1, totalItems: 0 });
+  const { pageNumber } = state;
+  console.log(store);
 
   React.useEffect(() => {
-    const { pageNumber } = state;
     getPackages(dispatch, { pageNumber, pageSize });
   }, []);
 
-  const HandleLoadPackage = (d: boolean) => {
-    if (store.totalRecords > state.totalItems && d) {
-      const { pageNumber } = state;
+  const HandleLoadMore = (e) => {
+    const isAtBottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+
+    if (isAtBottom && store.totalRecords > state.totalItems) {
       getPackages(dispatch, { pageNumber: pageNumber, pageSize });
       setState((prev) => ({
-        ...prev,
         pageNumber: prev.pageNumber + 1,
-        totalItems: pageSize,
+        totalItems: prev.totalItems + pageNumber,
       }));
     }
   };
@@ -97,9 +99,9 @@ const MainPageBooking = () => {
                 <DropdownShowcase
                   {...field}
                   showSearch
-                  loading={isLoadingData}
+                  loading={store.isLoading}
                   loadMore={isLoadingData}
-                  view={HandleLoadPackage}
+                  onPopupScroll={HandleLoadMore}
                   data={option}
                   optionLabelProp="customLabel"
                   placeholder="I want to go"
