@@ -27,6 +27,12 @@ const CardContainer = styled.div`
     width: 15rem;
     font-size: 8px;
   }
+  
+  @media (max-width: 570px) {
+    height: 20rem;
+    width: 60%;
+    font-size: 8px;
+  }
 `;
 
 const ImageContainer = styled.div`

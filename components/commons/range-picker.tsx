@@ -1,8 +1,8 @@
 import React from "react";
-import { ConfigProvider, DatePicker } from "antd";
+import { DatePicker } from "antd";
 import styled from "@emotion/styled";
-import { Control, Controller, FieldValues } from "react-hook-form";
-import { ThemeConfig } from "@chakra-ui/react";
+import { RangePickerProps } from "antd/es/date-picker";
+import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
 
@@ -11,38 +11,16 @@ const CheckInOutPicker = styled(RangePicker)`
     color: black;
   }
   color: black;
-  width: 15rem;
   height: 3.5rem;
+  @media screen and (max-width: 821px) {
+    width: 100%;
+  }
 `;
 
-interface RangePickerProps {
-  name: string;
-  control: Control<FieldValues>;
-  rules?: Record<string, any>;
-}
-
-const CheckInOut: React.FC<RangePickerProps> = ({
-  name,
-  control,
-  rules,
-  ...rest
-}) => (
-  <Controller
-    name={name}
-    control={control}
-    rules={rules}
-    render={({ field: { onChange } }) => (
-      <ConfigProvider
-        theme={{
-          token: {
-            colorBgContainer: "#EAEAEA",
-            borderRadius: 2,
-          },
-        }}>
-        <CheckInOutPicker onChange={onChange} {...rest} />
-      </ConfigProvider>
-    )}
-  />
-);
-
+const CheckInOut: React.FC<RangePickerProps> = ({ ...rest }) => {
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    return (current && current) < dayjs().endOf("day");
+  };
+  return <CheckInOutPicker {...rest} disabledDate={disabledDate} />;
+};
 export default CheckInOut;
