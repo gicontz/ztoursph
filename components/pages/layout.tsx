@@ -23,10 +23,10 @@ const Layout = ({ contained = false, children }) => {
         <Header />
       </Row>
       <Row
-        className={`top-0 left-0 w-full !max-w-full bg-white z-10  ${
+        className={`top-0 left-0 w-full !max-w-full bg-white z-1  ${
           inView
-            ? "opacity-0 h-24"
-            : "ease-in-out duration-300 sticky opacity-1"
+            ? "opacity-0 h-24 "
+            : "ease-in-out duration-300 sticky opacity-1 z-20"
         }`}>
         <Header />
       </Row>

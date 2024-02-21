@@ -8,11 +8,17 @@ const CookiesPopUp = () => {
   const [consent, setConsent] = React.useState(false);
   const [show, setShow] = React.useState(false);
 
+  const AgreeCookiesLocalStorage = (bool: boolean) => {
+    localStorage.setItem("agree_cookies_policy", bool?.toString());
+    return Boolean(localStorage.getItem("agree_cookies_policy"));
+  };
+
   React.useEffect(() => {
-    if (!consent) {
+    if (localStorage.getItem("agree_cookies_policy") !== "true") {
+      console.log(!Boolean(localStorage.getItem("agree_cookies_policy")));
       setTimeout(() => {
         setShow(true);
-      }, 3000);
+      }, 2500);
     }
   }, []);
 
@@ -64,7 +70,7 @@ const CookiesPopUp = () => {
         <Button
           type="primary"
           onClick={() => {
-            setConsent(true);
+            setConsent(AgreeCookiesLocalStorage(true));
             setShow(false);
           }}>
           Agree
@@ -73,7 +79,7 @@ const CookiesPopUp = () => {
           <Button
             type="link"
             onClick={() => {
-              setConsent(false);
+              setConsent(AgreeCookiesLocalStorage(false));
               setShow(false);
             }}>
             Visit Cookies Policy Page

@@ -3,7 +3,6 @@ import React from "react";
 import { Row, StyledDivider } from "@components/commons/common";
 import Button from "@components/commons/button";
 import PackageCard from "./packageCard";
-
 import { Source_Serif_4 } from "next/font/google";
 
 const SourceSerif = Source_Serif_4({

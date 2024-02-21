@@ -9,11 +9,16 @@ import { getTours, useTours } from "@app/modules/tours/actions";
 import TourCard from "@components/listing/tours-card";
 
 const ListCardsContainer = styled.div`
-  width: 100%;
   display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: space-around;
+  justify-content: center;
+  max-width: 1000px;
+  margin: auto;
+  width: 100%;
+  @media (max-width: 1085px) {
+    width: 90%;
+  }
 `;
 
 const Description = styled.div`

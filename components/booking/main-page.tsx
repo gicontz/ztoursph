@@ -1,41 +1,45 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
 
 import RangePickerComponent from "@components/commons/range-picker";
 import Button from "@components/commons/button";
 import AutoComplete from "@components/commons/autocomplete";
 import DropdownShowcase from "@components/commons/dropdown-showcase";
-
 import styled from "@emotion/styled";
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 import { getPackages, usePackages } from "@app/modules/packages/actions";
 
-const SubmitButton = styled(Button)`
-  padding: 0 1.6rem;
-  font-weight: bold;
-  height: 3.5rem;
-`;
-
 const ContainerCard = styled.div`
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  transform: translate(0%, -50%);
   background-color: white;
   justify-content: center;
-  flex-warp: nowarp;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-
+  margin: 0 auto;
+  width: fit-content;
+  heigth: fit-content;
   gap: 0.5rem;
-
-  padding: 1.2rem 1.1rem;
+  padding: 1rem 1.1rem;
   box-shadow: 0px 0px 5px black;
-  border-radius: 0.2rem;
+  border-radius: 3px;
 
-  @media (max-width: 800px) {
+  @media screen and (max-width: 821px) {
+    width: 100%;
+    border-radius: 0;
+    transform: translate(0%, 0%);
+  }
+
+  @media screen and (max-width: 821px) {
     flex-wrap: wrap;
+  }
+
+  @media screen and (max-width: 821px) {
+    input,
+    button,
+    .ant-select-selector,
+    .ant-picker-input,
+    .ant-picker-input-active {
+      width: 100% !important;
+    }
   }
 `;
 
@@ -43,7 +47,7 @@ const MainPageBooking = () => {
   const pageSize = 3;
   const { handleSubmit, control } = useForm();
   const [store, dispatch] = usePackages();
-  const [state, setState] = useState({ pageNumber: 1, totalItems: 0 });
+  const [state, setState] = React.useState({ pageNumber: 1, totalItems: 0 });
 
   React.useEffect(() => {
     const { pageNumber } = state;
@@ -82,43 +86,67 @@ const MainPageBooking = () => {
   const isLoadingData = React.useMemo(() => store.isLoading, [store.isLoading]);
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
-      <ContainerCard>
-        <DropdownShowcase
-          showSearch
-          loading={isLoadingData}
-          loadMore={isLoadingData}
-          data={option}
-          control={control}
-          name="Tour"
-          optionLabelProp="customLabel"
-          placeholder="I want to go"
-          filterOption={filterOption}
-          prefixIcon={<MapIcon />}
-          view={HandleLoadPackage}
-        />
-        <RangePickerComponent
-          name="check-in-out"
-          control={control}
-          rules={{ required: "Date is needed." }}
-        />
+    <div className="relative mx-auto w-full">
+      <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <ContainerCard>
+          <Controller
+            name="packages"
+            control={control}
+            render={({ field }) => {
+              return (
+                <DropdownShowcase
+                  {...field}
+                  showSearch
+                  loading={isLoadingData}
+                  loadMore={isLoadingData}
+                  view={HandleLoadPackage}
+                  data={option}
+                  optionLabelProp="customLabel"
+                  placeholder="I want to go"
+                  filterOption={filterOption}
+                  prefixIcon={<MapIcon />}
+                />
+              );
+            }}
+          />
 
-        <AutoComplete
-          style={{ width: 200 }}
-          options={optionTravellers}
-          placeholder="Travellers"
-          control={control}
-          name="travellers"
-          prefixIcon={<TravellersIcon />}
-          filterOption={(inputValue, option) =>
-            typeof inputValue === "number" && option?.label === inputValue
-          }
-        />
-        <SubmitButton type="primary" htmlType="submit">
-          Book
-        </SubmitButton>
-      </ContainerCard>
-    </form>
+          <Controller
+            name="date"
+            control={control}
+            render={({ field }) => {
+              return <RangePickerComponent {...field} />;
+            }}
+          />
+
+          <Controller
+            name="pax"
+            control={control}
+            render={({ field }) => {
+              return (
+                <AutoComplete
+                  {...field}
+                  className="w-10"
+                  options={optionTravellers}
+                  placeholder="Travellers"
+                  prefixIcon={<TravellersIcon />}
+                  filterOption={(inputValue, option) =>
+                    typeof inputValue === "number" &&
+                    option?.label === inputValue
+                  }
+                />
+              );
+            }}
+          />
+
+          <Button
+            className="px-10 h-14 font-semibold"
+            type="primary"
+            htmlType="submit">
+            Book
+          </Button>
+        </ContainerCard>
+      </form>
+    </div>
   );
 };
 

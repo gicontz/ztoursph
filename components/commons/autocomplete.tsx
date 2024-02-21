@@ -1,19 +1,16 @@
 import styled from "@emotion/styled";
-import { AutoCompleteProps, ConfigProvider } from "antd";
-import { Controller } from "react-hook-form";
+import { AutoCompleteProps } from "antd";
 import { AutoComplete as AntAutoComplete } from "antd";
 import { ReactNode } from "react";
 
 const StyledAutoComplete = styled(AntAutoComplete)`
-  .ant-select-selection-placeholder {
-    color: black;
-  }
-  width: "19rem";
   height: 3.5rem;
+  width: 100%;
 `;
 
 const AutoCompleteWrapper = styled.div<{ icon?: boolean }>`
   position: relative;
+  width: 14rem;
 
   .prefix-icon-wrapper {
     position: absolute;
@@ -25,40 +22,30 @@ const AutoCompleteWrapper = styled.div<{ icon?: boolean }>`
     justify-content: center;
   }
 
+  .ant-select-selection-placeholder {
+    color: black;
+  }
+
   .ant-select .ant-select-selector {
     text-indent: ${(props) => (props.icon ? "calc(2rem - 8px)" : "")};
+  }
+
+  @media screen and (max-width: 821px) {
+    width: 100%;
   }
 `;
 
 interface AutoComplete extends AutoCompleteProps {
-  name: string;
-  control: any;
-  rules?: any;
   prefixIcon?: ReactNode;
 }
 
-const AutoComplete = ({ ...rest }) => {
+const AutoComplete: React.FC<AutoComplete> = ({ ...rest }) => {
   return (
     <AutoCompleteWrapper icon={rest?.prefixIcon ? true : false}>
       {rest?.prefixIcon && (
         <div className="prefix-icon-wrapper">{rest?.prefixIcon}</div>
       )}
-      <Controller
-        name={rest.name}
-        control={rest.control}
-        rules={rest.rules}
-        render={({ field }) => (
-          <ConfigProvider
-            theme={{
-              token: {
-                colorBgContainer: "#EAEAEA",
-                borderRadius: 2,
-              },
-            }}>
-            <StyledAutoComplete {...rest} {...field} />
-          </ConfigProvider>
-        )}
-      />
+      <StyledAutoComplete {...rest} />
     </AutoCompleteWrapper>
   );
 };
