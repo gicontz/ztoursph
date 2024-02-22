@@ -1,5 +1,6 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { debounce } from "lodash";
 
 import RangePickerComponent from "@components/commons/range-picker";
 import Button from "@components/commons/button";
@@ -44,31 +45,38 @@ const ContainerCard = styled.div`
 `;
 
 const MainPageBooking = () => {
-  const pageSize = 3;
+  const pageSize = 5;
   const { handleSubmit, control } = useForm();
   const [store, dispatch] = usePackages();
-  const [state, setState] = React.useState({ pageNumber: 1, totalItems: 0 });
+  const [state, setState] = React.useState({
+    pageNumber: 1,
+    totalItems: pageSize,
+  });
   const { pageNumber } = state;
-  console.log(store);
 
   React.useEffect(() => {
     getPackages(dispatch, { pageNumber, pageSize });
-  }, []);
+  }, [state]);
 
-  const HandleLoadMore = (e) => {
+  const HandleLoadMore = debounce((e) => {
     const isAtBottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
 
     if (isAtBottom && store.totalRecords > state.totalItems) {
-      getPackages(dispatch, { pageNumber: pageNumber, pageSize });
-      setState((prev) => ({
-        pageNumber: prev.pageNumber + 1,
-        totalItems: prev.totalItems + pageNumber,
-      }));
+      setState((prev) => {
+        const numberOfItems = prev.totalItems + pageNumber;
+        return {
+          pageNumber: prev.pageNumber + 1,
+          totalItems:
+            store.totalRecords > numberOfItems
+              ? numberOfItems
+              : store.totalRecords,
+        };
+      });
     }
-  };
+  }, 500);
 
-  const option = store?.packages.map((e) => ({
+  const option = store.packages.map((e) => ({
     title: e.package_title,
     description: e.package_details,
     slug: e.package_slug,
@@ -99,7 +107,7 @@ const MainPageBooking = () => {
                 <DropdownShowcase
                   {...field}
                   showSearch
-                  loading={store.isLoading}
+                  loading={isLoadingData}
                   loadMore={isLoadingData}
                   onPopupScroll={HandleLoadMore}
                   data={option}
