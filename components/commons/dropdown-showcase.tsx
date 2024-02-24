@@ -4,6 +4,9 @@ import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
+import { useInView } from "react-intersection-observer";
+import { StyledDivider } from "./common";
+import Loading from "./loading";
 
 const PanelSearch = styled.div`
   display: flex;
@@ -92,25 +95,47 @@ interface DestDropdownProps extends DropdownProps {
     slug: string;
     url: React.ComponentProps<typeof Image>["src"];
   }[];
+  view?: ((d: boolean) => void) | undefined;
+  loadMore?: boolean;
 }
 
-const DropdownShowcase: React.FC<DestDropdownProps> = ({ data, ...rest }) => {
-  const [dataCotent, setDataCotent] = React.useState(data);
+const DropdownShowcase: React.FC<DestDropdownProps> = ({
+  data,
+  view,
+  loadMore,
+  ...rest
+}) => {
+  const [dropdownOptions, setDropdownOptions] =
+    React.useState<typeof data>(data);
+  const { ref, inView } = useInView({ threshold: 1 });
 
   React.useEffect(() => {
-    setDataCotent(data);
-  }, [rest?.loading]);
+    setDropdownOptions(data);
+  }, [data]);
 
-  const option = (dataCotent || data)?.map((element, index) => {
+  React.useMemo(() => {
+    if (view) {
+      view(inView);
+    }
+  }, [inView]);
+
+  const option = dropdownOptions?.map((element, index) => {
     return {
       value: element.slug,
       label: (
-        <div key={index}>
+        <div
+          key={index}
+          ref={index === dropdownOptions?.length - 1 ? ref : null}>
           <DropDownSearchList
             imageUrl={element.url}
             title={element.title}
             description={element.description}
           />
+          {index === dropdownOptions?.length - 1 && loadMore ? (
+            <div className="mx-auto w-fit mt-5">
+              <Loading />
+            </div>
+          ) : null}
         </div>
       ),
       customLabel: element.title,

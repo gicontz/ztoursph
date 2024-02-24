@@ -44,12 +44,27 @@ const ContainerCard = styled.div`
 `;
 
 const MainPageBooking = () => {
-  const { control, handleSubmit } = useForm();
+  const pageSize = 3;
+  const { handleSubmit, control } = useForm();
   const [store, dispatch] = usePackages();
+  const [state, setState] = React.useState({ pageNumber: 1, totalItems: 0 });
 
   React.useEffect(() => {
-    getPackages(dispatch, { pageNumber: 1, pageSize: 9 });
+    const { pageNumber } = state;
+    getPackages(dispatch, { pageNumber, pageSize });
   }, []);
+
+  const HandleLoadPackage = (d: boolean) => {
+    if (store.totalRecords > state.totalItems && d) {
+      const { pageNumber } = state;
+      getPackages(dispatch, { pageNumber: pageNumber, pageSize });
+      setState((prev) => ({
+        ...prev,
+        pageNumber: prev.pageNumber + 1,
+        totalItems: pageSize,
+      }));
+    }
+  };
 
   const option = store?.packages.map((e) => ({
     title: e.package_title,
@@ -68,6 +83,8 @@ const MainPageBooking = () => {
       .toLowerCase()
       .includes(input.toLowerCase());
 
+  const isLoadingData = React.useMemo(() => store.isLoading, [store.isLoading]);
+
   return (
     <div className="relative mx-auto w-full">
       <form onSubmit={handleSubmit((data) => console.log(data))}>
@@ -79,8 +96,10 @@ const MainPageBooking = () => {
               return (
                 <DropdownShowcase
                   {...field}
-                  loading={store.isLoading}
                   showSearch
+                  loading={isLoadingData}
+                  loadMore={isLoadingData}
+                  view={HandleLoadPackage}
                   data={option}
                   optionLabelProp="customLabel"
                   placeholder="I want to go"
