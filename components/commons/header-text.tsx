@@ -38,7 +38,7 @@ const HeaderText: React.FC<HeaderSectionProps> = ({
   size,
 }) => {
   return (
-    <Combine href={link ? link : "none"} haslink={link !== undefined}>
+    <Combine haslink={link !== undefined} href={link ? link : "none"}>
       <Text size={size}>{children}</Text>
       {underline && (
         <svg width="110" height="2" xmlns="http://www.w3.org/2000/svg">

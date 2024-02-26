@@ -104,7 +104,7 @@ const ReviewsContainer = styled.div`
   }
 `;
 
-const DescriptionContainer = styled.h4`
+const DescriptionContainer = styled.div`
   margin: 0.7rem 0 1rem 0;
   font-size: 0.75rem;
   overflow: hidden;
