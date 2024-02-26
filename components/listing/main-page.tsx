@@ -1,11 +1,11 @@
 import { PanelSection } from "@components/commons/common";
-import HeaderSection from "@components/commons/header-section";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import { getTours, useTours } from "@app/modules/tours/actions";
 import TourCard from "./tours-card";
 import Skeleton from "@components/commons/skeleton";
+import HeaderText from "@components/commons/header-text";
 
 const ListCardsContainer = styled.div`
   width: 100%;
@@ -48,7 +48,7 @@ const MainPageListing = () => {
 
   return (
     <Panel>
-      <HeaderSection underline>Adventure, guided wonders await.</HeaderSection>
+      <HeaderText underline>Adventure, guided wonders await.</HeaderText>
       <Description>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         <Link href={"/tours"}>View All Tours</Link>

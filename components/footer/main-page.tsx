@@ -25,7 +25,7 @@ const FooterContainer = styled(PanelSection)`
   gap: 0.9rem;
 `;
 
-const HeaderText = styled.h1`
+const HeaderText = styled.h4`
   font-size: 1rem;
   color: #c5fbd8;
 `;
@@ -112,7 +112,7 @@ const Contents = styled.div`
   grid-template-rows: 30px 1fr;
   margin-bottom: 10px;
 
-  h1 {
+  h4 {
     grid-row-start: 1;
     margin-bottom: 0.2rem;
   }

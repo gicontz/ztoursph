@@ -135,7 +135,7 @@ const TextWithIcon: React.FC<TextWithIconProps> = ({
     }}
     target="_blank"
     href={link || "none"}>
-    {icon} <h1>{children}</h1>
+    {icon} <p>{children}</p>
   </Link>
 );
 

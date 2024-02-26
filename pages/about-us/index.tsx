@@ -1,4 +1,4 @@
-import HeaderSection from "@components/commons/header-section";
+import HeaderText from "@components/commons/header-text";
 import Layout from "@components/pages/layout";
 import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
@@ -99,8 +99,8 @@ const ImageIndividual: React.FC<ImageIndividualProps> = ({
         width={500}
         height={500}
       />
-      <h1 className="font-bold text-xl mt-5">{name}</h1>
-      <h2 className="text-sm">{title}</h2>
+      <h4 className="font-bold text-xl mt-5">{name}</h4>
+      <p className="text-sm">{title}</p>
     </div>
   );
 };
@@ -174,9 +174,9 @@ const AboutUs = () => {
       />
       <AboutUsContainer>
         <AboutUsSection>
-          <HeaderSection link=" " size={2} underline>
+          <HeaderText size={2} underline>
             About us
-          </HeaderSection>
+          </HeaderText>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
             condimentum nulla. Nullam ultrices tempus ligula, eget luctus magna
@@ -187,9 +187,9 @@ const AboutUs = () => {
           </p>
         </AboutUsSection>
         <AboutUsSection>
-          <HeaderSection link=" " size={2} underline>
+          <HeaderText link=" " size={2} underline>
             Our Mission
-          </HeaderSection>
+          </HeaderText>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
             condimentum nulla. Nullam ultrices tempus ligula, eget luctus magna
@@ -204,9 +204,9 @@ const AboutUs = () => {
           </ul>
         </AboutUsSection>
         <AboutUsSection>
-          <HeaderSection link=" " size={2} underline>
+          <HeaderText size={2} underline>
             Our Journey
-          </HeaderSection>
+          </HeaderText>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
             condimentum nulla. Nullam ultrices tempus ligula, eget luctus magna
@@ -218,9 +218,9 @@ const AboutUs = () => {
           />
         </AboutUsSection>
         <AboutUsSection>
-          <HeaderSection link=" " size={2} underline>
+          <HeaderText link=" " size={2} underline>
             Our Team
-          </HeaderSection>
+          </HeaderText>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
             condimentum nulla. Nullam ultrices tempus ligula, eget luctus magna

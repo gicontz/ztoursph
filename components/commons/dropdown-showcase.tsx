@@ -34,10 +34,6 @@ const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  h1 {
-    font-size: 0.9rem;
-  }
-
   p {
     font-size: 0.8rem;
   }
