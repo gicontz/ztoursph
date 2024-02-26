@@ -110,12 +110,12 @@ const ImageTeam: React.FC<ImageTeamProps> = ({ department, data }) => {
     <>
       <h2 className="font-bold text-2xl">{department}</h2>
       <div className="card_divider">
-        {data?.map((e) => (
+        {data?.map((d, index) => (
           <ImageIndividual
-            key={e.name}
-            name={e.name}
-            title={e.title}
-            url={e.url}
+            key={index}
+            name={d.name}
+            title={d.title}
+            url={d.url}
           />
         ))}
       </div>

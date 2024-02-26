@@ -104,7 +104,7 @@ const ReviewsContainer = styled.div`
   }
 `;
 
-const DescriptionContainer = styled.h1`
+const DescriptionContainer = styled.h4`
   margin: 0.7rem 0 1rem 0;
   font-size: 0.75rem;
   overflow: hidden;
@@ -117,11 +117,10 @@ const DescriptionContainer = styled.h1`
   }
 `;
 
-const PackageTitle = styled.h1`
+const PackageTitle = styled.h3`
   overflow: hidden;
   max-width: 180px;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -163,7 +162,7 @@ const PackageCard = ({ data }) => {
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
             <PackageTitle>{data.package_title}</PackageTitle>
-            <h1 className="whitespace-nowrap">₱ {data.price}</h1>
+            <p className="whitespace-nowrap">₱ {data.price}</p>
           </TitlePriceContainer>
           <DescriptionContainer>
             {parse(data.package_details)}

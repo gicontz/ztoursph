@@ -137,7 +137,7 @@ const MainPageBooking = () => {
                   className="w-10"
                   options={optionTravellers}
                   placeholder="Travellers"
-                  prefixIcon={<TravellersIcon />}
+                  prefixicon={<TravellersIcon />}
                   filterOption={(inputValue, option) =>
                     typeof inputValue === "number" &&
                     option?.label === inputValue

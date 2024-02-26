@@ -27,7 +27,7 @@ const CardContainer = styled.div`
     width: 15rem;
     font-size: 8px;
   }
-  
+
   @media (max-width: 570px) {
     height: 20rem;
     width: 60%;
@@ -105,7 +105,7 @@ const ReviewsContainer = styled.div`
   }
 `;
 
-const DescriptionContainer = styled.h1`
+const DescriptionContainer = styled.div`
   margin: 0.7rem 0 1rem 0;
   font-size: 0.75rem;
   overflow: hidden;
@@ -118,11 +118,10 @@ const DescriptionContainer = styled.h1`
   }
 `;
 
-const TourTitle = styled.h1`
+const TourTitle = styled.h3`
   overflow: hidden;
   max-width: 180px;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -168,7 +167,7 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
             <TourTitle>{data.tour_title}</TourTitle>
-            <h1 className="whitespace-nowrap">₱ {data.price}</h1>
+            <p className="whitespace-nowrap">₱ {data.price}</p>
           </TitlePriceContainer>
           <DescriptionContainer>
             {parse(data.package_details)}

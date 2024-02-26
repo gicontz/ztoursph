@@ -159,9 +159,7 @@ const StyledLink = styled(Link)`
 const MainPageFooter = () => {
   const { handleSubmit, control } = useForm();
 
-  const onSubmit: SubmitHandler<{ email: string }> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<{ email: string }> = (data) => console.log(data);
 
   return (
     <FooterContainer>

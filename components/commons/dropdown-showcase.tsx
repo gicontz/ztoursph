@@ -84,7 +84,7 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
   );
 };
 
-interface DestDropdownProps extends DropdownProps {
+interface DropdownShowcaseProps extends DropdownProps {
   data: {
     title: string;
     description: string;
@@ -94,7 +94,7 @@ interface DestDropdownProps extends DropdownProps {
   loadMore?: boolean;
 }
 
-const DropdownShowcase: React.FC<DestDropdownProps> = ({
+const DropdownShowcase: React.FC<DropdownShowcaseProps> = ({
   data,
   loadMore,
   ...rest

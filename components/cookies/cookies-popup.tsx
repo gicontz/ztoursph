@@ -15,7 +15,6 @@ const CookiesPopUp = () => {
 
   React.useEffect(() => {
     if (localStorage.getItem("agree_cookies_policy") !== "true") {
-      console.log(!Boolean(localStorage.getItem("agree_cookies_policy")));
       setTimeout(() => {
         setShow(true);
       }, 2500);

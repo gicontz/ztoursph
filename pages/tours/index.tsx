@@ -61,7 +61,6 @@ export default function Tours() {
 
   React.useEffect(() => {
     const { pageNumber } = state;
-    console.log("get");
     getTours(dispatch, { pageNumber, pageSize });
   }, []);
 
@@ -76,8 +75,6 @@ export default function Tours() {
       }));
     }
   };
-
-  console.log(store);
 
   return (
     <Layout contained>

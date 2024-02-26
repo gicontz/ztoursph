@@ -3,7 +3,7 @@ import PageBanner from "@components/pages/page-banner";
 import React from "react";
 import styled from "@emotion/styled";
 import { PanelSection } from "@components/commons/common";
-import HeaderSection from "@components/commons/header-section";
+import HeaderText from "@components/commons/header-text";
 
 const CookiesContainer = styled(PanelSection)`
   display: flex;
@@ -21,9 +21,9 @@ const CookiesPolicy = () => {
         bannerImage="https://a.cdn-hotels.com/gdcs/production13/d1585/20120d80-bf76-4553-89f4-0098f94423d8.jpg"
       />
       <CookiesContainer>
-        <HeaderSection size={2} underline>
+        <HeaderText size={2} underline>
           What are cookies?
-        </HeaderSection>
+        </HeaderText>
         <p>
           This Cookie Policy explains what cookies are and how we use them, the
           types of cookies we use i.e, the information we collect using cookies
@@ -38,7 +38,7 @@ const CookiesPolicy = () => {
           understand how the website performs and to analyze what works and
           where it needs improvement.
         </p>
-        <HeaderSection size={2}>How do we use cookies?</HeaderSection>
+        <HeaderText size={2}>How do we use cookies?</HeaderText>
         <p>
           As most of the online services, our website uses first-party and
           third-party cookies for several purposes. First-party cookies are
