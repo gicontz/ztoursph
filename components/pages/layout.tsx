@@ -12,18 +12,12 @@ const defaultFont = Poppins({
 });
 
 const Layout = ({ contained = false, children }) => {
-  const { ref, inView } = useInView({ threshold: 0 });
-
-  console.log(inView);
-
   return (
     <main
       className={`relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh] App ${defaultFont.className}`}>
       <Row
-        ref={ref}
-        className={`top-0 left-0 w-full !max-w-full bg-white z-20 sticky ${
-          inView ? "h-24" : "ease-in-out duration-300 "
-        }`}>
+        className={`top-0 left-0 w-full  h-24 !max-w-full bg-white sticky opacity-1 z-20
+        `}>
         <Header />
       </Row>
       <CookiesPopUp />

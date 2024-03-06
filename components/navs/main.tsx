@@ -30,7 +30,7 @@ const MainNav = () => {
       ))}
       <Tooltip label="My Trips">
         <Link href="/trips">
-          <MdOutlineAirplaneTicket size="2em" />
+          <MdOutlineAirplaneTicket color="black" size="2em" />
         </Link>
       </Tooltip>
       <Tooltip label="My Account">

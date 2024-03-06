@@ -69,7 +69,7 @@ const NavPanel = styled.ul<{ visible?: boolean }>`
 const Hamburger = styled.div`
   width: 20px;
   height: 2px;
-  background-color: #533557;
+  background-color: black;
   border-radius: 5px;
   z-index: 20;
   transition: all 0.5s ease;
@@ -79,7 +79,7 @@ const Hamburger = styled.div`
     position: absolute;
     width: 20px;
     height: 2px;
-    background: #533557;
+    background: #ffff;
     border-radius: 5px;
     transition: all 0.5s ease;
   }
@@ -103,13 +103,13 @@ const MobileNavs: FunctionComponent = () => {
     <Container className="flex lg:hidden">
       <Tooltip label="My Trips">
         <Link href="/trips" className="mr-4">
-          <MdOutlineAirplaneTicket size="2em" />
+          <MdOutlineAirplaneTicket color="black" size="2em" />
         </Link>
       </Tooltip>
 
       <Tooltip label="My Account">
         <Link href="/account">
-          <MdPerson size="2em" />
+          <MdPerson color="black" size="2em" />
         </Link>
       </Tooltip>
 
