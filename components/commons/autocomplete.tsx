@@ -36,14 +36,14 @@ const AutoCompleteWrapper = styled.div<{ icon?: boolean }>`
 `;
 
 interface AutoComplete extends AutoCompleteProps {
-  prefixIcon?: ReactNode;
+  prefixicon?: ReactNode;
 }
 
 const AutoComplete: React.FC<AutoComplete> = ({ ...rest }) => {
   return (
-    <AutoCompleteWrapper icon={rest?.prefixIcon ? true : false}>
-      {rest?.prefixIcon && (
-        <div className="prefix-icon-wrapper">{rest?.prefixIcon}</div>
+    <AutoCompleteWrapper icon={rest?.prefixicon ? true : false}>
+      {rest?.prefixicon && (
+        <div className="prefix-icon-wrapper">{rest?.prefixicon}</div>
       )}
       <StyledAutoComplete {...rest} />
     </AutoCompleteWrapper>

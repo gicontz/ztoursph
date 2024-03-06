@@ -1,7 +1,6 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { debounce } from "lodash";
-
 import RangePickerComponent from "@components/commons/range-picker";
 import Button from "@components/commons/button";
 import AutoComplete from "@components/commons/autocomplete";
@@ -138,7 +137,7 @@ const MainPageBooking = () => {
                   className="w-10"
                   options={optionTravellers}
                   placeholder="Travellers"
-                  prefixIcon={<TravellersIcon />}
+                  prefixicon={<TravellersIcon />}
                   filterOption={(inputValue, option) =>
                     typeof inputValue === "number" &&
                     option?.label === inputValue

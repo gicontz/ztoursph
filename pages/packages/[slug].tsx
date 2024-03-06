@@ -62,8 +62,6 @@ export default function Packages() {
     if (typeof slug === "string") getPackageBySlug(dispatch, slug);
   }, [slug]);
 
-  console.log(store.selectedPackage);
-
   const parsedPackageDetails = store.selectedPackage ? (
     parse(store.selectedPackage.package_details)
   ) : (

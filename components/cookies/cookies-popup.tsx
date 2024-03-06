@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Button from "@components/commons/button";
-import HeaderSection from "@components/commons/header-section";
 import Link from "next/link";
+import HeaderText from "@components/commons/header-text";
 
 const CookiesPopUp = () => {
   const [consent, setConsent] = React.useState(false);
@@ -15,7 +15,6 @@ const CookiesPopUp = () => {
 
   React.useEffect(() => {
     if (localStorage.getItem("agree_cookies_policy") !== "true") {
-      console.log(!Boolean(localStorage.getItem("agree_cookies_policy")));
       setTimeout(() => {
         setShow(true);
       }, 2500);
@@ -57,7 +56,7 @@ const CookiesPopUp = () => {
   return (
     <PopUp visible={show}>
       <div>
-        <HeaderSection size={2}>Cookies Policy</HeaderSection>
+        <HeaderText size={2}>Cookies Policy</HeaderText>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
           interdum iaculis lectus, sed interdum velit convallis a. Curabitur

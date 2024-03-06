@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { Poppins } from "next/font/google";
 import React from "react";
 import Category from "@components/faq/faq-category";
-import HeaderSection from "@components/commons/header-section";
+import HeaderText from "@components/commons/header-text";
 
 const poppins = Poppins({
   weight: "400",
@@ -43,8 +43,7 @@ const FAQCategoryContainer = styled(PanelSection)`
     }
   }
 
-  h2,
-  h1 {
+  h2 {
     font-weight: 400;
     font-size: 1.4rem;
     color: #233d2c;
@@ -55,14 +54,16 @@ const FAQCategoryContainer = styled(PanelSection)`
   }
 `;
 
-const StyledButton = styled(Button)<{ onClickCategory: boolean }>`
+const StyledButton = styled(Button)<{ highlightcategory: String }>`
   height: fit-content;
   padding: 0;
   margin: 0;
   transition: font-weight, font-size 0.1s ease;
-  font-size: ${(props) => (props.onClickCategory ? "1.4rem" : "1rem")};
-  font-weight: ${(props) => (props.onClickCategory ? "700" : "400")};
-  ${(props) => (props.onClickCategory ? "700" : "400")};
+  font-size: ${({ highlightcategory }) =>
+    Boolean(highlightcategory) ? "1.4rem" : "1rem"};
+  font-weight: ${({ highlightcategory }) =>
+    Boolean(highlightcategory) ? "700" : "400"};
+  ${({ highlightcategory }) => (Boolean(highlightcategory) ? "700" : "400")};
   @media screen and (max-width: 800px) {
     font-size: 1.1rem;
   }
@@ -89,14 +90,14 @@ const FreaquentlyAskQuestion = () => {
         />
         <FAQCategoryContainer>
           <div>
-            <HeaderSection>Question Category</HeaderSection>
+            <HeaderText>Question Category</HeaderText>
             <ul>
               {["About us", , "Our Tours", "Legals", "Contact"].map((item) => (
                 <li key={item}>
                   <StyledButton
                     className={poppins.className}
                     onClick={() => handleCategoryClick(item)}
-                    onClickCategory={category === item}
+                    highlightcategory={String(category === item)}
                     type="link">
                     {item}
                   </StyledButton>

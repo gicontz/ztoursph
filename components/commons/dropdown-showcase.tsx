@@ -34,10 +34,6 @@ const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  h1 {
-    font-size: 0.9rem;
-  }
-
   p {
     font-size: 0.8rem;
   }
@@ -88,7 +84,7 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
   );
 };
 
-interface DestDropdownProps extends DropdownProps {
+interface DropdownShowcaseProps extends DropdownProps {
   data: {
     title: string;
     description: string;
@@ -98,7 +94,7 @@ interface DestDropdownProps extends DropdownProps {
   loadMore?: boolean;
 }
 
-const DropdownShowcase: React.FC<DestDropdownProps> = ({
+const DropdownShowcase: React.FC<DropdownShowcaseProps> = ({
   data,
   loadMore,
   ...rest

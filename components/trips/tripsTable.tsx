@@ -79,7 +79,6 @@ interface TripsTableProps {
 }
 
 const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
-  console.log(SourceSerif.className);
   const content = data.map((e, i) => (
     <PackageCard
       key={i}

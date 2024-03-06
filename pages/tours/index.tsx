@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import HeaderSection from "@components/commons/header-section";
 import { Row } from "@components/commons/common";
 import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
@@ -7,6 +6,7 @@ import React, { useState } from "react";
 import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
 import TourCard from "@components/listing/tours-card";
+import HeaderText from "@components/commons/header-text";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -61,7 +61,6 @@ export default function Tours() {
 
   React.useEffect(() => {
     const { pageNumber } = state;
-    console.log("get");
     getTours(dispatch, { pageNumber, pageSize });
   }, []);
 
@@ -77,12 +76,10 @@ export default function Tours() {
     }
   };
 
-  console.log(store);
-
   return (
     <Layout contained>
       <Row className="!mt-10">
-        <HeaderSection underline>Our Tour Collection</HeaderSection>
+        <HeaderText underline>Our Tour Collection</HeaderText>
       </Row>
       <Row className="!mt-5 !mb-10">
         <Description>
