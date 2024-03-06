@@ -73,7 +73,7 @@ const MainPageBooking = () => {
         };
       });
     }
-  }, 500);
+  });
 
   const option = store.packages.map((e) => ({
     title: e.package_title,
