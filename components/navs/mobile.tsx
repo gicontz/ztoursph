@@ -9,7 +9,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #ffffff;
-  color: #533557;
+  color: black;
   padding: 0 10px;
   z-index: 10;
 `;
@@ -45,9 +45,10 @@ const MenuToggler = styled.input`
 const NavPanel = styled.ul<{ visible?: boolean }>`
   position: absolute;
   z-index: 1;
+  color: #533557;
   background-color: #ffffff;
   left: ${({ visible }) => (visible ? "25%" : "100%")};
-  height: 100%;
+  height: 100vh;
   width: 55%;
   margin-left: 20%;
   padding: 20px 0;
@@ -69,7 +70,7 @@ const NavPanel = styled.ul<{ visible?: boolean }>`
 const Hamburger = styled.div`
   width: 20px;
   height: 2px;
-  background-color: #533557;
+  background-color: black;
   border-radius: 5px;
   z-index: 20;
   transition: all 0.5s ease;
@@ -79,7 +80,7 @@ const Hamburger = styled.div`
     position: absolute;
     width: 20px;
     height: 2px;
-    background: #533557;
+    background: black;
     border-radius: 5px;
     transition: all 0.5s ease;
   }
@@ -107,11 +108,11 @@ const MobileNavs: FunctionComponent = () => {
         </Link>
       </Tooltip>
 
-      <Tooltip label="My Account">
+      {/* <Tooltip label="My Account">
         <Link href="/account">
           <MdPerson size="2em" />
         </Link>
-      </Tooltip>
+      </Tooltip> */}
 
       <LabelMenuBtn htmlFor="screen1_menu_check" />
       <MenuToggler
