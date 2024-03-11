@@ -162,7 +162,7 @@ export default function Packages() {
             <StyledDivider />
           </div>
 
-          <SlugBookingForm onSubmit={(e) => console.log(e)} type="package" />
+          <SlugBookingForm onSubmit={(e) => console.log(e)} type="packages" />
         </Row>
       </Panel>
       <br />
