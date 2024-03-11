@@ -6,6 +6,8 @@ import { Controller, useForm } from "react-hook-form";
 import TravelersInput from "./travelerInput";
 import CustomDropDown from "./custom-dropdown";
 import Button from "./button";
+import PopupAddTrips from "@components/trips/pop-up";
+import { useCookies } from "react-cookie";
 
 const BookingContainer = styled.div`
   display: flex;
@@ -58,16 +60,21 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
   onSubmit,
   type,
 }) => {
+  const [_, setBooking] = useCookies([type]);
   const { handleSubmit, control } = useForm();
+  const [addTrip, setAddToTrip] = useState<any | undefined>();
   const [travellersArray, setTravellersArray] = useState<string[]>();
   const onSubmitFunc = (formData) => {
     formData.Travelers = travellersArray;
     formData.numberOfTravelers = travellersArray?.length;
+    setAddToTrip(formData);
+    setBooking("booking", formData);
     onSubmit(formData);
   };
 
   return (
     <BookingContainer>
+      {addTrip && <PopupAddTrips type="tours" />}
       <Form onSubmit={handleSubmit(onSubmitFunc)}>
         <LabelHeader>
           <h3>Date of {type}</h3>
@@ -76,6 +83,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
         <Controller
           name="date"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => (
             <Datepicker {...field} className="expand" name="Date" />
           )}
@@ -97,6 +105,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
         <Controller
           name="pick-up"
           control={control}
+          rules={{ required: true }}
           render={({ field }) => (
             <CustomDropDown
               {...field}
