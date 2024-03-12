@@ -13,6 +13,7 @@ const BookingContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin: 0 10px 0 10px;
 
   .expand {
     width: 100%;
