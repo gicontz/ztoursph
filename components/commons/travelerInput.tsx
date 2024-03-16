@@ -74,7 +74,9 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
       return;
     }
   };
+
   onChange(names);
+  
   const nameList = names.map((name, index) => (
     <>
       <p className="text-sm -mb-[0.5rem] font-thin font-['Source_Serif_Pro']">

@@ -72,16 +72,17 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
     const data = booking.Added_Trips
       ? booking.Added_Trips.slice().concat(formData)
       : [formData];
-
-    console.log(type.charAt(0).toUpperCase() + type.slice(1));
-
-    formData.details = details;
-    formData.travelers = travellersArray;
-    formData.numberOfTravelers = travellersArray?.length;
-    formData.category = type.charAt(0).toUpperCase() + type.slice(1);
-    setAddToTrip(formData);
-    setBooking("Added_Trips", data);
-    onSubmit(formData);
+      
+      if(travellersArray?.length !== 0) {
+        formData.details = details;
+        formData.travelers = travellersArray;
+        formData.numberOfTravelers = travellersArray?.length;
+        formData.category = type.charAt(0).toUpperCase() + type.slice(1);
+        setAddToTrip(formData);
+        setBooking("Added_Trips", data);
+        onSubmit(formData);
+      }
+    
   };
 
   return (
