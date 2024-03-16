@@ -33,6 +33,9 @@ const Description = styled.div`
   a {
     text-decoration: underline;
   }
+  p{
+    width: 70%;
+  }
 
   @media (max-width: 768px) {
     font-size: 0.6rem;
@@ -48,9 +51,9 @@ const MainPageListing = () => {
 
   return (
     <Panel>
-      <HeaderText underline>Adventure, guided wonders await.</HeaderText>
+      <HeaderText underline>Packand Go: Set Your Adventurous Seascapes with ZTours.ph</HeaderText>
       <Description>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Nothing beats nature's vibe! Experience the most enchanting hideaways, awe-inspiring islands, and underwater adventures tailored just for you! So, what are you waiting for? Book your exciting adventure with us!</p>
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       {!store.isLoading && store.tours ? (

@@ -32,7 +32,7 @@ const TextsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 10px;
-  width: 43%;
+  width: 50%;
 
   font-size: 0.9rem;
   gap: 0.5rem;
@@ -74,8 +74,7 @@ const MainPageClosing = () => {
         <TextsContainer>
           <h4>Escape from your 9 to 5</h4>
           <p>
-            We are happy to give you the best and memorable experience vacation
-            here in El nido.
+          Having a nature break is one of the best options for relaxation and self-reward; offering an escape from the unending hustle and bustle in your daily life. Take a pause, refresh your mind, and don't forget to have fun sometimes! In ZTours.ph, your happiness and satisfaction are our priority.
           </p>
           <Link href="/tours" target="_blank">
             See All Tours

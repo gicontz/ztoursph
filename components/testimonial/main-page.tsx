@@ -83,15 +83,9 @@ const MainPageTestimonial = () => {
     <TestimonialContainer>
       <Panel>
         <TextsContainer>
-          <h1>A truly wonderful experience</h1>
+          <h1>Spreading good news!</h1>
           <p>
-            Brilliant for anyone looking to get away from the hustle and bustle
-            of city life or detox from their tech for a few days. I could have
-            stayed another week!
-          </p>
-          <p>
-            They really have thought about everything here down to the finest
-            details.
+          Give us a quick review by sending your thoughts and success story of your travels with us! For we take those as our motivation to continuously provide you a better to best services in the near future encounter.  
           </p>
           <div className="rate">
             <StyledRate disabled allowHalf defaultValue={4.8} />
