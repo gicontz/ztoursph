@@ -7,6 +7,7 @@ import AddedTrip from "./added-trip";
 import Button from "@components/commons/button";
 import { Modal } from "antd";
 import { useCookies } from "react-cookie";
+import { StyledDivider } from "@components/commons/common";
 
 const font = Poppins({
   weight: "400",
@@ -23,6 +24,7 @@ const Container = styled.div`
     // border: blue solid 1px;
   }
   display: flex;
+  color: #23432c;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -30,8 +32,9 @@ const Container = styled.div`
 `;
 
 const PopupAddTrips = ({ type }) => {
-  const [booking] = useCookies([type]);
-  console.log(booking);
+  const [booking] = useCookies(["Added_Trips"]);
+  console.log(booking.Added_Trips.slice(1));
+
   return (
     <Modal open={true} closable={false} footer={false}>
       <Container className={font.className}>
@@ -39,7 +42,9 @@ const PopupAddTrips = ({ type }) => {
           <div className="w-fit mx-auto">
             <PlaneIcon />
           </div>
-          <p className="w-fit">Successfully Added to Trips!</p>
+          <p className="w-fit text-xl">
+            Successfully Added to {type === "tours" ? "Tours" : "Packages"}!
+          </p>
           <Link
             className={`${secondaryFont.className} underline text-center`}
             href={`/${type}`}>
@@ -48,16 +53,24 @@ const PopupAddTrips = ({ type }) => {
         </div>
 
         <div className="h-48 overflow-auto ">
-          <AddedTrip />
-          <AddedTrip />
-          <AddedTrip />
-          <AddedTrip />
+          {
+            <AddedTrip
+              content={booking.Added_Trips.slice().reverse().slice()[0]}
+            />
+          }
+          <StyledDivider />
+          {booking.Added_Trips.slice()
+            .reverse()
+            .slice(1)
+            .map((d, i) => {
+              return <AddedTrip key={i} content={d} />;
+            })}
         </div>
 
         <div className="flex justify-center gap-3">
           <Link href="/trips">
             <Button className="underline h-10 text-lg" type="link">
-              Go To {type.charAt(0).toUpperCase() + type.slice(1)}
+              Go To Trips
             </Button>
           </Link>
           <Button className="underline h-10 text-lg" type="primary">

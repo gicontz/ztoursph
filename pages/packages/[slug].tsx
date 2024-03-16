@@ -9,6 +9,7 @@ import Skeleton from "@components/commons/skeleton";
 import { getPackageBySlug, usePackages } from "@app/modules/packages/actions";
 import ImageTemplate from "@components/commons/image-template";
 import SlugBookingForm from "@components/commons/slug-booking-form";
+import { title } from "process";
 
 const Panel = styled(Row)`
   display: flex;
@@ -96,6 +97,11 @@ export default function Packages() {
       <Skeleton times={1} className="h-[2.5rem]" />
     );
 
+  const detail = {
+    title: store.selectedPackage?.package_title,
+    banner: store.selectedPackage?.package_banner_image,
+  };
+
   return (
     <Layout>
       <div>
@@ -162,7 +168,11 @@ export default function Packages() {
             <StyledDivider />
           </div>
 
-          <SlugBookingForm onSubmit={(e) => console.log(e)} type="packages" />
+          <SlugBookingForm
+            onSubmit={(e) => console.log(e)}
+            details={detail}
+            type="packages"
+          />
         </Row>
       </Panel>
       <br />

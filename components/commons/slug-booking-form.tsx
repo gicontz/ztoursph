@@ -55,27 +55,39 @@ const StyledButton = styled(Button)`
 type SlugBookingFormProps = {
   onSubmit: (d: any) => void;
   type: string;
+  details: { title: string | undefined; banner: string | undefined };
 };
 
 const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
   onSubmit,
   type,
+  details,
 }) => {
-  const [_, setBooking] = useCookies([type]);
+  const [booking, setBooking] = useCookies([type]);
   const { handleSubmit, control } = useForm();
   const [addTrip, setAddToTrip] = useState<any | undefined>();
   const [travellersArray, setTravellersArray] = useState<string[]>();
+
   const onSubmitFunc = (formData) => {
-    formData.Travelers = travellersArray;
-    formData.numberOfTravelers = travellersArray?.length;
-    setAddToTrip(formData);
-    setBooking("booking", formData);
-    onSubmit(formData);
+    const data = booking.Added_Trips
+      ? booking.Added_Trips.slice().concat(formData)
+      : [formData];
+      
+      if(travellersArray?.length !== 0) {
+        formData.details = details;
+        formData.travelers = travellersArray;
+        formData.numberOfTravelers = travellersArray?.length;
+        formData.category = type.charAt(0).toUpperCase() + type.slice(1);
+        setAddToTrip(formData);
+        setBooking("Added_Trips", data);
+        onSubmit(formData);
+      }
+    
   };
 
   return (
     <BookingContainer>
-      {addTrip && <PopupAddTrips type="tours" />}
+      {addTrip && <PopupAddTrips type={type} />}
       <Form onSubmit={handleSubmit(onSubmitFunc)}>
         <LabelHeader>
           <h3>Date of {type}</h3>
@@ -104,7 +116,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </LabelHeader>
         <Controller
-          name="pick-up"
+          name="locationPickUp"
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
