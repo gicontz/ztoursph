@@ -9,6 +9,9 @@ import Skeleton from "@components/commons/skeleton";
 import { getTourBySlug, useTours } from "@app/modules/tours/actions";
 import SlugBookingForm from "@components/commons/slug-booking-form";
 import ImageTemplate from "@components/commons/image-template";
+import { useCookies } from "react-cookie";
+import PopupAddTrips from "@components/trips/pop-up";
+import { PlaneIcon } from "@components/commons/icons";
 
 const Panel = styled(Row)`
   display: flex;
