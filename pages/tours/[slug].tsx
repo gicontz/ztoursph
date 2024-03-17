@@ -3,12 +3,15 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import PageTitle from "@components/pages/page-title";
 import Layout from "@components/pages/layout";
-import React from "react";
+import React, { useState } from "react";
 import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
 import { getTourBySlug, useTours } from "@app/modules/tours/actions";
-import SlugBookingForm from "@components/commons/slug-booking-form";
+import BookingForm from "@components/commons/booking-form";
 import ImageTemplate from "@components/commons/image-template";
+import { useCookies } from "react-cookie";
+import { MY_TRIPS } from "@constants/cookies";
+import PopupAddTrips from "@components/trips/pop-up";
 
 const Panel = styled(Row)`
   display: flex;
@@ -57,12 +60,14 @@ export default function Tours() {
   const router = useRouter();
   const slug = router.query.slug;
   const [store, dispatch] = useTours();
+  const [cookies, setCookies] = useCookies([MY_TRIPS]);
+  const [showCheckoutPopup, setShowCheckoutPopup] = useState(false);
 
   React.useEffect(() => {
     if (typeof slug === "string") getTourBySlug(dispatch, slug);
   }, [slug]);
 
-  const parsedPackageDetails = store.selectedTour ? (
+  const parsedPackageDetails = React.useMemo(() => store.selectedTour ? (
     parse(store.selectedTour.package_details)
   ) : (
     <>
@@ -70,7 +75,7 @@ export default function Tours() {
       <Skeleton times={3} className="h-3 w-11/12" />
       <Skeleton times={4} className="h-4 w-9/12" />
     </>
-  );
+  ), [store.selectedTour]);
 
   const priceContent =
     store.selectedTour?.discount && !store.isLoading ? (
@@ -100,6 +105,23 @@ export default function Tours() {
     banner: store.selectedTour?.tour_banner_image,
   };
 
+  const handleSubmit = (id: string | number) => (data) => {
+    let existingTrips = cookies[MY_TRIPS] as any[];
+    
+    if (existingTrips) {
+      const index = existingTrips.findIndex((trip) => trip.id === id);
+      if (index !== -1) {
+        existingTrips[index] = { ...existingTrips[index], ...data };
+      } else {
+        existingTrips.unshift({ id, ...data });
+      }
+    } else {
+      existingTrips = [{ id, ...data }];
+    }
+    setCookies(MY_TRIPS, existingTrips);
+    setShowCheckoutPopup(true);
+  };
+
   return (
     <Layout>
       <div>
@@ -121,7 +143,7 @@ export default function Tours() {
         </Row>
         <Row>
           <PackageDetail>
-            {parsedPackageDetails && !store.isLoading ? (
+            {!store.isLoading ? (
               parsedPackageDetails
             ) : (
               <>
@@ -165,15 +187,17 @@ export default function Tours() {
             <h2>Book This Tour</h2>
             <StyledDivider />
           </div>
-
-          <SlugBookingForm
-            onSubmit={(e) => console.log(e)}
-            details={detail}
-            type="tours"
-          />
+          {store.selectedTour &&
+            <BookingForm
+              onSubmit={handleSubmit(store.selectedTour.id)}
+              details={detail}
+              type="tours"
+            />
+          }
         </Row>
       </Panel>
       <br />
+      {showCheckoutPopup && <PopupAddTrips type="tours"/>}
     </Layout>
   );
 }

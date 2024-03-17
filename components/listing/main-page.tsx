@@ -19,6 +19,7 @@ const ListCardsContainer = styled.div`
 `;
 
 const Panel = styled(PanelSection)`
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;

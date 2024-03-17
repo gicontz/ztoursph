@@ -1,0 +1,1 @@
+export const MY_TRIPS = 'my_trips';

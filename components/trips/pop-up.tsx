@@ -8,6 +8,7 @@ import Button from "@components/commons/button";
 import { Modal } from "antd";
 import { useCookies } from "react-cookie";
 import { StyledDivider } from "@components/commons/common";
+import { MY_TRIPS } from "@constants/cookies";
 
 const font = Poppins({
   weight: "400",
@@ -32,11 +33,11 @@ const Container = styled.div`
 `;
 
 const PopupAddTrips = ({ type }) => {
-  const [booking] = useCookies(["Added_Trips"]);
-  console.log(booking.Added_Trips.slice(1));
+  const [booking] = useCookies([MY_TRIPS]);
+  const myTrips = booking[MY_TRIPS];
 
   return (
-    <Modal open={true} closable={false} footer={false}>
+    <Modal open closable footer={false}>
       <Container className={font.className}>
         <div className="flex flex-col justify-center gap-1">
           <div className="w-fit mx-auto">
@@ -53,17 +54,14 @@ const PopupAddTrips = ({ type }) => {
         </div>
 
         <div className="h-48 overflow-auto ">
-          {
-            <AddedTrip
-              content={booking.Added_Trips.slice().reverse().slice()[0]}
-            />
-          }
-          <StyledDivider />
-          {booking.Added_Trips.slice()
-            .reverse()
-            .slice(1)
+          {myTrips
             .map((d, i) => {
-              return <AddedTrip key={i} content={d} />;
+              return (
+                <React.Fragment key={`mytrip-${i}`}>
+                  <AddedTrip key={i} content={d} />
+                  {i === 0 &&  <StyledDivider />}
+                </React.Fragment>
+              );
             })}
         </div>
 

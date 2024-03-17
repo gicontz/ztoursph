@@ -8,7 +8,7 @@ import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
 import { getPackageBySlug, usePackages } from "@app/modules/packages/actions";
 import ImageTemplate from "@components/commons/image-template";
-import SlugBookingForm from "@components/commons/slug-booking-form";
+import SlugBookingForm from "@components/commons/booking-form";
 import { title } from "process";
 
 const Panel = styled(Row)`

@@ -67,26 +67,29 @@ const StyledButton = styled(Button)`
   font-size: 1.1rem;
 `;
 
-interface TripsTableProps {
-  data: {
+export type TTrip = {
+  details: {
+    banner: string;
     title: string;
-    imageUrl: string | { src: string };
-    date: string;
-    pickup: string;
-    price: number;
-    numberOfTraveller: number;
-  }[];
+  };
+  date: string;
+  locationPickup: string;
+  travelers: string[];
+}
+
+interface TripsTableProps {
+  data: TTrip[];
 }
 
 const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
   const content = data.map((e, i) => (
     <PackageCard
       key={i}
-      image={e.imageUrl}
-      title={e.title}
+      image={e.details.banner}
+      title={e.details.title}
       date={e.date}
-      pickup={e.pickup}
-      price={e.price}
+      pickup={e.locationPickup}
+      price={100}
       onUpdatePrice={(number: number) => console.log(number)}
     />
   ));

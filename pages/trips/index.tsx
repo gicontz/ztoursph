@@ -8,6 +8,8 @@ import TourB from "@assets/images/tour_b.jpg";
 import TourC from "@assets/images/tour_c.jpg";
 import styled from "@emotion/styled";
 import TripsTable from "@components/trips/tripsTable";
+import { useCookies } from "react-cookie";
+import { MY_TRIPS } from "@constants/cookies";
 
 const Panel = styled(Row)`
   margin: 2rem auto;
@@ -17,37 +19,13 @@ const Panel = styled(Row)`
 `;
 
 export default function Trips() {
-  const PackageDetail = [
-    {
-      title: "El Nido Island Tour A",
-      imageUrl: TourA,
-      date: "01/31/2024",
-      pickup: "To be Decided",
-      price: 1000,
-      numberOfTraveller: 2,
-    },
-    {
-      title: "El Nido Island Tour B",
-      imageUrl: TourB,
-      date: "01/31/2024",
-      pickup: "To be Decided",
-      price: 1000,
-      numberOfTraveller: 2,
-    },
-    {
-      title: "El Nido Island Tour C",
-      imageUrl: TourC,
-      date: "01/31/2024",
-      pickup: "To be Decided",
-      price: 1000,
-      numberOfTraveller: 2,
-    },
-  ];
+  const [cookies] = useCookies([MY_TRIPS]);
+  
   return (
     <Layout>
     <PageTitle title="My Trips" bgImage={BannerImage} />
       <Panel>
-        <TripsTable data={PackageDetail} />
+        <TripsTable data={cookies[MY_TRIPS]} />
       </Panel>
     </Layout>
   );
