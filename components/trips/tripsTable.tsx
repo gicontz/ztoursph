@@ -11,10 +11,6 @@ const SourceSerif = Source_Serif_4({
 });
 
 const Panel = styled(Row)`
-  * {
-    // border: 1px solid blue;
-  }
-  width: 60rem;
   margin: auto;
   h2 {
     width: 100%;
