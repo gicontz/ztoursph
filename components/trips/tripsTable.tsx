@@ -4,6 +4,7 @@ import { Row, StyledDivider } from "@components/commons/common";
 import Button from "@components/commons/button";
 import PackageCard from "./packageCard";
 import { Source_Serif_4 } from "next/font/google";
+import PopUp from "@components/checkout/pop-up";
 
 const SourceSerif = Source_Serif_4({
   subsets: ["latin"],
@@ -79,6 +80,10 @@ interface TripsTableProps {
 }
 
 const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
+  const [open, setIsOpen] = React.useState(false)
+  const CheckoutDetailModal = () => {
+    setIsOpen(true)
+  }
   const content = data.map((e, i) => (
     <PackageCard
       key={i}
@@ -93,6 +98,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
 
   return (
     <Panel>
+      <PopUp open={open}/>
       <TableContainer>
         <Column>
           <h2 className="expand">Trips</h2>
@@ -120,7 +126,8 @@ const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
           </div>
           <StyledButton
             type="primary"
-            className={`w-full ${SourceSerif.className}`}>
+            className={`w-full ${SourceSerif.className}`}
+            onClick={CheckoutDetailModal}>
             Proceed Checkout
           </StyledButton>
         </div>

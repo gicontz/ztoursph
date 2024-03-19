@@ -45,7 +45,7 @@ export default function Trips() {
   ];
   return (
     <Layout>
-    <PageTitle title="My Trips" bgImage={BannerImage} />
+      <PageTitle title="My Trips" bgImage={BannerImage} />
       <Panel>
         <TripsTable data={PackageDetail} />
       </Panel>

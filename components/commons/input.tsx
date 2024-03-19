@@ -1,36 +1,17 @@
 import React from "react";
-import { Controller } from "react-hook-form";
-import { ConfigProvider, Input } from "antd";
+import { Input as Int, InputProps } from "antd";
+import styled from "@emotion/styled";
 
-export interface CustomInputProps {
-  control: any;
+export interface CustomInputProps extends InputProps {
   name: string;
-  rules?: Record<string, any>;
-  placeholder?: string;
   type: string;
 }
+const StyledInput = styled(Int)`
+padding: 0.7rem;
+`
 
-export const CustomInput = ({
-  type = "text",
-  placeholder = "Enter Response",
-  ...rest
-}: CustomInputProps) => {
+export const Input: React.FC<CustomInputProps> = ({...rest}) => {
   return (
-    <Controller
-      name={rest.name}
-      control={rest.control}
-      rules={rest.rules}
-      render={({ field }) => (
-        <ConfigProvider
-          theme={{
-            token: {
-              colorBgContainer: "#EAEAEA",
-              borderRadius: 2,
-            },
-          }}>
-          <Input {...field} type={type} placeholder={placeholder} />
-        </ConfigProvider>
-      )}
-    />
+          <StyledInput {...rest}/>
   );
 };

@@ -52,7 +52,7 @@ const StyledButton = styled(Button)`
 `;
 
 interface ParticipantInputProps {
-  onChange: (e: string[]) => void;
+  onChange?: (e: string[]) => void;
 }
 
 const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
@@ -69,13 +69,14 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
 
   const handleAddParticipantClick = () => {
     if (participant) {
-      setNames((prev) => [...prev, participant]);
+      setNames((prev) => {
+        if (typeof onChange === 'function') onChange([...prev, participant]);
+        return [...prev, participant];
+      });
       setParticipant("");
       return;
     }
   };
-
-  onChange(names);
   
   const nameList = names.map((name, index) => (
     <>

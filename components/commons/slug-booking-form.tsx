@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import Datepicker from "./datepicker";
 import { Controller, useForm } from "react-hook-form";
 import TravelersInput from "./travelerInput";
-import CustomDropDown from "./custom-dropdown";
 import Button from "./button";
 import PopupAddTrips from "@components/trips/pop-up";
 import { useCookies } from "react-cookie";
+import dynamic from "next/dynamic";
+
+const CustomDropDown = dynamic(() => import("./custom-dropdown"), { ssr: false });
 
 const BookingContainer = styled.div`
   display: flex;
@@ -69,19 +71,18 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
   const [travellersArray, setTravellersArray] = useState<string[]>();
 
   const onSubmitFunc = (formData) => {
+    console.log(formData)
     const data = booking.Added_Trips
       ? booking.Added_Trips.slice().concat(formData)
       : [formData];
       
-      if(travellersArray?.length !== 0) {
         formData.details = details;
         formData.travelers = travellersArray;
-        formData.numberOfTravelers = travellersArray?.length;
+        formData.numberOfTravelers = travellersArray?.length ?? 1;
         formData.category = type.charAt(0).toUpperCase() + type.slice(1);
         setAddToTrip(formData);
         setBooking("Added_Trips", data);
         onSubmit(formData);
-      }
     
   };
 
@@ -98,7 +99,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <Datepicker {...field} className="expand" name="Date" />
+            <Datepicker {...field} className="expand" showTime placeholder="Select date and time" />
           )}
         />
 
@@ -125,7 +126,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
               placeholder="Enter pick-up location"
               buttonName="Add location"
               dropdownPlaceholder="Add location"
-              className="expand"
+              addClass="expand"
               toAddItemPlaceholder="Add location"
               defaultOption={["To be Provided"]}
             />
