@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, forwardRef } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Input, Select } from "antd";
 import Button from "./button";
@@ -11,6 +11,7 @@ interface CustomDropDownProps extends SelectProps {
   dropdownPlaceholder?: string;
   buttonName?: string;
   toAddItemPlaceholder?: string;
+  addClass?: string;
 }
 
 const Font = Poppins({
@@ -43,13 +44,13 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const CustomDropDown: React.FC<CustomDropDownProps> = ({
+const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = forwardRef(({
   defaultOption = [""],
   dropdownPlaceholder = "Please enter item",
   buttonName = "Add Item",
   toAddItemPlaceholder,
-  ...rest
-}) => {
+  addClass,
+}, ref) => {
   const [items, setItems] = useState(defaultOption);
   const [name, setName] = useState("");
   const inputRef = useRef<InputRef>(null);
@@ -69,8 +70,8 @@ const CustomDropDown: React.FC<CustomDropDownProps> = ({
   };
   return (
     <Select
-      {...rest}
-      className={`${Font.className} ${rest?.className}`}
+      ref={ref as any}
+      className={`${Font.className} ${addClass}`}
       dropdownRender={(menu) => (
         <>
           <div className={Font.className}>{menu}</div>
@@ -95,6 +96,6 @@ const CustomDropDown: React.FC<CustomDropDownProps> = ({
       options={items.map((item) => ({ label: item, value: item }))}
     />
   );
-};
+});
 
 export default CustomDropDown;

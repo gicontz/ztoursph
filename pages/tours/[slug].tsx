@@ -63,7 +63,7 @@ export default function Tours() {
   }, [slug]);
 
   const parsedPackageDetails = store.selectedTour ? (
-    parse(store.selectedTour.package_details)
+    parse(store.selectedTour.package_details ?? "")
   ) : (
     <>
       <Skeleton times={1} className="h-5" />
