@@ -3,13 +3,15 @@ import Button from '@components/commons/button';
 import { Row } from '@components/commons/common';
 import PageBanner from '@components/pages/page-banner';
 import styled from '@emotion/styled'
-import { Divider, Modal } from 'antd'
+import { DatePicker, Divider, Modal } from 'antd'
 import { Poppins, Source_Serif_4 } from 'next/font/google';
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import checkoutSchema from '@constants/validations/checkout';
+import { addDays, format } from 'date-fns';
 import dynamic from 'next/dynamic';
+import { getItenerary } from '@app/services/checkout';
 const Input = dynamic(() => import('@components/commons/input'), { ssr: false });
 
 const font = Poppins({
@@ -39,24 +41,13 @@ const Container = styled(Row)`
 );
  
  export default function Checkout() {
-    const [guest, setGuest] = React.useState<{name:string, age: string, nationality: string}[]>([])
-    const [guestValue, setGuestValue] = React.useState<{name: string, age: string, nationality: string}>({name: '', age: '', nationality: ''})
-    const { register, handleSubmit, control, formState: { errors }, watch } = useForm({
+    const { handleSubmit, control, formState: { errors }, watch } = useForm({
         resolver: yupResolver(checkoutSchema)
-    })
-
-    const valueGuestName = (e) => {setGuestValue((prev) => ({...prev, name: e.target.value }))}
-    const valueGuestAge = (e) => {setGuestValue((prev) => ({...prev, age: e.target.value }))}
-    const valueGuestNationality = (e) => {setGuestValue((prev) => ({...prev, nationality: e.target.value }))}
-
-    const addGuest = () => {
-        setGuest(prev => [...prev, guestValue])
-        setGuestValue({name: '', age: '', nationality: ''})
-        console.log(guest)
-    }
-
-    const handleSubmition = (data) => {
-        console.log(data);
+    });
+    
+    const handleSubmition = async (data) => {
+        const link = await getItenerary(data) 
+        console.log(link);
     }
 
   return (
@@ -68,7 +59,7 @@ const Container = styled(Row)`
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
                     <Divider className="!my-2"/>
                     <p className='text-lg font-bold'>Lead Guest Information</p>
-                    <div className='flex flex-auto space-x-2 w-full'>
+                    <div className='flex flex-auto space-x-2 w-full flex-col lg:flex-row'>
                         <FieldGroup>
                             <Label>First Name</Label>
                             <Controller 
@@ -76,14 +67,13 @@ const Container = styled(Row)`
                                 name="firstname"
                                 render={({ field }) => <Input type='text' onChange={field.onChange} required/>}
                             />
-                            
                         </FieldGroup>
-                        <FieldGroup additionalClass='w-2'>
+                        <FieldGroup additionalClass='lg:w-2 w-full'>
                             <Label>Middle Initial</Label>
                             <Controller 
                                 control={control}
                                 name="middleInitial"
-                                render={({ field }) => <Input type='text' onChange={field.onChange} maxLength={2} required />}
+                                render={({ field }) => <Input type='text' onChange={field.onChange} maxLength={2} />}
                             />
                         </FieldGroup>
                         <FieldGroup>
@@ -94,7 +84,7 @@ const Container = styled(Row)`
                                 render={({ field }) => <Input type='text' onChange={field.onChange} required/>}
                             />
                         </FieldGroup>
-                        <FieldGroup additionalClass='w-2'>
+                        <FieldGroup additionalClass='lg:w-2 w-full'>
                             <Label>Age</Label>
                             <Controller 
                                 control={control}
@@ -111,12 +101,12 @@ const Container = styled(Row)`
                             />
                         </FieldGroup>
                     </div>
-                    <div className='flex flex-auto space-x-2 w-full'>
+                    <div className='flex flex-auto space-x-2 flex-col lg:flex-row'>
                         <FieldGroup>
                             <Label>Mobile Number 1</Label>
                             <Controller 
                                 control={control}
-                                name="mobile1"
+                                name="mobileNumber1"
                                 render={({ field }) => <Input type='number' onChange={field.onChange} required/>}
                             />
                         </FieldGroup>
@@ -126,8 +116,8 @@ const Container = styled(Row)`
                             <Label>Mobile Number 2</Label>
                             <Controller 
                                 control={control}
-                                name="mobile2"
-                                render={({ field }) => <Input type='number' onChange={field.onChange} required/>}
+                                name="mobileNumber2"
+                                render={({ field }) => <Input type='number' onChange={field.onChange} />}
                             />
                         </FieldGroup>
 
@@ -136,10 +126,21 @@ const Container = styled(Row)`
                             <Controller 
                                 control={control}
                                 name="email"
-                                render={({ field }) => <Input type='email' onChange={field.onChange} required/>}
+                                render={({ field }) => <Input type='email' onChange={field.onChange} />}
                             />
                         </FieldGroup>
+
+                        
                     </div>
+                    <FieldGroup additionalClass='lg:w-1/4 w-full'>
+                            <Label>Tour Date</Label>
+                            <Controller 
+                                control={control}
+                                name="tour_date"
+                                render={({ field }) => <DatePicker onChange={field.onChange} showToday={false} disabledDate={d => !d || d.isBefore(new Date())}  className="h-12" />}
+                            />
+                        </FieldGroup>
+
 
                     <Divider className="!my-5" />
 
@@ -159,7 +160,7 @@ const Container = styled(Row)`
                         <Controller 
                                 control={control}
                                 name="guests"
-                                render={({ field }) => <Guest onChange={field.onChange} value={watch('isSameAsLeadGuest') ? [] : watch('guests')} helperText={errors?.guests?.message as string}/>}
+                                render={({ field }) => <Guest onChange={field.onChange} clearGuests={watch('isSameAsLeadGuest')} helperText={errors?.guests?.message as string}/>}
                             />
                     
                     <div className="flex space-x-3 justify-center h-10">
@@ -171,3 +172,49 @@ const Container = styled(Row)`
     </>
   )
 }
+
+/*
+ {
+    "content": {
+        "middleInitial": "R",
+        "guest": [
+            {
+                "name": "Jane Smith",
+                "age": 17,      
+                "nationality": "Filipino"
+            },          
+            {
+                "name": "Michael Johnson",
+                "age": 18,
+                "nationality": "American"
+            }
+        ],
+        "email": "johndoe@gmail.com",
+        "mobileNumber1": 9898978787,
+        "mobileNumber2": 98989787872,
+        "nationality": "American",
+        "age": 17,
+        "tour_date": "2024-04-15",
+        "booked_tours": [
+            {
+                "date": "2024-04-20",
+                "time": "11:00am",
+                "description": "Firefly watching tour at Iwahig River.",
+                "subtotal": "3000"
+            },
+            {
+                "date": "2024-04-21",
+                "time": "8:00am",
+                "description": "Hiking adventure at Mt. Bloomfield.",
+                "subtotal": "4200"
+            },
+            {
+                "date": "2024-04-22",
+                "time": "1:30pm",
+                "description": "Kayaking expedition at Honda Bay.",
+                "subtotal": "4400"
+            }
+        ]
+    }
+}
+ */

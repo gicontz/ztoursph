@@ -56,19 +56,23 @@ export type TGuest = {
 interface ParticipantInputProps {
   onChange?: (e: TGuest[]) => void;
   helperText?: string;
-  value?: TGuest[];
+  clearGuests?: boolean;
 }
 
-const GuestInput: React.FC<ParticipantInputProps> = ({ value, helperText, onChange }) => {
+const GuestInput: React.FC<ParticipantInputProps> = ({ clearGuests, helperText, onChange }) => {
   const [participant, setParticipant] = useState<{name: string, age: string, nationality: string }>({ name: '', age: '', nationality: '' });
   const [participantData, setParticipantData] = useState<{name: string, age: string, nationality: string }[]>([]);
 
-  React.useEffect(() => {
-    if (value) {
-      setParticipantData(value);
-      if (typeof onChange === 'function') onChange(value);
+  const setValueChange = React.useCallback(() => {
+    if (clearGuests) {
+      setParticipantData([]);
+      if (typeof onChange === 'function') onChange([]);
     }
-  }, [value]);
+  }, [clearGuests]);
+
+  React.useEffect(() => {
+    setValueChange();
+  }, [clearGuests]);
 
   const deleteName = (index: number) => {
     setParticipantData((prev) => {
@@ -113,35 +117,34 @@ const handleInputChange = (event) => {
 
   return (
     <>
-     
-      <AddParticipant>
-      <Input
-          className={Font.className}
-          value={participant?.name}
-          onChange={handleInputChange}
-          name="name"
-          type="text"
-          placeholder="Name"
-        />
+      <AddParticipant className="w-full flex-col [&>input]:w-full [&>input]:h-10 lg:flex-row">
         <Input
-          className={Font.className}
-          value={participant?.age}
-          onChange={handleInputChange}
-          name="age"
-          type="number"
-          placeholder="Age"
-        />
-        <Input
-          className={Font.className}
-          value={participant?.nationality}
-          onChange={handleInputChange}
-          name="nationality"
-          type="text"
-          placeholder="Nationality"
-        />
-        <StyledButton type="primary" onClick={handleAddParticipantClick}>
-          Add Participant
-        </StyledButton>
+            className={Font.className}
+            value={participant?.name}
+            onChange={handleInputChange}
+            name="name"
+            type="text"
+            placeholder="Name"
+          />
+          <Input
+            className={Font.className}
+            value={participant?.age}
+            onChange={handleInputChange}
+            name="age"
+            type="number"
+            placeholder="Age"
+          />
+          <Input
+            className={Font.className}
+            value={participant?.nationality}
+            onChange={handleInputChange}
+            name="nationality"
+            type="text"
+            placeholder="Nationality"
+          />
+          <StyledButton type="primary" onClick={handleAddParticipantClick}>
+            Add Participant
+          </StyledButton>
       </AddParticipant>
       {helperText && <p className="text-red-700 text-xs font-italized">{helperText}</p>}
       <br />
