@@ -61,6 +61,7 @@ export default function Packages() {
 
   React.useEffect(() => {
     if (typeof slug === "string") getPackageBySlug(dispatch, slug);
+    //eslint-disable-next-line
   }, [slug]);
 
   const parsedPackageDetails = store.selectedPackage ? (

@@ -44,6 +44,7 @@ const MainPageListing = () => {
 
   React.useEffect(() => {
     getTours(dispatch, { pageNumber: 1, pageSize: 4 });
+    //eslint-disable-next-line
   }, []);
 
   return (

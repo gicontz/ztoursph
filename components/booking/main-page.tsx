@@ -55,6 +55,7 @@ const MainPageBooking = () => {
 
   React.useEffect(() => {
     getPackages(dispatch, { pageNumber, pageSize });
+    //eslint-disable-next-line
   }, [state]);
 
   const HandleLoadMore = debounce((e) => {

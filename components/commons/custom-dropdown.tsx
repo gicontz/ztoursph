@@ -44,7 +44,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = forwardRef(({
+const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = forwardRef<typeof Select, CustomDropDownProps>(({
   defaultOption = [""],
   dropdownPlaceholder = "Please enter item",
   buttonName = "Add Item",
@@ -98,5 +98,7 @@ const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = for
     />
   );
 });
+
+CustomDropDown.displayName = 'CustomDropDown';
 
 export default CustomDropDown;
