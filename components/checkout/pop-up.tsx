@@ -1,15 +1,10 @@
-import { Input } from '@components/commons/input';
+import Input from '@components/commons/input';
 import styled from '@emotion/styled'
 import { Divider, Modal } from 'antd'
-import { Poppins, Source_Serif_4 } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import React from 'react'
 
 const font = Poppins({
-    weight: "400",
-    subsets: ["latin"],
-  });
-  
-  const secondaryFont = Source_Serif_4({
     weight: "400",
     subsets: ["latin"],
   });
