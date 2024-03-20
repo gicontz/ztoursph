@@ -176,7 +176,6 @@ const MainPageFooter = () => {
             <li>
               <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
             </li>
-            <li>Why us?</li>
           </ul>
         </Contents>
 
@@ -192,12 +191,13 @@ const MainPageFooter = () => {
         <Contents>
           <HeaderText>Our Activities</HeaderText>
           <ul>
-            <li>Island Hopping</li>
-            <li>Hidden Lagoon Exploration</li>
+            <li>El Nido Island Hopping</li>
+            <li>El Nido Expeditions</li>
             <li>Beach Relaxation</li>
-            <li>Snorkeling Adventures</li>
-            <li>Kayaking Tours</li>
-            <li>Hiking to Viewpoints</li>
+            <li>PPC Underground River Tou</li>
+            <li>City Tour</li>
+            <li>Scuba- Diving</li>
+            <li>Canopy Walk Adventure</li>
           </ul>
         </Contents>
 

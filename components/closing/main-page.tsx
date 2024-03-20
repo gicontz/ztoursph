@@ -1,7 +1,6 @@
 import { FullWidth, PanelSection } from "@components/commons/common";
 import styled from "@emotion/styled";
 import sunset from "@assets/images/sunsets.jpg";
-import Button from "@components/commons/button";
 import Link from "next/link";
 
 const ClosingContainer = styled(FullWidth)`
@@ -72,9 +71,9 @@ const MainPageClosing = () => {
     <ClosingContainer>
       <Panel>
         <TextsContainer>
-          <h4>Escape from your 9 to 5</h4>
+          <h4>Yes, it's all adventure-packed indeed! </h4>
           <p>
-          Having a nature break is one of the best options for relaxation and self-reward; offering an escape from the unending hustle and bustle in your daily life. Take a pause, refresh your mind, and don't forget to have fun sometimes! In ZTours.ph, your happiness and satisfaction are our priority.
+          ZTours.ph is happy to provide you a variety of hassle-free tour packages and activities manually picked for you and your loved ones. 
           </p>
           <Link href="/tours" target="_blank">
             See All Tours

@@ -84,9 +84,7 @@ export default function Tours() {
       <Row className="!mt-5 !mb-10">
         <Description>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            pharetra, lacus eget consectetur eleifend, quam sem mattis dolor,
-            non sodales tellus nulla nec est.
+            Well-planned getaways lead to extraordinary adventure experiences! Book your El Nido plans with us, confirm your reservation, and get ready for a stress-free and memorable trip to a tropical paradise like El Nido, Palawan. Your another memorable moment of sun-kissed adventure is waiting for you on the horizon! Join us & enjoy! The following are the tours we offer, indicating every tour detail and its rates.
           </p>
         </Description>
       </Row>

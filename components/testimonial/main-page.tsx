@@ -83,10 +83,11 @@ const MainPageTestimonial = () => {
     <TestimonialContainer>
       <Panel>
         <TextsContainer>
-          <h1>Spreading good news!</h1>
+          <h1>Let the adventure begin! </h1>
           <p>
-          Give us a quick review by sending your thoughts and success story of your travels with us! For we take those as our motivation to continuously provide you a better to best services in the near future encounter.  
+          Having a nature break is one of the best options for relaxation and self-reward; offering an escape from the unending hustle and bustle in your daily life. Take a pause, refresh your mind, and don't forget to have fun sometimes! In Z Tours.ph, your happiness and satisfaction are our priority.
           </p>
+          <p>Spread the good news! Give us a quick review by sending your thoughts and success story of your travels with us! For we take those as our motivation to continuously provide you a better to best services in the near future encounter</p>
           <div className="rate">
             <StyledRate disabled allowHalf defaultValue={4.8} />
             <p>Rating 4.8</p>

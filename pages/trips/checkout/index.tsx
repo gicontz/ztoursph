@@ -9,9 +9,7 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import checkoutSchema from '@constants/validations/checkout';
-import { addDays, format } from 'date-fns';
 import dynamic from 'next/dynamic';
-import { getItenerary } from '@app/services/checkout';
 const Input = dynamic(() => import('@components/commons/input'), { ssr: false });
 
 const font = Poppins({
@@ -46,8 +44,7 @@ const Container = styled(Row)`
     });
     
     const handleSubmition = async (data) => {
-        const link = await getItenerary(data) 
-        console.log(link);
+        console.log(data);
     }
 
   return (
