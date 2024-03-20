@@ -71,6 +71,7 @@ const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = for
   return (
     <Select
       ref={ref as any}
+      placeholder={dropdownPlaceholder}
       className={`${Font.className} ${addClass}`}
       dropdownRender={(menu) => (
         <>
