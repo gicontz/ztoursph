@@ -1,13 +1,16 @@
 import Guest from '@components/checkout/guest';
 import Button from '@components/commons/button';
 import { Row } from '@components/commons/common';
-import { Input } from '@components/commons/input';
 import PageBanner from '@components/pages/page-banner';
 import styled from '@emotion/styled'
 import { Divider, Modal } from 'antd'
 import { Poppins, Source_Serif_4 } from 'next/font/google';
 import React from 'react'
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import checkoutSchema from '@constants/validations/checkout';
+import dynamic from 'next/dynamic';
+const Input = dynamic(() => import('@components/commons/input'), { ssr: false });
 
 const font = Poppins({
     weight: "400",
@@ -25,14 +28,22 @@ const Container = styled(Row)`
     padding: 1rem;
  `
 
- const Label = styled.label`
-    width: 100%;
- `
+ const Label = ({...props}) => (
+    <label className="flex-auto mt-4" {...props}>{props.children}</label>
+ );
 
+ const FieldGroup = ({additionalClass, ...props}: { additionalClass?: string, children: React.ReactNode }) => (
+        <div className={`flex-auto flex flex-col gap-2 ${additionalClass}`}>
+            {props.children}
+        </div>
+);
+ 
  export default function Checkout() {
     const [guest, setGuest] = React.useState<{name:string, age: string, nationality: string}[]>([])
     const [guestValue, setGuestValue] = React.useState<{name: string, age: string, nationality: string}>({name: '', age: '', nationality: ''})
-    const {handleSubmit, control } = useForm()
+    const { register, handleSubmit, control, formState: { errors }, watch } = useForm({
+        resolver: yupResolver(checkoutSchema)
+    })
 
     const valueGuestName = (e) => {setGuestValue((prev) => ({...prev, name: e.target.value }))}
     const valueGuestAge = (e) => {setGuestValue((prev) => ({...prev, age: e.target.value }))}
@@ -44,68 +55,119 @@ const Container = styled(Row)`
         console.log(guest)
     }
 
-  return (<div>
-    <PageBanner title={'Checkout'} bannerImage={'https://lp-cms-production.imgix.net/2019-06/78349125.jpg?auto=format&w=1920&h=640&fit=crop&crop=faces,edges&q=75'} description={'Checkout your trips'}/>
+    const handleSubmition = (data) => {
+        console.log(data);
+    }
+
+  return (
+    <>
+        <PageBanner title={'Checkout'} bannerImage={'https://scontent.fmnl13-2.fna.fbcdn.net/v/t39.30808-6/432045031_402711462374881_1912772286436138233_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeH2heH57e3nCKm8xdpw7XF-6UqKIZgsjT3pSoohmCyNPcUS0B-jJHj_u3jOaMhrjuCTQaGr5PrjZNRI5NkYMCVi&_nc_ohc=UfTZXtV6lA0AX8FLHsy&_nc_ht=scontent.fmnl13-2.fna&cb_e2o_trans=t&oh=00_AfCCIp-HOHASv_kBpeKcbStrtYsOyLbTZZ-Z_31rWKVlZw&oe=65FE8F04'} description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}/>
             <Container className={font.className}>
-            <h4 className={`text-2xl font-bold ${secondaryFont.className}`}>Checkout Details</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
-            <Divider/>
-            <p className='text-lg font-bold'>Lead Guest Information</p>
-            <br />
-            <div className='flex gap-1 w-full'> 
-            
-            <Label>
-                Lead Guest Name
-                <Input name='leadGuest' type='text'/>
-            </Label>
-            <Label>
-                Age
-                <Input name='leadGuestAge' type='text'/>
-            </Label>
-            <Label>
-                Nationality
-                <Input name='leadGuestNationality' type='text'/>
-            </Label>
-            </div>
-        
+                <form className="flex flex-col space-y-2" onSubmit={handleSubmit(handleSubmition)}>
+                    <h4 className={`text-2xl font-bold ${secondaryFont.className}`}>Checkout Details</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                    <Divider className="!my-2"/>
+                    <p className='text-lg font-bold'>Lead Guest Information</p>
+                    <div className='flex flex-auto space-x-2 w-full'>
+                        <FieldGroup>
+                            <Label>First Name</Label>
+                            <Controller 
+                                control={control}
+                                name="firstname"
+                                render={({ field }) => <Input type='text' onChange={field.onChange} required/>}
+                            />
+                            
+                        </FieldGroup>
+                        <FieldGroup additionalClass='w-2'>
+                            <Label>Middle Initial</Label>
+                            <Controller 
+                                control={control}
+                                name="middleInitial"
+                                render={({ field }) => <Input type='text' onChange={field.onChange} maxLength={2} required />}
+                            />
+                        </FieldGroup>
+                        <FieldGroup>
+                            <Label>Last Name</Label>
+                            <Controller 
+                                control={control}
+                                name="lastname"
+                                render={({ field }) => <Input type='text' onChange={field.onChange} required/>}
+                            />
+                        </FieldGroup>
+                        <FieldGroup additionalClass='w-2'>
+                            <Label>Age</Label>
+                            <Controller 
+                                control={control}
+                                name="age"
+                                render={({ field }) => <Input type='number' onChange={field.onChange} required/>}
+                            />
+                        </FieldGroup>
+                        <FieldGroup>
+                            <Label>Nationality</Label>
+                            <Controller 
+                                control={control}
+                                name="nationality"
+                                render={({ field }) => <Input type='text' onChange={field.onChange} required/>}
+                            />
+                        </FieldGroup>
+                    </div>
+                    <div className='flex flex-auto space-x-2 w-full'>
+                        <FieldGroup>
+                            <Label>Mobile Number 1</Label>
+                            <Controller 
+                                control={control}
+                                name="mobile1"
+                                render={({ field }) => <Input type='number' onChange={field.onChange} required/>}
+                            />
+                        </FieldGroup>
 
-            <Label>
-                Telephone 1
-                <Input name='tel1' type='text'/>
-            </Label>
+                       
+                        <FieldGroup>
+                            <Label>Mobile Number 2</Label>
+                            <Controller 
+                                control={control}
+                                name="mobile2"
+                                render={({ field }) => <Input type='number' onChange={field.onChange} required/>}
+                            />
+                        </FieldGroup>
 
-            <Label>
-            Telephone 2
-                <Input name='tel2' type='text'/>
-            </Label>
+                        <FieldGroup>
+                            <Label>Email</Label>
+                            <Controller 
+                                control={control}
+                                name="email"
+                                render={({ field }) => <Input type='email' onChange={field.onChange} required/>}
+                            />
+                        </FieldGroup>
+                    </div>
 
-            <Label>
-            Email
-                <Input name='tel2' type='email'/>
-            </Label>
-            <Divider/>
+                    <Divider className="!my-5" />
 
-            <p className='text-lg font-bold'>Guest/s Name Information</p>
-            <br />
-            <Guest onChange={(e) => {console.log(e)} }/>
-          
+                    <p className='text-lg font-bold mb-2'>Guest/s Name Information</p>
+
+                    <div className="flex flex-auto space-x-2 w-full">
+                        <FieldGroup additionalClass='!flex-row items-center justify-start'>
+                            <Controller 
+                                control={control}
+                                name="isSameAsLeadGuest"
+                                render={({ field }) => <Input type='checkbox' onChange={field.onChange} className='w-5' />}
+                            />
+                            <Label className="flex-auto !mt-0">Same as Lead Guest</Label>
+                        </FieldGroup>
+                    </div>
+
+                        <Controller 
+                                control={control}
+                                name="guests"
+                                render={({ field }) => <Guest onChange={field.onChange} value={watch('isSameAsLeadGuest') ? [] : watch('guests')} helperText={errors?.guests?.message as string}/>}
+                            />
+                    
+                    <div className="flex space-x-3 justify-center h-10">
+                        <Button className='h-full'>View Itinerary</Button>
+                        <Button className='h-full' type='primary' htmlType='submit'>Checkout</Button>
+                    </div>
+                </form>
             </Container>
-        </div>
+    </>
   )
 }
-
-/**
- * Lead Guest input 
- * Age
- * Nationality
- * Contact number x2 
- * email
- * 
- * 
- * Other Guest
- * name, age, nationality
- * 
- * 
- * 
- * 
-*/

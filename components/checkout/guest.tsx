@@ -47,18 +47,35 @@ const StyledButton = styled(Button)`
   }
 `;
 
+export type TGuest = {
+  name: string;
+  age: string;
+  nationality: string; 
+};
+
 interface ParticipantInputProps {
-  onChange: (e: {name: string;
-    age: string;
-    nationality: string; }[]) => void;
+  onChange?: (e: TGuest[]) => void;
+  helperText?: string;
+  value?: TGuest[];
 }
 
-const GuestInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
+const GuestInput: React.FC<ParticipantInputProps> = ({ value, helperText, onChange }) => {
   const [participant, setParticipant] = useState<{name: string, age: string, nationality: string }>({ name: '', age: '', nationality: '' });
   const [participantData, setParticipantData] = useState<{name: string, age: string, nationality: string }[]>([]);
 
+  React.useEffect(() => {
+    if (value) {
+      setParticipantData(value);
+      if (typeof onChange === 'function') onChange(value);
+    }
+  }, [value]);
+
   const deleteName = (index: number) => {
-    setParticipantData((prev) => prev.filter((_, i) => i !== index));
+    setParticipantData((prev) => {
+      const newList = prev.filter((_, i) => i !== index);
+      if (typeof onChange === 'function') onChange([...newList]);
+      return newList;
+    });
   };
 
 const handleInputChange = (event) => {
@@ -69,14 +86,17 @@ const handleInputChange = (event) => {
 // 07 10 2003
   const handleAddParticipantClick = () => {
     if (participant.age && participant.name && participant.nationality) {
-      setParticipantData((prev) => [...prev, participant]);
+      setParticipantData((prev) => {
+        if (typeof onChange === 'function') onChange([...prev, participant]);
+        return [...prev, participant]
+      });
       setParticipant({ name: '', age: '', nationality: '' });
-      onChange(participantData as any);
+      
       return;
     }
     
   };
-  const nameList = participantData.map((data, index) => (
+  const nameList = participantData.length ? participantData.map((data, index) => (
     <>
       <IndividualNameContainer key={index}>
       <p className="w-48">{data.name}</p>
@@ -89,7 +109,7 @@ const handleInputChange = (event) => {
         />
       </IndividualNameContainer>
     </>
-  ));
+  )) : participantData.length === 0 ? <p>No guests added</p> : null;
 
   return (
     <>
@@ -123,6 +143,7 @@ const handleInputChange = (event) => {
           Add Participant
         </StyledButton>
       </AddParticipant>
+      {helperText && <p className="text-red-700 text-xs font-italized">{helperText}</p>}
       <br />
       <p className='text-lg font-bold'>Guests</p>
       <div className="flex flex-col gap-1">{nameList}</div>
