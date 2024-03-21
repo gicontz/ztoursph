@@ -156,14 +156,10 @@ const Contact = () => {
         <ContactContainer>
         
           <div className="flex flex-col gap-4">
-          <ContactDetail>
+            <ContactDetail>
               <h2>Our Contact Information</h2>
-             
               <ul>
               <li>
-                  Our lines are open 24/7
-                </li>
-                <li>
                   <TextWithIcon icon={<TelephoneIcon boxSize={5} />}>
                   0966-442-8625
                   </TextWithIcon>
@@ -173,11 +169,6 @@ const Contact = () => {
                   0962-078-7353
                   </TextWithIcon>
                 </li>
-              </ul>
-            </ContactDetail>
-            <ContactDetail>
-              <h2>Our Location</h2>
-              <ul>
                 <li>
                   <TextWithIcon icon={<EmailIcon boxSize={5} />}>
                     ztours@ztours.com

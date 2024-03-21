@@ -17,7 +17,7 @@ const CookiesPolicy = () => {
     <Layout>
       <PageBanner
         title="Cookies Policy"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum iaculis lectus, sed interdum velit convallis a. "
+        description="This is made to help our website remember information about your visit."
         bannerImage="https://a.cdn-hotels.com/gdcs/production13/d1585/20120d80-bf76-4553-89f4-0098f94423d8.jpg"
       />
       <CookiesContainer>
@@ -25,34 +25,16 @@ const CookiesPolicy = () => {
           What are cookies?
         </HeaderText>
         <p>
-          This Cookie Policy explains what cookies are and how we use them, the
-          types of cookies we use i.e, the information we collect using cookies
-          and how that information is used, and how to manage the cookie
-          settings.
+        Cookies are tiny text files placed or used to store small pieces of information when you visit a website. This Cookies Policy outlines their purpose, which is to ensure and help make the website function properly, securely, and enhance the user's experience. It also details the types of cookies used, the information collected, and how to manage cookie settings for the best browsing.
         </p>
+        <HeaderText size={2}>How Do We Utilize Cookies?</HeaderText>
         <p>
-          Cookies are small text files that are used to store small pieces of
-          information. They are stored on your device when the website is loaded
-          on your browser. These cookies help us make the website function
-          properly, make it more secure, provide better user experience, and
-          understand how the website performs and to analyze what works and
-          where it needs improvement.
+        Our website relies on both first-party and third-party cookies. First-party cookies are necessary for the best website functionality and do not collect personally identifiable data. Third-party cookies on our website aim to analyze the website's performance, understand interactions, maintain and ensure security services, deliver relevant advertisements, and overall enhance your user experience.
         </p>
-        <HeaderText size={2}>How do we use cookies?</HeaderText>
+
+        <HeaderText size={2}>What Do We Collect?</HeaderText>
         <p>
-          As most of the online services, our website uses first-party and
-          third-party cookies for several purposes. First-party cookies are
-          mostly necessary for the website to function the right way, and they
-          do not collect any of your personally identifiable data.
-        </p>
-        <p>
-          The third-party cookies used on our website are mainly for
-          understanding how the website performs, how you interact with our
-          website, keeping our services secure, providing advertisements that
-          are relevant to you, and all in all providing you with a better and
-          improved user experience and help speed up your future interactions
-          with our website.
-        </p>
+        Our website gathers certain types of information through using cookies. This may include your IP address, the device you're using, as well as personal information such as name, birthdate, age, sex, address, and phone number. We utilize cookies to understand how you engage with our website content. Rest assured that all the information or data we collected is well cared of in accordance with our privacy policy.</p>
       </CookiesContainer>
     </Layout>
   );

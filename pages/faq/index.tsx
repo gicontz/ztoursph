@@ -92,7 +92,7 @@ const FreaquentlyAskQuestion = () => {
           <div>
             <HeaderText>Question Category</HeaderText>
             <ul>
-              {["About us", , "Our Tours", "Legals", "Contact"].map((item) => (
+              {["About us", "Our Tours", "Legals", "Contact",].map((item) => (
                 <li key={item}>
                   <StyledButton
                     className={poppins.className}
