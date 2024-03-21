@@ -85,7 +85,6 @@ export default function Tours() {
         <Description>
           <p>
           Created to flip your moments into memory of a lifetime. Z Tours.ph offers the best Packages that you'll surely love to try. These packages are meticulously went under a needle's hole in order to ensure that aside from providing great itineraries, it's also worthy of every penny you've spent. Check out your reservation now!
-
           </p>
         </Description>
       </Row>

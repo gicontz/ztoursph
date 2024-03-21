@@ -172,7 +172,7 @@ const MainPageFooter = () => {
             </li>
             <li>
               <StyledLink href="/faq">FAQ</StyledLink>
-            </li>
+          </li>
             <li>
               <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
             </li>

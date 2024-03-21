@@ -5,6 +5,7 @@ import {
   EmailIcon,
   FacebookDarkIcon,
   InstagramDarkIcon,
+  TelephoneIcon
 } from "@components/commons/icons";
 
 import Layout from "@components/pages/layout";
@@ -149,11 +150,31 @@ const Contact = () => {
       <Panel>
         <PageBanner
           title="Contact us"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id est arcu. Nulla eros risus, maximus eget sem id."
+          description="Know the answers at your fingertips! Every queries and feedback matters to us. Yes! Our lines are always open at your most convenient time."
           bannerImage="https://a.cdn-hotels.com/gdcs/production13/d1585/20120d80-bf76-4553-89f4-0098f94423d8.jpg"
         />
         <ContactContainer>
+        
           <div className="flex flex-col gap-4">
+          <ContactDetail>
+              <h2>Our Contact Information</h2>
+             
+              <ul>
+              <li>
+                  Our lines are open 24/7
+                </li>
+                <li>
+                  <TextWithIcon icon={<TelephoneIcon boxSize={5} />}>
+                  0966-442-8625
+                  </TextWithIcon>
+                </li>
+                <li>
+                  <TextWithIcon icon={<TelephoneIcon boxSize={5} />}>
+                  0962-078-7353
+                  </TextWithIcon>
+                </li>
+              </ul>
+            </ContactDetail>
             <ContactDetail>
               <h2>Our Location</h2>
               <ul>
