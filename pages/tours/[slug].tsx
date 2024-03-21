@@ -73,7 +73,7 @@ export default function Tours() {
   );
 
   const priceContent =
-    store.selectedTour?.discount && !store.isLoading ? (
+  (store.selectedTour?.discount ?? 0) > 0 && store.selectedTour?.discount && !store.isLoading ? (
       <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
         <p className=" text-[1rem] line-through opacity-90">
           ₱ {store.selectedTour.price}
