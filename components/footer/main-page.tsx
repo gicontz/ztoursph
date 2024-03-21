@@ -182,9 +182,10 @@ const MainPageFooter = () => {
         <Contents>
           <HeaderText>Tours</HeaderText>
           <ul>
-            <li>Elnido Island Tour A</li>
-            <li>Elnido Island Tour B</li>
-            <li>Elnido Island Tour C</li>
+            <li><StyledLink href="/packages/expedition-tour">Expedition Tour</StyledLink></li>
+            <li><StyledLink href="/tours/el-nido-island-hopping-tour-a">Elnido Island Hopping Tour A</StyledLink></li>
+            <li><StyledLink href="/tours/el-nido-island-hopping-tour-b">Elnido Island Hopping Tour B</StyledLink></li>
+            <li><StyledLink href="/tours/el-nido-island-hopping-tour-c">Elnido Island Hopping Tour C</StyledLink></li>
           </ul>
         </Contents>
 
@@ -202,11 +203,9 @@ const MainPageFooter = () => {
         </Contents>
 
         <Contents>
-          <HeaderText>Support</HeaderText>
+          <HeaderText>Contact</HeaderText>
           <ul>
-            <li>Text 1</li>
-            <li>Text 2</li>
-            <li>Text 3</li>
+            <li><StyledLink href="/contact-us">Contact us</StyledLink></li>
           </ul>
         </Contents>
       </PanelContents>
@@ -257,7 +256,7 @@ const MainPageFooter = () => {
           <p>ⓒ 2024 ZToursPH</p>
           <SocialMediaIcons>
             <TelephoneIcon boxSize={4} />
-            <p>+63 960 353 4800</p>
+            <p>+63 966 442 8625</p>
           </SocialMediaIcons>
 
           <SocialMediaIcons>
