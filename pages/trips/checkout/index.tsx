@@ -9,9 +9,7 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import checkoutSchema from '@constants/validations/checkout';
-import { addDays, format } from 'date-fns';
 import dynamic from 'next/dynamic';
-import { getItenerary } from '@app/services/checkout';
 const Input = dynamic(() => import('@components/commons/input'), { ssr: false });
 
 const font = Poppins({
@@ -46,8 +44,72 @@ const Container = styled(Row)`
     });
     
     const handleSubmition = async (data) => {
-        const link = await getItenerary(data) 
-        console.log(link);
+        // "content": {
+        //     "firstname": "John",
+        //     "middleInitial": "R",
+        //     "lastname": "Doe",
+        //     "nationality": "Filipino",
+        //     "age": 35,
+        //     "guests": [
+        //         {
+        //             "name": "Juan Dela Cruz",
+        //             "age": 30,
+        //             "nationality": "Filipino"
+        //         },
+        //         {
+        //             "name": "Pedro Penduko",
+        //             "age": 25,
+        //             "nationality": "American"
+        //         },
+        //         {
+        //             "name": "Maria Clara",
+        //             "age": 28,
+        //             "nationality": "Filipino"
+        //         }
+        //     ],
+        //     "email": "johndoe@gmail.com",
+        //     "mobileNumber1": 9123456789,
+        //     "mobileNumber2": 9876543210,
+        //     "tour_date": "2024-03-20",
+        //     "booked_tours": [
+        //         {
+        //             "date": "2024-03-21",
+        //             "time": "10:00 AM",
+        //             "pax": 3,
+        //             "description": "Tour to the Chocolate Hills",
+        //             "subtotal": 12333
+        //         },
+        //         {
+        //             "date": "2024-03-21",
+        //             "time": "10:00 AM",
+        //             "pax": 3,
+        //             "description": "Tour to the Chocolate Hills",
+        //             "subtotal": 12333
+        //         },
+        //         {
+        //             "date": "2024-03-21",
+        //             "time": "10:00 AM",
+        //             "pax": 3,
+        //             "description": "Tour to the Chocolate Hills",
+        //             "subtotal": 12333
+        //         }
+        //     ]
+        // }
+        // make content object similar to content using data data
+
+        const content = {
+            firstname: data.firstname,
+            middleInitial: data.middleInitial,
+            lastname: data.lastname,
+            age: data.age,
+            email: data.email,
+            mobileNumber1: data.mobileNumber1,
+            mobileNumber2: data.mobileNumber2,
+            tour_date: data.tour_date,
+            guests: data.guests,
+        }
+
+        console.log(content);
     }
 
   return (
