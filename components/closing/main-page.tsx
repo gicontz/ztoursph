@@ -71,7 +71,7 @@ const MainPageClosing = () => {
     <ClosingContainer>
       <Panel>
         <TextsContainer>
-          <h4>Yes, it's all adventure-packed indeed! </h4>
+          <h4>Yes, it&apos;s all adventure-packed indeed! </h4>
           <p>
           ZTours.ph is happy to provide you a variety of hassle-free tour packages and activities manually picked for you and your loved ones. 
           </p>

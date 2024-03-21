@@ -53,7 +53,7 @@ const MainPageListing = () => {
     <Panel>
       <HeaderText underline>Packand Go: Set Your Adventurous Seascapes with ZTours.ph</HeaderText>
       <Description>
-        <p>Nothing beats nature's vibe! Experience the most enchanting hideaways, awe-inspiring islands, and underwater adventures tailored just for you! So, what are you waiting for? Book your exciting adventure with us!</p>
+        <p>Nothing beats nature&apos;s vibe! Experience the most enchanting hideaways, awe-inspiring islands, and underwater adventures tailored just for you! So, what are you waiting for? Book your exciting adventure with us!</p>
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       {!store.isLoading && store.tours ? (

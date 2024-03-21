@@ -98,4 +98,6 @@ const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = for
   );
 });
 
+CustomDropDown.displayName = "CustomDropDown";
+
 export default CustomDropDown;

@@ -214,7 +214,7 @@ const MainPageFooter = () => {
         <HeaderText>Sign-up to our Newsletter</HeaderText>
         <div>
           <p>
-          Hola! If you want to get updated and catch the latest offers of ZTours.ph, just type your email and shoot it by clicking the "Submit" button.
+          Hola! If you want to get updated and catch the latest offers of ZTours.ph, just type your email and shoot it by clicking the &quot;Submit&quot; button.
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller

@@ -56,11 +56,11 @@ const PopUp = ({open = false}) => {
         </Label>
         <Divider/>
 
-        <p className='text-lg'>Guest's</p>
+        <p className='text-lg'>Guest&apos;s</p>
         <br />
         <div className='flex gap-1'> 
         <Label>
-            Guest's Name
+            Guest&apos;s Name
             <Input name='leadGuest' type='text'/>
         </Label>
         <Label>

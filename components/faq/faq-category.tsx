@@ -35,9 +35,9 @@ const collapseItems = {
       children: <p>The most popular and breathtaking tour in El Nido is often considered TOUR A. It features stunning lagoons and picturesque limestone formations with crystal-clear seawater.
       </p>,
     },
-    { key: "2", label: "Safety Measures", children: <p>ZTous.ph ensures that our clients are safe in whatever tour they choose. Our staffs are all well-trained regarding different safety emergency trainings like first-aid and CPR trainings. We also consider health condition like food allergies (if client's have), informing us ahead of time regarding this matter is highly appreciated. Rest assured that our agency is capable of giving the best service and the trust that you have given us.
+    { key: "2", label: "Safety Measures", children: <p>ZTous.ph ensures that our clients are safe in whatever tour they choose. Our staffs are all well-trained regarding different safety emergency trainings like first-aid and CPR trainings. We also consider health condition like food allergies (if client&apos;s have), informing us ahead of time regarding this matter is highly appreciated. Rest assured that our agency is capable of giving the best service and the trust that you have given us.
     </p> },
-    { key: "3", label: "How much does a single tour cost per person?", children: <p>The cost for a single tour per person varies and is based on the specific tour package you choose. It's advisable to check the “TOURS” main tabs option on the top right side of the website.
+    { key: "3", label: "How much does a single tour cost per person?", children: <p>The cost for a single tour per person varies and is based on the specific tour package you choose. It&apos;s advisable to check the “TOURS” main tabs option on the top right side of the website.
     </p> },
     { key: "4", label: "What is the time duration of the tour?", children: <p>The tour duration depends on the specific package/tour you have chosen. But typically, each tour takes almost a full day to finish.
     </p> },
