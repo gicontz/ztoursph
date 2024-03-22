@@ -62,6 +62,7 @@ export default function Tours() {
   React.useEffect(() => {
     const { pageNumber } = state;
     getTours(dispatch, { pageNumber, pageSize });
+    //eslint-disable-next-line
   }, []);
 
   const handleLoadMore = () => {

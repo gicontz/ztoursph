@@ -68,10 +68,12 @@ const GuestInput: React.FC<ParticipantInputProps> = ({ clearGuests, helperText, 
       setParticipantData([]);
       if (typeof onChange === 'function') onChange([]);
     }
+    //eslint-disable-next-line
   }, [clearGuests]);
 
   React.useEffect(() => {
     setValueChange();
+    //eslint-disable-next-line
   }, [clearGuests]);
 
   const deleteName = (index: number) => {

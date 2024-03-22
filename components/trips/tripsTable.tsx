@@ -4,7 +4,6 @@ import { Row, StyledDivider } from "@components/commons/common";
 import Button from "@components/commons/button";
 import PackageCard from "./packageCard";
 import { Source_Serif_4 } from "next/font/google";
-import PopUp from "@components/checkout/pop-up";
 
 const SourceSerif = Source_Serif_4({
   subsets: ["latin"],
@@ -98,7 +97,6 @@ const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
 
   return (
     <Panel>
-      <PopUp open={open}/>
       <TableContainer>
         <Column>
           <h2 className="expand">Trips</h2>

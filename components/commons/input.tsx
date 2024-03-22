@@ -1,5 +1,5 @@
 import React from "react";
-import { Input as Int, InputProps } from "antd";
+import { Input as Int } from "antd";
 import styled from "@emotion/styled";
 
 export interface CustomInputProps extends React.ComponentProps<typeof Int> {

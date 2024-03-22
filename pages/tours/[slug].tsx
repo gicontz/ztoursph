@@ -57,9 +57,10 @@ export default function Tours() {
   const router = useRouter();
   const slug = router.query.slug;
   const [store, dispatch] = useTours();
-
+  
   React.useEffect(() => {
     if (typeof slug === "string") getTourBySlug(dispatch, slug);
+    //eslint-disable-next-line
   }, [slug]);
 
   const parsedPackageDetails = store.selectedTour ? (

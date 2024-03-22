@@ -44,7 +44,19 @@ const Container = styled(Row)`
     });
     
     const handleSubmition = async (data) => {
-        console.log(data);
+        const content = {
+            firstname: data.firstname,
+            middleInitial: data.middleInitial,
+            lastname: data.lastname,
+            age: data.age,
+            email: data.email,
+            mobileNumber1: data.mobileNumber1,
+            mobileNumber2: data.mobileNumber2,
+            tour_date: data.tour_date,
+            guests: data.guests,
+        }
+
+        console.log(content);
     }
 
   return (
