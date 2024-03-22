@@ -50,6 +50,7 @@ const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = for
   buttonName = "Add Item",
   toAddItemPlaceholder,
   addClass,
+  ...props
 }, ref) => {
   const [items, setItems] = useState(defaultOption);
   const [name, setName] = useState("");
@@ -95,6 +96,7 @@ const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = for
         </>
       )}
       options={items.map((item) => ({ label: item, value: item }))}
+      {...props}
     />
   );
 });

@@ -7,7 +7,7 @@ import React from "react";
 import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
 import { getTourBySlug, useTours } from "@app/modules/tours/actions";
-import SlugBookingForm from "@components/commons/slug-booking-form";
+import BookingForm from "@components/commons/booking-form";
 import ImageTemplate from "@components/commons/image-template";
 
 const Panel = styled(Row)`
@@ -167,7 +167,7 @@ export default function Tours() {
             <StyledDivider />
           </div>
 
-          <SlugBookingForm
+          <BookingForm
             onSubmit={(e) => console.log(e)}
             details={detail}
             type="tours"

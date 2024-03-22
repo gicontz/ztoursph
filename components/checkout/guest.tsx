@@ -103,7 +103,7 @@ const handleInputChange = (event) => {
     
   };
   const nameList = participantData.length ? participantData.map((data, index) => (
-    <>
+    <React.Fragment key={`participant-${index}`}>
       <IndividualNameContainer key={index}>
       <p className="w-48">{data.name}</p>
       <p>{data.age}</p>
@@ -114,7 +114,7 @@ const handleInputChange = (event) => {
           boxSize={5}
         />
       </IndividualNameContainer>
-    </>
+    </React.Fragment>
   )) : participantData.length === 0 ? <p>No guests added</p> : null;
 
   return (

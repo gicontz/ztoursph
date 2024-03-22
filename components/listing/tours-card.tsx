@@ -12,6 +12,7 @@ const CardContainer = styled.div`
   height: 27rem;
   width: 20rem;
   min-width: 12rem;
+  max-width: 20rem;
   border-radius: 5px;
   overflow: hidden;
   background-color: #2b3030;
@@ -23,15 +24,12 @@ const CardContainer = styled.div`
   }
 
   @media (max-width: 800px) {
-    height: 20rem;
+        font-size: 8px;
     width: 15rem;
-    font-size: 8px;
   }
 
   @media (max-width: 570px) {
-    height: 20rem;
-    width: 60%;
-    font-size: 8px;
+    width: 100%;
   }
 `;
 
@@ -63,24 +61,20 @@ const DetailsContainer = styled.div`
   .location {
     color: #d7fff1;
     font-size: 0.8rem;
-
-    @media (max-width: 800px) {
-      font-size: 12px;
-    }
   }
 
   @media (max-width: 800px) {
-    font-size: 12px;
+    font-size: 0.8rem;
   }
 `;
 
 const TitlePriceContainer = styled.div`
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1;
   display: flex;
   justify-content: space-between;
   @media (max-width: 800px) {
-    font-size: 15px;
+    font-size: 1.3rem;
   }
 `;
 
@@ -114,7 +108,7 @@ const DescriptionContainer = styled.div`
   -webkit-box-orient: vertical;
 
   @media (max-width: 800px) {
-    font-size: 8px;
+    font-size: 0.8rem;
   }
 `;
 

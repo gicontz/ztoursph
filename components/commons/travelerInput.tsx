@@ -79,7 +79,7 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
   };
   
   const nameList = names.map((name, index) => (
-    <>
+    <React.Fragment key={`name-${index}`}>
       <p className="text-sm -mb-[0.5rem] font-thin font-['Source_Serif_Pro']">
         Traveler {index + 1}
       </p>
@@ -91,7 +91,7 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
           boxSize={5}
         />
       </IndividualNameContainer>
-    </>
+    </React.Fragment>
   ));
 
   return (
