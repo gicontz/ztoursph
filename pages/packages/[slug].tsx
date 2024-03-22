@@ -8,7 +8,7 @@ import parse from "html-react-parser";
 import Skeleton from "@components/commons/skeleton";
 import { getPackageBySlug, usePackages } from "@app/modules/packages/actions";
 import ImageTemplate from "@components/commons/image-template";
-import SlugBookingForm from "@components/commons/slug-booking-form";
+import BookingForm from "@components/commons/booking-form";
 import { title } from "process";
 
 const Panel = styled(Row)`
@@ -169,7 +169,7 @@ export default function Packages() {
             <StyledDivider />
           </div>
 
-          <SlugBookingForm
+          <BookingForm
             onSubmit={(e) => console.log(e)}
             details={detail}
             type="packages"

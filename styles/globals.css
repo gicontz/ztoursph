@@ -37,3 +37,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* Ant Overrides */
+.ant-btn-primary {
+  background: #1677ff;
+}

@@ -8,6 +8,7 @@ import Button from "@components/commons/button";
 import { Modal } from "antd";
 import { useCookies } from "react-cookie";
 import { StyledDivider } from "@components/commons/common";
+import { Added_Trips } from "@constants/added_trips";
 
 const font = Poppins({
   weight: "400",
@@ -32,8 +33,9 @@ const Container = styled.div`
 `;
 
 const PopupAddTrips = ({ type }) => {
-  const [booking] = useCookies(["Added_Trips"]);
-  console.log(booking.Added_Trips.slice(1));
+  const [booking] = useCookies([Added_Trips]);
+
+  const bookingData = booking[Added_Trips].reverse();
 
   return (
     <Modal open={true} closable={false} footer={false}>
@@ -55,16 +57,11 @@ const PopupAddTrips = ({ type }) => {
         <div className="h-48 overflow-auto ">
           {
             <AddedTrip
-              content={booking.Added_Trips.slice().reverse().slice()[0]}
+              content={bookingData.unshift()}
             />
           }
           <StyledDivider />
-          {booking.Added_Trips.slice()
-            .reverse()
-            .slice(1)
-            .map((d, i) => {
-              return <AddedTrip key={i} content={d} />;
-            })}
+          {bookingData}
         </div>
 
         <div className="flex justify-center gap-3">

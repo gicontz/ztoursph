@@ -60,7 +60,7 @@ type SlugBookingFormProps = {
   details: { title: string | undefined; banner: string | undefined };
 };
 
-const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
+const BookingForm: React.FC<SlugBookingFormProps> = ({
   onSubmit,
   type,
   details,
@@ -72,6 +72,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
 
   const onSubmitFunc = (formData) => {
     console.log(formData)
+
     const data = booking.Added_Trips
       ? booking.Added_Trips.slice().concat(formData)
       : [formData];
@@ -99,7 +100,7 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <Datepicker {...field} className="expand" showTime placeholder="Select date and time" />
+            <Datepicker {...field} className="expand" showTime placeholder="Select Date and Time" showNow={false}/>
           )}
         />
 
@@ -141,4 +142,4 @@ const SlugBookingForm: React.FC<SlugBookingFormProps> = ({
   );
 };
 
-export default SlugBookingForm;
+export default BookingForm;
