@@ -4,8 +4,7 @@ import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
-import { useInView } from "react-intersection-observer";
-import { StyledDivider } from "./common";
+import parse from "html-react-parser";
 import Loading from "./loading";
 
 const PanelSearch = styled.div`
@@ -33,6 +32,10 @@ const PanelSearch = styled.div`
 const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
 
   p {
     font-size: 0.8rem;
@@ -59,12 +62,14 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const summary = () => (
+  const summary = () => {
+    const description = parse(data.description ?? "")
+    return (
     <SummaryContainer>
-      <p>{data.description}</p>
+     {description}
     </SummaryContainer>
-  );
+  )
+};
   return (
     <Tooltip
       title={summary}
@@ -78,7 +83,7 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
           width={320}
           height={216}
         />
-        <p>{data.title}</p>
+        <p>{ data.title}</p>
       </PanelSearch>
     </Tooltip>
   );
