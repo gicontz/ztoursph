@@ -172,41 +172,40 @@ const MainPageFooter = () => {
             </li>
             <li>
               <StyledLink href="/faq">FAQ</StyledLink>
-            </li>
+          </li>
             <li>
               <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
             </li>
-            <li>Why us?</li>
           </ul>
         </Contents>
 
         <Contents>
           <HeaderText>Tours</HeaderText>
           <ul>
-            <li>Elnido Island Tour A</li>
-            <li>Elnido Island Tour B</li>
-            <li>Elnido Island Tour C</li>
+            <li><StyledLink href="/packages/expedition-tour">Expedition Tour</StyledLink></li>
+            <li><StyledLink href="/tours/el-nido-island-hopping-tour-a">Elnido Island Hopping Tour A</StyledLink></li>
+            <li><StyledLink href="/tours/el-nido-island-hopping-tour-b">Elnido Island Hopping Tour B</StyledLink></li>
+            <li><StyledLink href="/tours/el-nido-island-hopping-tour-c">Elnido Island Hopping Tour C</StyledLink></li>
           </ul>
         </Contents>
 
         <Contents>
           <HeaderText>Our Activities</HeaderText>
           <ul>
-            <li>Island Hopping</li>
-            <li>Hidden Lagoon Exploration</li>
+            <li>El Nido Island Hopping</li>
+            <li>El Nido Expeditions</li>
             <li>Beach Relaxation</li>
-            <li>Snorkeling Adventures</li>
-            <li>Kayaking Tours</li>
-            <li>Hiking to Viewpoints</li>
+            <li>PPC Underground River Tou</li>
+            <li>City Tour</li>
+            <li>Scuba- Diving</li>
+            <li>Canopy Walk Adventure</li>
           </ul>
         </Contents>
 
         <Contents>
-          <HeaderText>Support</HeaderText>
+          <HeaderText>Contact</HeaderText>
           <ul>
-            <li>Text 1</li>
-            <li>Text 2</li>
-            <li>Text 3</li>
+            <li><StyledLink href="/contact-us">Contact us</StyledLink></li>
           </ul>
         </Contents>
       </PanelContents>
@@ -215,9 +214,7 @@ const MainPageFooter = () => {
         <HeaderText>Sign-up to our Newsletter</HeaderText>
         <div>
           <p>
-            {
-              "Provide your email, and we'll get in touch promptly. Reserve your memorable experience with us 😊"
-            }
+          Hola! If you want to get updated and catch the latest offers of ZTours.ph, just type your email and shoot it by clicking the &quot;Submit&quot; button.
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
@@ -259,7 +256,7 @@ const MainPageFooter = () => {
           <p>ⓒ 2024 ZToursPH</p>
           <SocialMediaIcons>
             <TelephoneIcon boxSize={4} />
-            <p>+63 960 353 4800</p>
+            <p>+63 966 442 8625</p>
           </SocialMediaIcons>
 
           <SocialMediaIcons>

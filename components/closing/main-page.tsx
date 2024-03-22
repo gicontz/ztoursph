@@ -1,7 +1,6 @@
 import { FullWidth, PanelSection } from "@components/commons/common";
 import styled from "@emotion/styled";
 import sunset from "@assets/images/sunsets.jpg";
-import Button from "@components/commons/button";
 import Link from "next/link";
 
 const ClosingContainer = styled(FullWidth)`
@@ -32,7 +31,7 @@ const TextsContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 10px;
-  width: 43%;
+  width: 50%;
 
   font-size: 0.9rem;
   gap: 0.5rem;
@@ -72,10 +71,9 @@ const MainPageClosing = () => {
     <ClosingContainer>
       <Panel>
         <TextsContainer>
-          <h4>Escape from your 9 to 5</h4>
+          <h4>Yes, it&apos;s all adventure-packed indeed! </h4>
           <p>
-            We are happy to give you the best and memorable experience vacation
-            here in El nido.
+          ZTours.ph is happy to provide you a variety of hassle-free tour packages and activities manually picked for you and your loved ones. 
           </p>
           <Link href="/tours" target="_blank">
             See All Tours

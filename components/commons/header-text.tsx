@@ -12,7 +12,6 @@ const Text = styled.h2<{ size: number | undefined }>`
   min-width: fit-content;
   font-weight: bold;
   font-size: ${({ size }) => (size ? `${size}rem` : "1.4rem")};
-  white-space: nowrap;
 
   @media (max-width: 600px) {
     font-size: ${({ size }) => (size ? `${size - 4}rem` : "1rem")};

@@ -52,15 +52,11 @@ export default function Home() {
     <Layout>
       <Banner>
         <Row className="pb-24">
-          <TagLine>Seize the Zen</TagLine>
+          <TagLine>Travel Way Beyond Your Borders! </TagLine>
           <div className="text-right">
             <Phrase>
-              Embrace the nature in the magnificent waters
-              <br /> of Palawan. Experience the breathtaking
-              <br /> views and sceneries that you can only catch
-              <br /> here in the Philippines.
-              <br />
-              <strong>Be You. Be Free. Be Zest.</strong>
+            Explore and seize the ethereal beauty and
+              <br />paradisiacal vibe of the Last Frontier of the Philippines – Palawan.
             </Phrase>
           </div>
         </Row>

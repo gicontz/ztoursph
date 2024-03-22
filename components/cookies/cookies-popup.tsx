@@ -58,10 +58,7 @@ const CookiesPopUp = () => {
       <div>
         <HeaderText size={2}>Cookies Policy</HeaderText>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-          interdum iaculis lectus, sed interdum velit convallis a. Curabitur
-          maximus molestie dolor, nec rutrum libero ultrices vel. Nulla ac arcu
-          ante. Donec ut convallis eros, nec tempor enim.
+        This is made to help our website remember information about your visit.
         </p>
       </div>
 

@@ -21,7 +21,7 @@ const TextHeader = styled.h1`
   }
 `;
 const TextDescription = styled.h2`
-  width: 35rem;
+  width: 70%;
   font-weight: 300;
   @media screen and (max-width: 700px) {
     width: 90%;
