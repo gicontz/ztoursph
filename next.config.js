@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
@@ -7,7 +8,7 @@ const nextConfig = {
         hostname: "**",
       },
     ],
-  },
+  },  
   compiler: {
     emotion: true,
   },

@@ -1,2 +1,2 @@
 
-export const Added_Trips = "AddedTrip"
+export const Added_Trips = "Added_Trips"

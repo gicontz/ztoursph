@@ -36,9 +36,10 @@ const PopupAddTrips = ({ type }) => {
   const [booking] = useCookies([Added_Trips]);
 
   const bookingData = booking[Added_Trips].reverse();
+  const currentBooking = bookingData.shift();
 
   return (
-    <Modal open={true} closable={false} footer={false}>
+    <Modal open closable={false} footer={false}>
       <Container className={font.className}>
         <div className="flex flex-col justify-center gap-1">
           <div className="w-fit mx-auto">
@@ -57,11 +58,14 @@ const PopupAddTrips = ({ type }) => {
         <div className="h-48 overflow-auto ">
           {
             <AddedTrip
-              content={bookingData.unshift()}
+              content={currentBooking}
             />
           }
           <StyledDivider />
-          {bookingData}
+          {bookingData
+            .map((d, i) => {
+              return <AddedTrip key={i} content={d} />;
+            })}
         </div>
 
         <div className="flex justify-center gap-3">

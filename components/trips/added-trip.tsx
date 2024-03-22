@@ -80,9 +80,10 @@ const AddedTrip: React.FC<AddedTripProps> = ({ content }) => {
             <Detail>
               <p className={`label ${secondaryFont.className}`}>Tour Date</p>
               <p>
-                {new Intl.DateTimeFormat("en-US", {
+                {/* {new Intl.DateTimeFormat("en-US", {
                   dateStyle: "short",
-                }).format(date)}
+                }).format(date)} */}
+                {date.toDateString()}
               </p>
             </Detail>
             <Detail>

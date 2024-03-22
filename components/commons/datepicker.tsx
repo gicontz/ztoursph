@@ -7,7 +7,6 @@ import { forwardRef } from "react";
 const DatePicker = styled(Picker)`
   a.ant-picker-now-btn {
     font-size: 0;
-    background-color #1677ff;
   }
 
   a.ant-picker-now-btn:after {

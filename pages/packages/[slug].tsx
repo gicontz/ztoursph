@@ -9,7 +9,6 @@ import Skeleton from "@components/commons/skeleton";
 import { getPackageBySlug, usePackages } from "@app/modules/packages/actions";
 import ImageTemplate from "@components/commons/image-template";
 import BookingForm from "@components/commons/booking-form";
-import { title } from "process";
 
 const Panel = styled(Row)`
   display: flex;
@@ -75,7 +74,7 @@ export default function Packages() {
   );
 
   const priceContent =
-    store.selectedPackage?.discount && !store.isLoading ? (
+  (store.selectedPackage?.discount ?? 0) > 0 && store.selectedPackage?.discount && !store.isLoading ? (
       <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
         <p className=" text-[1rem] line-through opacity-90">
           ₱ {store.selectedPackage.price}
@@ -83,8 +82,7 @@ export default function Packages() {
         <p className="text-2xl ">
           ₱{" "}
           {store.selectedPackage.price -
-            (store.selectedPackage?.discount / 100) *
-              store.selectedPackage.price}
+            (store.selectedPackage?.discount / 100) * store.selectedPackage.price}
         </p>
         <div className="text-xs px-1 bg-[rgb(35,67,44)] text-white">
           -{store.selectedPackage.discount}%

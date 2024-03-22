@@ -8,6 +8,7 @@ import Button from "./button";
 import PopupAddTrips from "@components/trips/pop-up";
 import { useCookies } from "react-cookie";
 import dynamic from "next/dynamic";
+import { Added_Trips } from "@constants/added_trips";
 
 const CustomDropDown = dynamic(() => import("./custom-dropdown"), { ssr: false });
 
@@ -54,42 +55,38 @@ const StyledButton = styled(Button)`
   font-weight: 500;
 `;
 
-type SlugBookingFormProps = {
+type BookingFormProps = {
   onSubmit: (d: any) => void;
   type: string;
   details: { title: string | undefined; banner: string | undefined };
 };
 
-const BookingForm: React.FC<SlugBookingFormProps> = ({
+const BookingForm: React.FC<BookingFormProps> = ({
   onSubmit,
   type,
   details,
 }) => {
-  const [booking, setBooking] = useCookies([type]);
-  const { handleSubmit, control } = useForm();
-  const [addTrip, setAddToTrip] = useState<any | undefined>();
-  const [travellersArray, setTravellersArray] = useState<string[]>();
+  const [booking, setBooking] = useCookies([Added_Trips]);
+  const { register, handleSubmit, control } = useForm();
+  const [showTrips, setShowAddToTrips] = useState(false);
 
   const onSubmitFunc = (formData) => {
     console.log(formData)
-
-    const data = booking.Added_Trips
-      ? booking.Added_Trips.slice().concat(formData)
+    const data = booking[Added_Trips]
+      ? booking[Added_Trips].slice().concat(formData)
       : [formData];
       
-        formData.details = details;
-        formData.travelers = travellersArray;
-        formData.numberOfTravelers = travellersArray?.length ?? 1;
-        formData.category = type.charAt(0).toUpperCase() + type.slice(1);
-        setAddToTrip(formData);
-        setBooking("Added_Trips", data);
-        onSubmit(formData);
-    
+      formData.details = details;
+      formData.numberOfTravelers = formData.participants?.length ?? 1;
+      formData.category = type.charAt(0).toUpperCase() + type.slice(1);
+      setShowAddToTrips(true);
+      setBooking(Added_Trips, data);
+      onSubmit(formData);
   };
 
   return (
     <BookingContainer>
-      {addTrip && <PopupAddTrips type={type} />}
+      {showTrips && <PopupAddTrips type={type} />}
       <Form onSubmit={handleSubmit(onSubmitFunc)}>
         <LabelHeader>
           <h3>Date of {type}</h3>
@@ -100,7 +97,7 @@ const BookingForm: React.FC<SlugBookingFormProps> = ({
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <Datepicker {...field} className="expand" showTime placeholder="Select Date and Time" showNow={false}/>
+            <Datepicker onChange={field.onChange} className="expand" showTime placeholder="Select Date and Time" showNow={false}/>
           )}
         />
 
@@ -109,8 +106,14 @@ const BookingForm: React.FC<SlugBookingFormProps> = ({
           <h3>Participants</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </LabelHeader>
-
-        <TravelersInput onChange={(e) => setTravellersArray(e)} />
+        <Controller
+          name="participants"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <TravelersInput onChange={field.onChange} />
+          )}
+        />
 
         <StyledDivider />
         <LabelHeader>
@@ -123,7 +126,7 @@ const BookingForm: React.FC<SlugBookingFormProps> = ({
           rules={{ required: true }}
           render={({ field }) => (
             <CustomDropDown
-              {...field}
+              onChange={field.onChange}
               placeholder="Enter pick-up location"
               buttonName="Add location"
               dropdownPlaceholder="Add location"
@@ -135,7 +138,7 @@ const BookingForm: React.FC<SlugBookingFormProps> = ({
         />
 
         <StyledButton htmlType="submit" type="primary">
-          Add {type.charAt(0).toUpperCase() + type.slice(1)}
+          Add {type[0].toUpperCase() + type.slice(1)}
         </StyledButton>
       </Form>
     </BookingContainer>
