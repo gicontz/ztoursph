@@ -10,11 +10,5 @@ const Datepicker: React.ForwardRefExoticComponent<DatePickerProps> = forwardRef(
 
   return <DatePicker disabledDate={disabledDate} {...rest} ref={ref as any}/>;
 });
-
-<<<<<<< HEAD
 Datepicker.displayName = "Datepicker";
-=======
-Datepicker.displayName = 'Datepicker';
->>>>>>> 2dd54fd8837661aa316fae5d9294312ab76efee9
-
 export default Datepicker;
