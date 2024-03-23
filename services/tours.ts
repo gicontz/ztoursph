@@ -1,4 +1,3 @@
-import { TTourResponse } from "@app/modules/tours/types";
 import { handleResponse } from "@app/utils/helpers";
 
 const getTours = (options?: {
@@ -25,4 +24,14 @@ const getTourBySlug = (slug) => {
     .catch((err) => console.log(err));
 };
 
-export { getTours, getTourBySlug };
+const getTrips = (ids: Array<string | number>) => {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  return fetch(`/api/tours/trips`, { method: "POST", body: JSON.stringify({ ids }), headers })
+    .then((res) => handleResponse(res))
+    .then((res) => res)
+    .catch((err) => console.log(err));
+};
+
+export { getTours, getTourBySlug, getTrips };

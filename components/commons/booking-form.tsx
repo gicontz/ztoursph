@@ -9,6 +9,7 @@ import PopupAddTrips from "@components/trips/pop-up";
 import { useCookies } from "react-cookie";
 import dynamic from "next/dynamic";
 import { Added_Trips } from "@constants/added_trips";
+import { TTrip } from "@app/modules/trips/types";
 
 const CustomDropDown = dynamic(() => import("./custom-dropdown"), { ssr: false });
 
@@ -58,7 +59,7 @@ const StyledButton = styled(Button)`
 type BookingFormProps = {
   onSubmit: (d: any) => void;
   type: string;
-  details: { title: string | undefined; banner: string | undefined };
+  details: { tourId?: string | number; title: string | undefined; thumbnail: string | undefined };
 };
 
 const BookingForm: React.FC<BookingFormProps> = ({
@@ -67,21 +68,28 @@ const BookingForm: React.FC<BookingFormProps> = ({
   details,
 }) => {
   const [booking, setBooking] = useCookies([Added_Trips]);
-  const { register, handleSubmit, control } = useForm();
+  const { handleSubmit, control } = useForm();
   const [showTrips, setShowAddToTrips] = useState(false);
 
+  console.log(details)
   const onSubmitFunc = (formData) => {
-    console.log(formData)
-    const data = booking[Added_Trips]
-      ? booking[Added_Trips].slice().concat(formData)
-      : [formData];
-      
       formData.details = details;
       formData.numberOfTravelers = formData.participants?.length ?? 1;
-      formData.category = type.charAt(0).toUpperCase() + type.slice(1);
+      formData.category = type;
       setShowAddToTrips(true);
+      const data = booking[Added_Trips]
+        ? booking[Added_Trips].slice().concat(formData)
+        : [formData];
       setBooking(Added_Trips, data);
-      onSubmit(formData);
+      onSubmit({
+        tripId: formData.details.tourId,
+        title: formData.details.title,
+        date: formData.date,
+        location: formData.locationPickUp,
+        participants: formData.participants,
+        thumbnail: formData.details.thumbnail,
+        category: type,
+      } as TTrip);
   };
 
   return (

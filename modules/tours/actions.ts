@@ -1,13 +1,14 @@
 import { Dispatch, useReducer } from "react";
 import { Actions, ToursState, ToursTypes } from "./types";
 import { tours } from "./reducer";
-import { getTours as getToursApi, getTourBySlug as getTourBySlugApi } from "@app/services/tours";
+import { getTours as getToursApi, getTourBySlug as getTourBySlugApi, getTrips as getTripsApi } from "@app/services/tours";
 
 const defaultState = {
     isLoading: false,
     tours: [],
     selectedTour: null,
-    totalRecords: 0
+    totalRecords: 0,
+    trips: [],
 }
 
 export const useTours = (): [ToursState, React.Dispatch<ToursTypes>] => {
@@ -39,5 +40,17 @@ export const getTourBySlug = async (dispatch: Dispatch<ToursTypes>, slug: string
     } catch (e) {
         console.log(e);
         dispatch({ type: Actions.GET_TOUR_INFO_FAILED });
+    }
+}
+
+export const getTrips = async (dispatch: Dispatch<ToursTypes>, ids: Array<string | number>) => {
+    dispatch({ type: Actions.GET_TRIPS_START });
+    try {
+        const { data } = await getTripsApi(ids);
+        console.log(data);
+        dispatch({ type: Actions.GET_TRIPS_FULFILLED, payload: [ ...data.records ]});
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: Actions.GET_TRIPS_FAILED });
     }
 }

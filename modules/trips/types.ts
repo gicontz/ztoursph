@@ -6,12 +6,16 @@ export enum Actions {
     GET_TRIPS = '@trips/GET_TRIPS',
 };
 
+export type TCategory = 'tours' | 'packages';
+
 export type TTrip = {
     tripId: string | number;
     title: string;
+    thumbnail: string;
     date: string;
     participants: Array<string>;
     location: string;
+    category: TCategory;
 }
 
 export interface TripsState {

@@ -7,17 +7,18 @@ const __ = async (req: NextApiRequest, res: NextApiResponse) => {
     'Content-Type': 'application/json',
   }
   const result = await fetch(
-    `${APIUri}/checkout/verify`,
+    `${APIUri}/tours/trips`,
     { method: "POST", body: JSON.stringify(req.body), headers }
   );
-  if (result.status !== 200) {
+  console.log(`${APIUri}/tours/trips`, req.body, result.status, result.statusText);
+  if (result.status !== 201) {
     const error = result.statusText;
     return res
       .status(result.status)
       .json({ status: result.status, message: result.statusText, error });
   }
   const data = await result.json();
-  return res.status(200).json(data);
+  return res.status(result.status).json(data);
 };
 
 export default __;
