@@ -102,8 +102,6 @@ export default function Packages() {
     thumbnail: store.selectedPackage?.thumbnail,
   };
 
-  console.log(detail)
-
   return (
     <Layout>
       <div>

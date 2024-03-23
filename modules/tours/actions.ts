@@ -53,4 +53,4 @@ export const getTrips = async (dispatch: Dispatch<ToursTypes>, ids: Array<string
         console.log(e);
         dispatch({ type: Actions.GET_TRIPS_FAILED });
     }
-}
+};

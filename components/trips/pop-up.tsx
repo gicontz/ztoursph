@@ -9,6 +9,7 @@ import { Modal } from "antd";
 import { useCookies } from "react-cookie";
 import { StyledDivider } from "@components/commons/common";
 import { Added_Trips } from "@constants/added_trips";
+import { useTripsContext } from "@providers/trips";
 
 const font = Poppins({
   weight: "400",
@@ -33,9 +34,9 @@ const Container = styled.div`
 `;
 
 const PopupAddTrips = ({ type }) => {
-  const [booking] = useCookies([Added_Trips]);
+  const { tripStore } = useTripsContext();
 
-  const bookingData = booking[Added_Trips].reverse();
+  const bookingData = tripStore.trips.reverse();
   const currentBooking = bookingData.shift();
 
   return (
@@ -46,7 +47,7 @@ const PopupAddTrips = ({ type }) => {
             <PlaneIcon />
           </div>
           <p className="w-fit text-xl">
-            Successfully Added to {type === "tours" ? "Tours" : "Packages"}!
+            Successfully Added to Trips!
           </p>
           <Link
             className={`${secondaryFont.className} underline text-center`}
@@ -57,6 +58,7 @@ const PopupAddTrips = ({ type }) => {
 
         <div className="h-48 overflow-auto ">
           {
+            currentBooking &&
             <AddedTrip
               content={currentBooking}
             />

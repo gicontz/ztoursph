@@ -19,3 +19,7 @@ export const removeToTrips = (dispatch: Dispatch<TripsTypes>, tripId: string) =>
 export const getTrips = (dispatch: Dispatch<TripsTypes>, trips: TTrip[]) => {
     dispatch({ type: Actions.GET_TRIPS, payload: trips });
 }
+
+export const setLoading = (dispatch: Dispatch<TripsTypes>, isLoading: boolean) => {
+    dispatch({ type: Actions.SET_LOADING, payload: isLoading });
+}

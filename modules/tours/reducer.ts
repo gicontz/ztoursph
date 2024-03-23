@@ -50,7 +50,8 @@ export const tours  = (state: ToursState, action: ToursTypes): ToursState => {
         case Actions.GET_TRIPS_FULFILLED: {
             return {
                 ...state,
-                trips: [...action.payload!]
+                trips: [...action.payload!],
+                isLoading: false
             }
         }
         case Actions.GET_TRIPS_FAILED: {

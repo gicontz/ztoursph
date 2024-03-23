@@ -10,8 +10,6 @@ const PageWrapper = ({ children }) => {
   const [cookie] = useCookies([Added_Trips]);
   const { tripDispatch } = useTripsContext();
 
-  console.log("cookie", cookie);
-
   useEffect(() => {
     getTrips(tripDispatch, cookie[Added_Trips] ?? []);
   }, []);

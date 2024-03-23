@@ -21,6 +21,12 @@ export const trips  = (state: TripsState = defaultState.tripStore, action: Trips
                 trips: [...action.payload!]
             }
         }
+        case Actions.SET_LOADING: {
+            return {
+                ...state,
+                isLoading: action.payload
+            }
+        }
         default:
             return state;
     }
