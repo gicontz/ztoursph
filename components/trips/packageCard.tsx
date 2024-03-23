@@ -75,7 +75,7 @@ const PackageCard = ({
     <Rows>
       <CardDetail className="details">
         <Image
-          src={typeof image === "string" ? image : image.src}
+          src={image}
           alt={title}
           width={1000}
           height={250}

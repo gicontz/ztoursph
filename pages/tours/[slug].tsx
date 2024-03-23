@@ -109,8 +109,9 @@ export default function Tours() {
   const detail = {
     tourId: store.selectedTour?.id,
     title: store.selectedTour?.tour_title,
-    banner: store.selectedTour?.tour_banner_image,
+    thumbnail: store.selectedTour?.thumbnail,
   };
+  console.log(detail)
 
   return (
     <Layout>

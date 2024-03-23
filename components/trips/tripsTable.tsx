@@ -79,15 +79,20 @@ interface TripsTableProps {
 }
 
 const TripsTable: React.FC<TripsTableProps> = ({ data }) => {
-  const [open, setIsOpen] = React.useState(false)
+  const [open, setIsOpen] = React.useState(false);
+
   const CheckoutDetailModal = () => {
     setIsOpen(true)
-  }
+  };
+
+  console.log(data)
+
   const content = data.map((e, i) => (
     <PackageCard
-      key={i}
+      key={`package-${i}`}
       image={e.imageUrl}
       title={e.title}
+      pax={e.numberOfTraveller}
       date={e.date}
       pickup={e.pickup}
       price={e.price}

@@ -51,7 +51,7 @@ type AddedTripProps = {
     date: Date;
     numberOfTravelers: number;
     locationPickUp: string;
-    details: { title: string; banner: string };
+    details: { title: string; thumbnail: string };
   };
 };
 
@@ -60,7 +60,7 @@ const AddedTrip: React.FC<AddedTripProps> = ({ content }) => {
   return (
     <Container>
       <Image
-        src={content.details?.banner}
+        src={content.details?.thumbnail}
         alt={content.details?.title}
         width={1000}
         height={250}

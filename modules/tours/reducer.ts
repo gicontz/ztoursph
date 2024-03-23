@@ -41,6 +41,24 @@ export const tours  = (state: ToursState, action: ToursTypes): ToursState => {
                 isLoading: false,
             }
         }
+        case Actions.GET_TRIPS_START: {
+            return {
+                ...state,
+                isLoading: true
+            }
+        }
+        case Actions.GET_TRIPS_FULFILLED: {
+            return {
+                ...state,
+                trips: [...action.payload!]
+            }
+        }
+        case Actions.GET_TRIPS_FAILED: {
+            return {
+                ...state,
+                isLoading: false
+            }
+        }
         default:
             return state;
     }
