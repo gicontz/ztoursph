@@ -59,7 +59,7 @@ const PackageDetail = styled.div`
 `;
 export default function Tours() {
   const router = useRouter();
-  const [cookies] = useCookies([Added_Trips]);
+  const [booking, setBooking] = useCookies([Added_Trips]);
   const slug = router.query.slug;
   const [store, dispatch] = useTours();
   const { tripDispatch } = useTripsContext();
@@ -70,7 +70,12 @@ export default function Tours() {
   }, [slug]);
 
   const handleSubmit = (trip) => {
+    console.log(trip)
     addToTrips(tripDispatch, trip);
+    const data = booking[Added_Trips]
+      ? booking[Added_Trips].slice().concat(trip)
+      : [trip];
+    setBooking(Added_Trips, data);
   };
 
   const parsedPackageDetails = store.selectedTour ? (

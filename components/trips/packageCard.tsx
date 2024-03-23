@@ -66,7 +66,7 @@ const PackageCard = ({
 }) => {
   const [count, setCount] = useState(pax);
 
-  const handleCountAdd = (newCount) => {
+  const handleCount = (newCount) => {
     setCount(newCount);
     onUpdatePrice(newCount);
   };
@@ -82,7 +82,7 @@ const PackageCard = ({
           blurDataURL={blurImageData}
         />
         <div className="flex flex-col justify-between package">
-          <h2>{title}</h2>
+          <h2 className="truncate max-w-[220px]" title={title}>{title}</h2>
           <div>
             <h2 className="tour">Tour Details</h2>
             <div className="flex gap-3">
@@ -101,7 +101,7 @@ const PackageCard = ({
       </CardDetail>
       <h2>₱{price}</h2>
       <div className="flex justify-center">
-        <IncreaseCount number={pax} onChange={handleCountAdd} />
+        <IncreaseCount number={pax} onChange={handleCount} />
       </div>
       <h2>₱{count * price}</h2>
     </Rows>

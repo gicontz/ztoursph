@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import { Source_Serif_4 } from "next/font/google";
 import { blurImageData } from "@constants/image";
+import { TTrip } from "@app/modules/trips/types";
 
 const secondaryFont = Source_Serif_4({
   weight: "700",
@@ -45,14 +46,7 @@ const Detail = styled.div`
 `;
 
 type AddedTripProps = {
-  content: {
-    category: string;
-    traveler: string[];
-    date: Date;
-    numberOfTravelers: number;
-    locationPickUp: string;
-    details: { title: string; thumbnail: string };
-  };
+  content: TTrip;
 };
 
 const AddedTrip: React.FC<AddedTripProps> = ({ content }) => {
@@ -60,8 +54,8 @@ const AddedTrip: React.FC<AddedTripProps> = ({ content }) => {
   return (
     <Container>
       <Image
-        src={content.details?.thumbnail}
-        alt={content.details?.title}
+        src={content.thumbnail}
+        alt={content.title}
         width={1000}
         height={250}
         blurDataURL={blurImageData}
@@ -69,7 +63,7 @@ const AddedTrip: React.FC<AddedTripProps> = ({ content }) => {
 
       <div className="flex flex-col justify-between">
         <p className={`text-xl ${secondaryFont.className}`}>
-          {content.details?.title}
+          {content.title}
         </p>
         <div>
           <p
@@ -90,11 +84,11 @@ const AddedTrip: React.FC<AddedTripProps> = ({ content }) => {
               <p className={`label ${secondaryFont.className}`}>
                 Pick Up Location
               </p>
-              <p>{content.locationPickUp}</p>
+              <p>{content.location}</p>
             </Detail>
             <Detail>
               <p className={`label ${secondaryFont.className}`}>Pax</p>
-              <p>{content.numberOfTravelers}</p>
+              <p>{content.participants.length}</p>
             </Detail>
           </div>
         </div>

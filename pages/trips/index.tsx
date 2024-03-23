@@ -3,9 +3,6 @@ import React, { useEffect, useMemo } from "react";
 import BannerImage from "@assets/images/banner.jpg";
 import Layout from "@components/pages/layout";
 import { Row } from "@components/commons/common";
-import TourA from "@assets/images/tour_a.jpg";
-import TourB from "@assets/images/tour_b.jpg";
-import TourC from "@assets/images/tour_c.jpg";
 import styled from "@emotion/styled";
 import TripsTable from "@components/trips/tripsTable";
 import { useTripsContext } from "@providers/trips";
@@ -24,31 +21,30 @@ export default function Trips() {
 
   useEffect(() => {
     getTrips(dispatch, tripStore.trips.map(({ tripId }) => tripId ) ?? []);
-  }, []);
+  }, [tripStore.trips]);
 
   const myTrips = useMemo(() => {
-    const trips = tripStore.trips.map((trip) => ({
-      tripId: trip.tripId,
-      title: trip.title,
-      imageUrl: trip.thumbnail,
-      date: trip.date,
-      pickup: trip.location,
-      numberOfTraveller: trip.participants.length,
-    }));
-    console.log(tripStore.trips)
+    const trips = tripStore.trips.map((trip) => {
+      return {
+        ...trip,
+        imageUrl: trip.thumbnail,
+        pickup: trip.location,
+        numberOfTraveller: trip.numberOfTraveller,
+      }
+    });
     return trips.map((t) => ({
       ...t,
       price: store.trips.find(({ id }) => id === t.tripId )?.price ?? 0,
     }))
-  }, [tripStore.trips]);
+  }, [tripStore.trips, store.trips]);
 
-  console.log(tripStore, myTrips);
+  const isLoading = store.isLoading && tripStore.isLoading;
 
   return (
     <Layout>
       <PageTitle title="My Trips" bgImage={BannerImage} />
       <Panel>
-        <TripsTable data={myTrips} />
+        <TripsTable data={myTrips} isLoading={isLoading}/>
       </Panel>
     </Layout>
   );

@@ -67,29 +67,25 @@ const BookingForm: React.FC<BookingFormProps> = ({
   type,
   details,
 }) => {
-  const [booking, setBooking] = useCookies([Added_Trips]);
   const { handleSubmit, control } = useForm();
   const [showTrips, setShowAddToTrips] = useState(false);
-
-  console.log(details)
+  
   const onSubmitFunc = (formData) => {
       formData.details = details;
       formData.numberOfTravelers = formData.participants?.length ?? 1;
       formData.category = type;
       setShowAddToTrips(true);
-      const data = booking[Added_Trips]
-        ? booking[Added_Trips].slice().concat(formData)
-        : [formData];
-      setBooking(Added_Trips, data);
-      onSubmit({
+      const tripData = {
         tripId: formData.details.tourId,
         title: formData.details.title,
         date: formData.date,
         location: formData.locationPickUp,
         participants: formData.participants,
+        numberOfTraveller: formData.numberOfTravelers,
         thumbnail: formData.details.thumbnail,
         category: type,
-      } as TTrip);
+      };
+      onSubmit(tripData as TTrip);
   };
 
   return (
