@@ -4,6 +4,7 @@ import { Tooltip } from "@chakra-ui/react";
 import { MdOutlineAirplaneTicket, MdPerson } from "react-icons/md";
 import { MENU_LINKS } from "@constants/nav";
 import Link from "next/link";
+import { useTripsContext } from "@providers/trips";
 
 const Container = styled.div`
   padding-top: 5px;
@@ -21,6 +22,7 @@ const Container = styled.div`
 `;
 
 const MainNav = () => {
+  const { tripStore } = useTripsContext();
   return (
     <Container className="hidden lg:!flex">
       {MENU_LINKS.map(({ label, href }) => (
@@ -29,8 +31,9 @@ const MainNav = () => {
         </Link>
       ))}
       <Tooltip label="My Trips">
-        <Link href="/trips">
+        <Link href="/trips" className="relative">
           <MdOutlineAirplaneTicket color="black" size="2em" />
+          {tripStore.trips.length > 0 && <span className="absolute -right-1 -mt-5 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">{tripStore.trips.length}</span>}
         </Link>
       </Tooltip>
       {/* <Tooltip label="My Account">

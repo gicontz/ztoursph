@@ -105,7 +105,7 @@ const MainPageBooking = () => {
             render={({ field }) => {
               return (
                 <DropdownShowcase
-                  {...field}
+                  onChange={field.onChange}
                   showSearch
                   loading={isLoadingData}
                   loadMore={isLoadingData}
@@ -124,7 +124,7 @@ const MainPageBooking = () => {
             name="date"
             control={control}
             render={({ field }) => {
-              return <RangePickerComponent {...field} />;
+              return <RangePickerComponent onChange={field.onChange} />;
             }}
           />
 
@@ -134,7 +134,7 @@ const MainPageBooking = () => {
             render={({ field }) => {
               return (
                 <AutoComplete
-                  {...field}
+                  onChange={field.onChange}
                   className="w-10"
                   options={optionTravellers}
                   placeholder="Travellers"
