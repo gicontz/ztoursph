@@ -1,0 +1,28 @@
+import { Action } from '@app/types/Action';
+
+export enum Actions {
+    ADD_TO_TRIPS = '@trips/ADD_TO_TRIPS',
+    REMOVE_TO_TRIPS = '@trips/REMOVE_TO_TRIPS',
+    GET_TRIPS = '@trips/GET_TRIPS',
+};
+
+export type TTrip = {
+    tripId: string | number;
+    title: string;
+    date: string;
+    participants: Array<string>;
+    location: string;
+}
+
+export interface TripsState {
+    trips: TTrip[];
+};
+
+export type AddToTrips = Action<typeof Actions.ADD_TO_TRIPS, TTrip>;
+export type RemoveToTrips = Action<typeof Actions.REMOVE_TO_TRIPS, string>;
+export type GetTrips = Action<typeof Actions.GET_TRIPS, TTrip[]>;
+
+export type TripsTypes = 
+    | AddToTrips
+    | RemoveToTrips
+    | GetTrips;

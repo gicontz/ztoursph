@@ -9,6 +9,10 @@ import Skeleton from "@components/commons/skeleton";
 import { getTourBySlug, useTours } from "@app/modules/tours/actions";
 import BookingForm from "@components/commons/booking-form";
 import ImageTemplate from "@components/commons/image-template";
+import { addToTrips } from "@app/modules/trips/actions";
+import { useTripsContext } from "@providers/trips";
+import { useCookies } from "react-cookie";
+import { Added_Trips } from "@constants/added_trips";
 
 const Panel = styled(Row)`
   display: flex;
@@ -55,13 +59,19 @@ const PackageDetail = styled.div`
 `;
 export default function Tours() {
   const router = useRouter();
+  const [cookies] = useCookies([Added_Trips]);
   const slug = router.query.slug;
   const [store, dispatch] = useTours();
+  const { tripDispatch } = useTripsContext();
   
   React.useEffect(() => {
     if (typeof slug === "string") getTourBySlug(dispatch, slug);
     //eslint-disable-next-line
   }, [slug]);
+
+  const handleSubmit = (trip) => {
+    addToTrips(tripDispatch, trip);
+  };
 
   const parsedPackageDetails = store.selectedTour ? (
     parse(store.selectedTour.package_details ?? "")
@@ -97,6 +107,7 @@ export default function Tours() {
     );
 
   const detail = {
+    tourId: store.selectedTour?.id,
     title: store.selectedTour?.tour_title,
     banner: store.selectedTour?.tour_banner_image,
   };
@@ -168,7 +179,7 @@ export default function Tours() {
           </div>
 
           <BookingForm
-            onSubmit={(e) => console.log(e)}
+            onSubmit={handleSubmit}
             details={detail}
             type="tours"
           />

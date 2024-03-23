@@ -4,8 +4,6 @@ import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
-import { useInView } from "react-intersection-observer";
-import { StyledDivider } from "./common";
 import Loading from "./loading";
 
 const PanelSearch = styled.div`
