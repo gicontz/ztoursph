@@ -7,6 +7,7 @@ import parse from "html-react-parser";
 import { TToursResponse } from "@app/modules/tours/types";
 import { blurImageData } from "@constants/image";
 import { classNames, getDiscountedPrice } from "@app/utils/helpers";
+import { TCategory } from "@app/modules/trips/types";
 
 const CardContainer = styled.div`
   position: relative;
@@ -147,6 +148,7 @@ export type TTrip = {
   reviews: number;
   numberReviews: number;
   slug: string;
+  category: TCategory;
 }
 
 interface ListingCard {
@@ -159,7 +161,7 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
   return (
     <CardContainer>
       <ImageContainer>
-        <Link href={`/tours/${data.slug}`}>
+        <Link href={`/${data.category}/${data.slug}`}>
           <Image
             src={data.thumbnail}
             alt="Scenic Forest"
@@ -178,7 +180,7 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
           )
         }
       </ImageContainer>
-      <Link href={`/tours/${data.slug}`}>
+      <Link href={`/${data.category}/${data.slug}`}>
         <DetailsContainer>
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
