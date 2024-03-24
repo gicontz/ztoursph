@@ -1,5 +1,5 @@
 import PageTitle from "@components/pages/page-title";
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import BannerImage from "@assets/images/banner.jpg";
 import Layout from "@components/pages/layout";
 import { Row } from "@components/commons/common";
@@ -7,6 +7,9 @@ import styled from "@emotion/styled";
 import TripsTable from "@components/trips/tripsTable";
 import { useTripsContext } from "@providers/trips";
 import { getTrips, useTours } from "@app/modules/tours/actions";
+import { getTrips as getTheTrips } from "@app/modules/trips/actions";
+import { useCookies } from "react-cookie";
+import { Added_Trips } from "@constants/added_trips";
 
 const Panel = styled(Row)`
   margin: 2rem auto;
@@ -16,10 +19,22 @@ const Panel = styled(Row)`
 `;
 
 export default function Trips() {
-  const { tripStore } = useTripsContext();
+  const { tripStore, tripDispatch } = useTripsContext();
+  const [cookie] = useCookies([Added_Trips]);
+  
+  useEffect(() => {
+    getTheTrips(tripDispatch, cookie[Added_Trips] ?? []);
+  }, []);
+  
   const [store, dispatch] = useTours();
 
   useEffect(() => {
+    getTripsData();
+  }, [tripStore.trips]);
+
+  console.log('tripStore.trips', tripStore.trips);
+
+  const getTripsData = useCallback(() => {
     getTrips(dispatch, tripStore.trips.map(({ tripId }) => tripId ) ?? []);
   }, [tripStore.trips]);
 

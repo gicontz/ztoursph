@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
 import { getTours, useTours } from "@app/modules/tours/actions";
-import TourCard from "./tours-card";
+import TourCard from "./trip-card";
 import Skeleton from "@components/commons/skeleton";
 import HeaderText from "@components/commons/header-text";
 
@@ -50,6 +50,12 @@ const MainPageListing = () => {
     //eslint-disable-next-line
   }, []);
 
+  const trips = store.tours.map((tour) => ({
+    ...tour,
+    title: tour.tour_title,
+    slug: tour.tour_slug,
+  }))
+
   return (
     <Panel>
       <HeaderText underline>Packand Go: Set Your Adventurous Seascapes with ZTours.ph</HeaderText>
@@ -59,7 +65,7 @@ const MainPageListing = () => {
       </Description>
       {!store.isLoading && store.tours ? (
         <ListCardsContainer>
-          {store.tours?.slice(0, 4).map((data, key) => (
+          {trips?.slice(0, 4).map((data, key) => (
             <TourCard key={key} data={data} />
           ))}
         </ListCardsContainer>

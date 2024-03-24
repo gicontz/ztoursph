@@ -12,7 +12,7 @@ export const addToTrips = (dispatch: Dispatch<TripsTypes>, trip: TTrip) => {
     dispatch({ type: Actions.ADD_TO_TRIPS, payload: trip });
 }
 
-export const removeToTrips = (dispatch: Dispatch<TripsTypes>, tripId: string) => {
+export const removeToTrips = (dispatch: Dispatch<TripsTypes>, tripId: string | number) => {
     dispatch({ type: Actions.REMOVE_TO_TRIPS, payload: tripId });
 }
 
@@ -22,4 +22,8 @@ export const getTrips = (dispatch: Dispatch<TripsTypes>, trips: TTrip[]) => {
 
 export const setLoading = (dispatch: Dispatch<TripsTypes>, isLoading: boolean) => {
     dispatch({ type: Actions.SET_LOADING, payload: isLoading });
+}
+
+export const setPaxToTrips = (dispatch: Dispatch<TripsTypes>, data: { id: string | number; pax: number }) => {
+    dispatch({ type: Actions.SET_PAX_TO_TRIPS, payload: data });
 }

@@ -6,4 +6,12 @@ export const handleResponse = (response: Response) => {
       } catch(e) {
           return Promise.reject({ status: response.status, text: response.statusText });
       }
-}
+};
+
+export const classNames = (...classes: string[]) => {
+    return classes.filter(Boolean).join(' ');
+};
+
+export const getDiscountedPrice = (price: number, discount: number) => {
+    return price - (discount / 100) * price;
+};

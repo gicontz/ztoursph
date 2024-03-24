@@ -7,7 +7,7 @@ const IncreaseCount = ({ number = 1, onChange }) => {
   
   const handleCount = (op: '+' | '-') => {
     const newCount = op === '+' ? count + 1 : count - 1;
-    if (newCount < 1) return;
+    if (newCount < 0) return;
     setCount(newCount);
     onChange(newCount);
   };
@@ -18,7 +18,7 @@ const IncreaseCount = ({ number = 1, onChange }) => {
         onClick={handleCount.bind(null, '+')}
         twoToneColor="#787878"
       />
-      <h2 className="select-none">{count}</h2>
+      <h4 className="select-none">{count}</h4>
       <MinusOutlined
         onClick={handleCount.bind(null,'-')}
         twoToneColor="#787878"

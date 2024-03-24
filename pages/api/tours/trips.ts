@@ -10,7 +10,6 @@ const __ = async (req: NextApiRequest, res: NextApiResponse) => {
     `${APIUri}/tours/trips`,
     { method: "POST", body: JSON.stringify(req.body), headers }
   );
-  console.log(`${APIUri}/tours/trips`, req.body, result.status, result.statusText);
   if (result.status !== 201) {
     const error = result.statusText;
     return res
