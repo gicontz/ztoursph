@@ -1,9 +1,13 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import { Tooltip } from "@chakra-ui/react";
 import { MdOutlineAirplaneTicket, MdPerson, MdArrowBack } from "react-icons/md";
 import { MENU_LINKS } from "@constants/nav";
+import { useTripsContext } from "@providers/trips";
+import { getTrips } from "@app/modules/trips/actions";
+import { useCookies } from "react-cookie";
+import { Added_Trips } from "@constants/added_trips";
 
 const Container = styled.div`
   align-items: center;
@@ -96,6 +100,12 @@ const MobileNavs: FunctionComponent = () => {
   const [state, setState] = useState({
     toggle: false,
   });
+  const [cookie] = useCookies([Added_Trips]);
+  const { tripStore, tripDispatch } = useTripsContext();
+  
+  useEffect(() => {
+    getTrips(tripDispatch, cookie[Added_Trips] ?? []);
+  }, []);
 
   const handleToggle = (v: boolean) => {
     setState({ toggle: v });
@@ -103,8 +113,9 @@ const MobileNavs: FunctionComponent = () => {
   return (
     <Container className="flex lg:hidden">
       <Tooltip label="My Trips">
-        <Link href="/trips" className="mr-4">
-          <MdOutlineAirplaneTicket size="2em" />
+        <Link href="/trips" className="relative">
+          <MdOutlineAirplaneTicket color="black" size="2em" />
+          {tripStore.trips.length > 0 && <span className="absolute -right-1 -mt-4 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">{tripStore.trips.length}</span>}
         </Link>
       </Tooltip>
 

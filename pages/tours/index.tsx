@@ -5,7 +5,7 @@ import Button from "@components/commons/button";
 import React, { useState } from "react";
 import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
-import TourCard from "@components/listing/tours-card";
+import TourCard from "@components/listing/trip-card";
 import HeaderText from "@components/commons/header-text";
 
 const ListCardsContainer = styled.div`
@@ -77,6 +77,12 @@ export default function Tours() {
     }
   };
 
+  const trips = store.tours.map((tour) => ({
+    ...tour,
+    title: tour.tour_title,
+    slug: tour.tour_slug,
+  }));
+
   return (
     <Layout contained>
       <Row className="!mt-10">
@@ -94,7 +100,7 @@ export default function Tours() {
         {store?.tours.length !== 0 && store.tours && (
           <>
             <ListCardsContainer>
-              {store.tours?.map((data, key) => (
+              {trips?.map((data, key) => (
                 <TourCard key={key} data={data} />
               ))}
             </ListCardsContainer>

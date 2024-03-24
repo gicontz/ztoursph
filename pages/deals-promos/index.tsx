@@ -5,7 +5,7 @@ import Button from "@components/commons/button";
 import React, { useState } from "react";
 import Loading from "@components/commons/loading";
 import { getPackages, usePackages } from "@app/modules/packages/actions";
-import PackageCard from "@components/listing/packages-card";
+import PackageCard from "@components/listing/trip-card";
 import HeaderText from "@components/commons/header-text";
 
 const ListCardsContainer = styled.div`
@@ -51,7 +51,7 @@ const LoadMoreButton = styled(Button)`
   }
 `;
 
-export default function Tours() {
+export default function DealsPromos() {
   const pageSize = 9;
   const [state, setState] = useState({
     pageNumber: 1,
@@ -77,6 +77,12 @@ export default function Tours() {
     }
   };
 
+  const trips = store.packages.map((tour) => ({
+    ...tour,
+    title: tour.package_title,
+    slug: tour.package_slug,
+  }))
+
   return (
     <Layout contained>
       <Row className="!mt-10">
@@ -94,7 +100,7 @@ export default function Tours() {
         {(store?.packages.length !== 0) && (
           <>
             <ListCardsContainer>
-              {store.packages?.filter((p) => p.discount > 0).map((data, key) => (
+              {trips?.filter((p) => p.discount > 0).map((data, key) => (
                 <PackageCard key={key} data={data} />
               ))}
             </ListCardsContainer>

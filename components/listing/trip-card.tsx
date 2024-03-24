@@ -6,6 +6,7 @@ import Link from "next/link";
 import parse from "html-react-parser";
 import { TToursResponse } from "@app/modules/tours/types";
 import { blurImageData } from "@constants/image";
+import { classNames, getDiscountedPrice } from "@app/utils/helpers";
 
 const CardContainer = styled.div`
   position: relative;
@@ -135,16 +136,30 @@ const SVGHeart = ({ width, height, color }) => (
   </svg>
 );
 
+export type TTrip = {
+  id: string | number;
+  title: string;
+  price: number;
+  discount: number;
+  location: string;
+  thumbnail: string;
+  package_details: string;
+  reviews: number;
+  numberReviews: number;
+  slug: string;
+}
+
 interface ListingCard {
-  data: TToursResponse;
+  data: TTrip;
 }
 
 const TourCard: React.FC<ListingCard> = ({ data }) => {
   const [like, setLike] = useState(false);
+
   return (
     <CardContainer>
       <ImageContainer>
-        <Link href={`/tours/${data.tour_slug}`}>
+        <Link href={`/tours/${data.slug}`}>
           <Image
             src={data.thumbnail}
             alt="Scenic Forest"
@@ -155,13 +170,23 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
         <ActionButton onClick={() => setLike(!like)}>
           <SVGHeart width={20} height={20} color={like ? "red" : "white"} />
         </ActionButton>
+        {
+          data.discount > 0 && (
+            <div className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg">
+              PROMO
+            </div>
+          )
+        }
       </ImageContainer>
-      <Link href={`/tours/${data.tour_slug}`}>
+      <Link href={`/tours/${data.slug}`}>
         <DetailsContainer>
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
-            <TourTitle>{data.tour_title}</TourTitle>
-            <p className="whitespace-nowrap">₱ {data.price}</p>
+            <TourTitle>{data.title}</TourTitle>
+            <p className="whitespace-nowrap space-x-2">
+              <span>₱ {getDiscountedPrice(data.price, data.discount)}</span>
+              {parseInt(data.discount as any, 10) > 0 && <span className="text-sm text-green-400">{data.discount}% off</span>}
+            </p>
           </TitlePriceContainer>
           <DescriptionContainer>
             {parse(data.package_details)}

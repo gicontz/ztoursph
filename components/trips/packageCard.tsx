@@ -5,10 +5,13 @@ import IncreaseCount from "./increaseCount";
 import { blurImageData } from "@constants/image";
 
 const Rows = styled.div`
-  display: grid;
+  display: flex;
   text-align: center;
-  grid-template-columns: repeat(5, 1fr);
+  justify-content: space-between;
   padding: 0.5rem;
+  > * {
+    width: 25%;
+  }
 
   .details {
     grid-column: span 2;
@@ -16,10 +19,6 @@ const Rows = styled.div`
 `;
 
 const CardDetail = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-
   h2 {
     font-size: 1.3rem;
   }
@@ -73,19 +72,20 @@ const PackageCard = ({
 
   return (
     <Rows>
-      <CardDetail className="details">
+      <CardDetail className="details flex flex-col lg:flex-row items-baseline lg:items-center lg:space-x-2">
         <Image
           src={image}
           alt={title}
           width={1000}
           height={250}
+          className="!w-30 !lg:w-40"
           blurDataURL={blurImageData}
         />
-        <div className="flex flex-col justify-between package">
-          <h2 className="truncate max-w-[220px]" title={title}>{title}</h2>
-          <div>
+        <div className="flex flex-col justify-between text-left">
+          <h4 className="truncate max-w-[220px] text-md mt-2" title={title}>{title}</h4>
+          <div className="flex flex-col">
             <h2 className="tour">Tour Details</h2>
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3">
               <div className="flex flex-col">
                 <p className="header">Tour Date</p>
                 <p className="content">{date}</p>
@@ -99,11 +99,11 @@ const PackageCard = ({
           </div>
         </div>
       </CardDetail>
-      <h2>₱{price}</h2>
+      <h4>₱{price}</h4>
       <div className="flex justify-center">
         <IncreaseCount number={pax} onChange={handleCount} />
       </div>
-      <h2>₱{count * price}</h2>
+      <h4 className="w-full">₱{count * price}</h4>
     </Rows>
   );
 };

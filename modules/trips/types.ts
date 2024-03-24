@@ -4,6 +4,7 @@ export enum Actions {
     ADD_TO_TRIPS = '@trips/ADD_TO_TRIPS',
     REMOVE_TO_TRIPS = '@trips/REMOVE_TO_TRIPS',
     GET_TRIPS = '@trips/GET_TRIPS',
+    SET_PAX_TO_TRIPS = '@trips/SET_PAX_TO_TRIPS',
     SET_LOADING = '@trips/SET_LOADING',
 };
 
@@ -26,13 +27,15 @@ export interface TripsState {
 };
 
 export type AddToTrips = Action<typeof Actions.ADD_TO_TRIPS, TTrip>;
-export type RemoveToTrips = Action<typeof Actions.REMOVE_TO_TRIPS, string>;
+export type RemoveToTrips = Action<typeof Actions.REMOVE_TO_TRIPS, string | number>;
 export type GetTrips = Action<typeof Actions.GET_TRIPS, TTrip[]>;
 
 export type SetLoadingAction = Action<typeof Actions.SET_LOADING, boolean>;
+export type SetPaxToTripsAction = Action<typeof Actions.SET_PAX_TO_TRIPS, { id: string | number, pax: number }>;
 
 export type TripsTypes = 
     | AddToTrips
     | RemoveToTrips
     | GetTrips
-    | SetLoadingAction;
+    | SetLoadingAction
+    | SetPaxToTripsAction;

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Tooltip } from "@chakra-ui/react";
 import { MdOutlineAirplaneTicket, MdPerson } from "react-icons/md";
 import { MENU_LINKS } from "@constants/nav";
 import Link from "next/link";
 import { useTripsContext } from "@providers/trips";
+import { useCookies } from "react-cookie";
+import { Added_Trips } from "@constants/added_trips";
+import { getTrips } from "@app/modules/trips/actions";
 
 const Container = styled.div`
   padding-top: 5px;
@@ -22,7 +25,13 @@ const Container = styled.div`
 `;
 
 const MainNav = () => {
-  const { tripStore } = useTripsContext();
+  const { tripStore, tripDispatch } = useTripsContext();
+  const [cookie] = useCookies([Added_Trips]);
+  
+  useEffect(() => {
+    getTrips(tripDispatch, cookie[Added_Trips] ?? []);
+  }, []);
+  
   return (
     <Container className="hidden lg:!flex">
       {MENU_LINKS.map(({ label, href }) => (

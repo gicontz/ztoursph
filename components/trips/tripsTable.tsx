@@ -8,12 +8,14 @@ import Loading from "@components/commons/loading";
 import { calculateTrips } from "@app/services/checkout";
 import { TPreCheckout, TPreCheckoutCalculation } from "@app/modules/checkout/types";
 import { useTours } from "@app/modules/tours/actions";
-import { setLoading } from "@app/modules/trips/actions";
+import { removeToTrips, setLoading, setPaxToTrips } from "@app/modules/trips/actions";
 import { useTripsContext } from "@providers/trips";
 import { set } from "lodash";
 import { useRouter } from "next/router";
 import { Added_Trips } from "@constants/added_trips";
 import { useCookies } from "react-cookie";
+import { useDialog } from "@providers/dialog";
+import ConfirmationDialog from "@app/layouts/modals/ConfirmationDialog";
 
 const SourceSerif = Source_Serif_4({
   subsets: ["latin"],
@@ -21,35 +23,11 @@ const SourceSerif = Source_Serif_4({
 });
 
 const Panel = styled(Row)`
-  * {
-    // border: 1px solid blue;
-  }
-  width: 60rem;
   margin: auto;
   h2 {
     width: 100%;
     color: #23432c;
     font-size: 1.3rem;
-  }
-`;
-
-const TableContainer = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-rows: repeat(2, fit-content);
-  gap: 0.5rem;
-  margin: auto;
-`;
-
-const Column = styled.div`
-  display: grid;
-  text-align: center;
-  grid-template-columns: repeat(5, 1fr);
-  background-color: #efefef;
-  padding: 0.3rem;
-
-  .expand {
-    grid-column: span 2;
   }
 `;
 
@@ -94,6 +72,7 @@ interface TripsTableProps {
 const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
   const route = useRouter();
   const { tripDispatch } = useTripsContext();
+  const [openDialog, closeDialog] = useDialog();
   const [cookies, setCookie] = useCookies([Added_Trips]);
   const [checkoutData, setCheckoutData] = React.useState<TData[]>(data);
   const [checkoutDetails, setCheckoutDetails] = React.useState<TPreCheckoutCalculation | null>(null);
@@ -107,15 +86,16 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     handleCalc();
   }, [data]);
 
-  console.log(cookies);
-
   const handleCalc = async (newData?: TPreCheckout) => {
     try {
       const calculations = await checkoutCalculations(newData);
       const { data: d} = calculations;
       if (d) {
         setCheckoutDetails(d);
-        setCookie(Added_Trips, cookies[Added_Trips].map((e) => ({ ...e, numberOfTraveller: d.subTotals.find((s) => s.id === e.tripId)?.pax ?? e.numberOfTraveller })));
+        const newCookieData = cookies[Added_Trips].map((e) => ({ ...e, numberOfTraveller: d.subTotals.find((s) => s.id === e.tripId)?.pax ?? e.numberOfTraveller }));
+        setCookie(Added_Trips, newCookieData);
+      } else {
+        setCheckoutDetails(null);
       }
     } catch (e) {
       return;
@@ -130,7 +110,38 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     return calculations;
   }, [data]);
 
+  const removeItem = (id: string | number) => {
+    setCheckoutData(prev => {
+      const removedList = prev.filter((e) => e.tripId !== id);
+      const newData = {
+        booking: removedList.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller }))
+      };
+      setCookie(Added_Trips, cookies[Added_Trips].filter((e) => e.tripId !== id));
+      removeToTrips(tripDispatch, id);
+      handleCalc(newData);
+      return removedList;
+    });
+    closeDialog();
+  };
+
+  const handleCancel = () => {
+    handleCalc();
+    closeDialog();
+  }
+
   const handleUpdatePax = (id: string | number) => (newPax: number) => {
+    if (newPax === 0) {
+      openDialog({
+        children: <ConfirmationDialog
+          title="Remove Trip"
+          message="Are you sure you want to remove this trip?"
+          onOk={() => removeItem(id)}
+          onCancel={handleCancel}
+        />
+      });
+      return;
+    }
+    setPaxToTrips(tripDispatch, { id, pax: newPax });
     const newData = {
       booking: checkoutData.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller }))
     };
@@ -138,6 +149,8 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     setCheckoutData(prev => prev.map((e) => ({ ...e, numberOfTraveller: e.tripId === id ? newPax : e.numberOfTraveller })));
     handleCalc(newData);
   };
+
+  console.log(checkoutDetails);
 
   const Trips = () => checkoutData.map((e, i) => (
     <PackageCard
@@ -154,38 +167,38 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
 
   return (
     <Panel>
-      <TableContainer>
-        <Column>
-          <h2 className="expand">Trips</h2>
-          <h2>Price</h2>
-          <h2>Pax</h2>
-          <h2>Subtotal</h2>
-        </Column>
+      <div className="flex flex-col px-4">
+        <div className="flex justify-between text-center bg-gray-50 p-2 w-full [&>h4]:text-sm mb-4">
+          <h4>Trips</h4>
+          <h4>Price</h4>
+          <h4>Pax</h4>
+          <h4>Subtotal</h4>
+        </div>
         { isLoading ? <Loading /> : checkoutData.length > 0 ? <Trips /> : <h2>No trips added</h2>}
-      </TableContainer>
+      </div>
 
       <CheckoutSection>
-        <div className="flex-col flex gap-3">
+        <div className="flex-col flex gap-3 p-2">
           {
-            (isLoading && !checkoutDetails) ? (
+            (isLoading) ? (
               <Loading />
             ) : (
                 <div className="w-full">
-                  <h2 className="tour--total">Trips Total</h2>
+                  <h4 className="tour--total">Trips Total</h4>
                   <Divider />
                   <div className="flex justify-between">
-                    <h2 className="">Subtotal</h2>
-                    <h2 className="font-normal text-right">₱ {checkoutDetails?.totalAmt ?? 0}</h2>
+                    <h4 className="">Subtotal</h4>
+                    <h4 className="font-normal text-right">₱ {checkoutDetails?.totalAmt ?? 0}</h4>
                   </div>
                   <Divider />
                   <div className="flex justify-between ">
-                    <h2 className="w-fit">Convenience Fee</h2>
-                    <h2 className="w-fit text-right">₱ {checkoutDetails?.processingFee ?? 0}</h2>
+                    <h4 className="w-fit">Convenience Fee</h4>
+                    <h4 className="w-fit text-right">₱ {checkoutDetails?.processingFee ?? 0}</h4>
                   </div>
                   <Divider />
                   <div className="flex justify-between ">
-                    <h2 className="w-fit">Total</h2>
-                    <h2 className="w-fit text-right">₱ {checkoutDetails?.totalAmtTbp ?? 0}</h2>
+                    <h4 className="w-fit">Total</h4>
+                    <h4 className="w-fit text-right">₱ {checkoutDetails?.totalAmtTbp ?? 0}</h4>
                   </div>
                 </div>
             )

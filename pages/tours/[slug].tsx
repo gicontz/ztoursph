@@ -70,7 +70,6 @@ export default function Tours() {
   }, [slug]);
 
   const handleSubmit = (trip) => {
-    console.log(trip)
     addToTrips(tripDispatch, trip);
     const data = booking[Added_Trips]
       ? booking[Added_Trips].slice().concat(trip)
