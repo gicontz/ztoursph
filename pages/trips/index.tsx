@@ -32,8 +32,6 @@ export default function Trips() {
     getTripsData();
   }, [tripStore.trips]);
 
-  console.log('tripStore.trips', tripStore.trips);
-
   const getTripsData = useCallback(() => {
     getTrips(dispatch, tripStore.trips.map(({ tripId }) => tripId ) ?? []);
   }, [tripStore.trips]);

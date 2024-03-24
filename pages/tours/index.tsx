@@ -7,6 +7,7 @@ import Loading from "@components/commons/loading";
 import { getTours, useTours } from "@app/modules/tours/actions";
 import TourCard from "@components/listing/trip-card";
 import HeaderText from "@components/commons/header-text";
+import { TCategory } from "@app/modules/trips/types";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -81,6 +82,7 @@ export default function Tours() {
     ...tour,
     title: tour.tour_title,
     slug: tour.tour_slug,
+    category: 'tours' as TCategory,
   }));
 
   return (
