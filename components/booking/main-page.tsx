@@ -8,6 +8,7 @@ import DropdownShowcase from "@components/commons/dropdown-showcase";
 import styled from "@emotion/styled";
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 import { getPackages, usePackages } from "@app/modules/packages/actions";
+import { useRouter } from "next/router";
 
 const ContainerCard = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ const ContainerCard = styled.div`
 `;
 
 const MainPageBooking = () => {
+  const router = useRouter();
   const pageSize = 5;
   const { handleSubmit, control } = useForm();
   const [store, dispatch] = usePackages();
@@ -95,9 +97,15 @@ const MainPageBooking = () => {
 
   const isLoadingData = React.useMemo(() => store.isLoading, [store.isLoading]);
 
+  const onSubmit = (data) => {
+    console.log(data);
+    if (data.packages)
+      router.push(`/packages/${data.packages}`);
+  }
+
   return (
     <div className="relative mx-auto w-full">
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <ContainerCard>
           <Controller
             name="packages"
