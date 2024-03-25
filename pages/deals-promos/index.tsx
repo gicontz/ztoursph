@@ -82,29 +82,35 @@ export default function DealsPromos() {
     ...tour,
     title: tour.package_title,
     slug: tour.package_slug,
-    category: 'packages' as TCategory,
-  }))
+    category: "packages" as TCategory,
+  }));
 
   return (
     <Layout contained>
       <Row className="!mt-10">
-        <HeaderText underline>Our Package Collection</HeaderText>
+        <HeaderText underline>Our Deals & Promos</HeaderText>
       </Row>
       <Row className="!mt-5 !mb-10">
         <Description>
           <p>
-          Created to flip your moments into memory of a lifetime. Z Tours.ph offers the best Packages that you&apos;ll surely love to try. These packages are meticulously went under a needle&apos;s hole in order to ensure that aside from providing great itineraries, it&apos;s also worthy of every penny you&apos;ve spent. Check out your reservation now!
+            Planning your next island getaway without exhausting and breaking
+            your savings? Our exclusive and latest deals and promos will serve
+            as your ticket for making your island travel wishlist possible! Book
+            now with us, and get ready to experience and create an indelible
+            memories of a lifetime!
           </p>
         </Description>
       </Row>
 
       <Row>
-        {(store?.packages.length !== 0) && (
+        {store?.packages.length !== 0 && (
           <>
             <ListCardsContainer>
-              {trips?.filter((p) => p.discount > 0).map((data, key) => (
-                <PackageCard key={key} data={data} />
-              ))}
+              {trips
+                ?.filter((p) => p.discount > 0)
+                .map((data, key) => (
+                  <PackageCard key={key} data={data} />
+                ))}
             </ListCardsContainer>
           </>
         )}
