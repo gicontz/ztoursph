@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Tooltip } from "antd";
 import Image from "next/image";
 import React from "react";
+import parse from "html-react-parser";
 import Loading from "./loading";
 
 const PanelSearch = styled.div`
@@ -31,6 +32,10 @@ const PanelSearch = styled.div`
 const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
 
   p {
     font-size: 0.8rem;
@@ -57,12 +62,10 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const summary = () => (
-    <SummaryContainer>
-      <p>{data.description}</p>
-    </SummaryContainer>
-  );
+  const summary = () => {
+    const description = parse(data.description ?? "");
+    return <SummaryContainer>{description}</SummaryContainer>;
+  };
   return (
     <Tooltip
       title={summary}
