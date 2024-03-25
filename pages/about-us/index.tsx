@@ -125,7 +125,7 @@ const ImageTeam: React.FC<ImageTeamProps> = ({ department, data }) => {
 
 const AboutUs = () => {
   const bannerText = {
-    title: "About us",
+    title: "About Us",
     description:
       " A section of who we are and anything about us under the sun.",
     bannerImage:
@@ -175,10 +175,15 @@ const AboutUs = () => {
       <AboutUsContainer>
         <AboutUsSection>
           <HeaderText size={2} underline>
-          Welcome to ZTours.ph! We are here to help you transform your travel plans into a memorable one.
+            Welcome to ZTours.ph! We are here to help you transform your travel
+            plans into a memorable one.
           </HeaderText>
           <p>
-          For a brief history, ZTours.ph was founded and established years ago. This agency is now making a name to the scene of travel and tour agency here in Palawan. Our good office is originally located at Rizal St. Brgy. Maligaya, El Nido, Palawan, and is also owned by a humble former local guide based in El Nido.
+            For a brief history, ZTours.ph was founded and established years
+            ago. This agency is now making a name to the scene of travel and
+            tour agency here in Palawan. Our good office is originally located
+            at Rizal St. Brgy. Maligaya, El Nido, Palawan, and is also owned by
+            a humble former local guide based in El Nido.
           </p>
         </AboutUsSection>
         <AboutUsSection>
@@ -186,7 +191,12 @@ const AboutUs = () => {
             Our Mission
           </HeaderText>
           <p>
-          As we begin on this journey, our mission is clear and that is to stand out as one of the premier travels and tour agencies in the Philippines, highlighting the unique experience of each of our client’s chosen tours and trips. We are truly committed in delivering high-quality and value-driven services using creative and innovative solutions that surpass the guest expectations.
+            As we begin on this journey, our mission is clear and that is to
+            stand out as one of the premier travels and tour agencies in the
+            Philippines, highlighting the unique experience of each of our
+            client’s chosen tours and trips. We are truly committed in
+            delivering high-quality and value-driven services using creative and
+            innovative solutions that surpass the guest expectations.
           </p>
           {/* <ul className="list">
             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
@@ -198,10 +208,14 @@ const AboutUs = () => {
         </AboutUsSection>
         <AboutUsSection>
           <HeaderText size={2} underline>
-            Our Journey
+            Our Vision
           </HeaderText>
           <p>
-          By 2025, we aim to carve and solidify our standing as the leading go-to provider of island tours, expedition tours, van transfers, and various activities on the island. In order to maintain a consistent stream of satisfied customers, we strive to provide exceptional hassle-free experiences that goes above beyond expectations.
+            By 2025, we aim to carve and solidify our standing as the leading
+            go-to provider of island tours, expedition tours, van transfers, and
+            various activities on the island. In order to maintain a consistent
+            stream of satisfied customers, we strive to provide exceptional
+            hassle-free experiences that goes above beyond expectations.
           </p>
           {/* <Timeline
             className={PoppinsFont.className}
@@ -210,13 +224,16 @@ const AboutUs = () => {
         </AboutUsSection>
         <AboutUsSection>
           <HeaderText size={2} underline>
-          Our Goals
+            Our Goals
           </HeaderText>
           <p>
-          Navigate and execute successful travel and tour agency operations to maximize benefits for both the organization and attendees.
-Delight clients with superior services, cultivating trust for future bookings and reservations with our travel and tour agency. 
-Provide services that not only exceed expectations but also come at a reasonable cost.
-Continuously innovate and inspire customers in their future travels.
+            Navigate and execute successful travel and tour agency operations to
+            maximize benefits for both the organization and attendees. Delight
+            clients with superior services, cultivating trust for future
+            bookings and reservations with our travel and tour agency. Provide
+            services that not only exceed expectations but also come at a
+            reasonable cost. Continuously innovate and inspire customers in
+            their future travels.
           </p>
         </AboutUsSection>
         <AboutUsSection>
@@ -224,9 +241,15 @@ Continuously innovate and inspire customers in their future travels.
             Our Team
           </HeaderText>
           <p>
-          Mind, Heart, and Soul: Meet the masters behind ZTours.ph! Our team is composed of a good and humble people, seasoned experts and enthusiast in their respective fields and crafts, and licensed guides – all of us are bound by a sole purpose, and that is to make your every journey with our agency truly unparalleled and exceptional.
+            Mind, Heart, and Soul: Meet the masters behind ZTours.ph! Our team
+            is composed of a good and humble people, seasoned experts and
+            enthusiast in their respective fields and crafts, and licensed
+            guides – all of us are bound by a sole purpose, and that is to make
+            your every journey with our agency truly unparalleled and
+            exceptional.
           </p>
-          <TeamImage>
+
+          {/* <TeamImage>
             <ImageTeam
               department="CEO "
               data={[
@@ -248,7 +271,7 @@ Continuously innovate and inspire customers in their future travels.
                 },
               ]}
             />
-          </TeamImage>
+          </TeamImage> */}
         </AboutUsSection>
       </AboutUsContainer>
     </Layout>

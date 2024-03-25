@@ -84,15 +84,15 @@ const FreaquentlyAskQuestion = () => {
     <Layout>
       <Panel>
         <PageBanner
-          title="FAQ's"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et nunc sapien. Aliquam vestibulum congue odio. "
+          title="Frequently Asked Questions (FAQs)"
+          description="Ask and know: This is a client’s go-to source of common queries, serving you clear and concise answers about the different services we offer."
           bannerImage="https://static.saltinourhair.com/wp-content/uploads/2019/02/23121212/things-to-do-el-nido-island-hopping-tour-2.jpg"
         />
         <FAQCategoryContainer>
           <div>
             <HeaderText>Question Category</HeaderText>
             <ul>
-              {["About us", "Our Tours", "Legals", "Contact",].map((item) => (
+              {["About us", "Our Tours", "Legals", "Contact"].map((item) => (
                 <li key={item}>
                   <StyledButton
                     className={poppins.className}

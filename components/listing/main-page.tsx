@@ -34,7 +34,7 @@ const Description = styled.div`
   a {
     text-decoration: underline;
   }
-  p{
+  p {
     width: 70%;
   }
 
@@ -55,14 +55,21 @@ const MainPageListing = () => {
     ...tour,
     title: tour.tour_title,
     slug: tour.tour_slug,
-    category: 'tours' as TCategory,
-  }))
+    category: "tours" as TCategory,
+  }));
 
   return (
     <Panel>
-      <HeaderText underline>Packand Go: Set Your Adventurous Seascapes with ZTours.ph</HeaderText>
+      <HeaderText underline>
+        Pack and Go: Set Your Adventurous Seascapes with ZTours.ph
+      </HeaderText>
       <Description>
-        <p>Nothing beats nature&apos;s vibe! Experience the most enchanting hideaways, awe-inspiring islands, and underwater adventures tailored just for you! So, what are you waiting for? Book your exciting adventure with us!</p>
+        <p>
+          Nothing beats nature&apos;s vibe! Experience the most enchanting
+          hideaways, awe-inspiring islands, and underwater adventures tailored
+          just for you! So, what are you waiting for? Book your exciting
+          adventure with us!
+        </p>
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
       {!store.isLoading && store.tours ? (
