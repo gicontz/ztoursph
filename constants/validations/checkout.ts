@@ -10,7 +10,9 @@ const schema = object().shape({
   nationality: string().required("Nationality is a required field."),
   mobileNumber1: number().required("Mobile 1 is a required field."),
   mobileNumber2: number().required("Mobile 2 is a required field."),
-  email: string().email().required("Email is a required field."),
+  email: string()
+    .email("Email must be valid email")
+    .required("Email is a required field."),
   isSameAsLeadGuest: boolean().required(),
   guests: array().when("isSameAsLeadGuest", {
     is: false,
@@ -20,5 +22,7 @@ const schema = object().shape({
   }),
   tour_date: date().required("Tour Date is a required field."),
 });
+
+const guestSchema = object();
 
 export default schema;

@@ -3,13 +3,14 @@ import Button from "@components/commons/button";
 import { Row } from "@components/commons/common";
 import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
-import { DatePicker, Divider, Modal } from "antd";
+import { DatePicker as rawDatePicker, Divider, Modal } from "antd";
 import { Poppins, Source_Serif_4 } from "next/font/google";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import checkoutSchema from "@constants/validations/checkout";
 import dynamic from "next/dynamic";
+import { boolean } from "yup";
 const Input = dynamic(() => import("@components/commons/input"), {
   ssr: false,
 });
@@ -48,6 +49,16 @@ const FieldGroup = ({
   </div>
 );
 
+//datepicker component overide style
+const DatePicker = styled(rawDatePicker)<{ hasError: boolean }>`
+  :where(.css-dev-only-do-not-override-1qhpsh8).ant-picker-outlined {
+    border-color: #4096ff;
+    background-color: #ffffff;
+    border-color: ${({ hasError }) =>
+      hasError ? "rgb(185 28 28)" : "#d9d9d9"};
+  }
+`;
+
 export default function Checkout() {
   const {
     handleSubmit,
@@ -70,7 +81,6 @@ export default function Checkout() {
       tour_date: data.tour_date,
       guests: data.guests,
     };
-
     console.log(content);
   };
 
@@ -103,6 +113,7 @@ export default function Checkout() {
                   <Input
                     type="text"
                     onChange={field.onChange}
+                    hasError={errors?.firstname !== undefined}
                     helperText={errors?.firstname?.message as string}
                   />
                 )}
@@ -118,6 +129,7 @@ export default function Checkout() {
                     type="text"
                     onChange={field.onChange}
                     maxLength={2}
+                    hasError={errors?.middleInitial !== undefined}
                     helperText={errors?.middleInitial?.message as string}
                   />
                 )}
@@ -132,6 +144,7 @@ export default function Checkout() {
                   <Input
                     type="text"
                     onChange={field.onChange}
+                    hasError={errors?.lastname !== undefined}
                     helperText={errors?.lastname?.message as string}
                   />
                 )}
@@ -146,6 +159,7 @@ export default function Checkout() {
                   <Input
                     type="number"
                     onChange={field.onChange}
+                    hasError={errors?.age !== undefined}
                     helperText={errors?.age?.message as string}
                   />
                 )}
@@ -160,6 +174,7 @@ export default function Checkout() {
                   <Input
                     type="text"
                     onChange={field.onChange}
+                    hasError={errors?.nationality !== undefined}
                     helperText={errors?.nationality?.message as string}
                   />
                 )}
@@ -176,6 +191,7 @@ export default function Checkout() {
                   <Input
                     type="number"
                     onChange={field.onChange}
+                    hasError={errors?.mobileNumber1 !== undefined}
                     helperText={errors?.mobileNumber1?.message as string}
                   />
                 )}
@@ -191,6 +207,7 @@ export default function Checkout() {
                   <Input
                     type="number"
                     onChange={field.onChange}
+                    hasError={errors?.mobileNumber2 !== undefined}
                     helperText={errors?.mobileNumber2?.message as string}
                   />
                 )}
@@ -206,6 +223,7 @@ export default function Checkout() {
                   <Input
                     type="email"
                     onChange={field.onChange}
+                    hasError={errors?.email !== undefined}
                     helperText={errors?.email?.message as string}
                   />
                 )}
@@ -224,6 +242,7 @@ export default function Checkout() {
                     showToday={false}
                     disabledDate={(d) => !d || d.isBefore(new Date())}
                     className="h-12"
+                    hasError={errors?.tour_date !== undefined}
                   />
                   {errors?.tour_date?.message !== undefined && (
                     <p className="text-red-700 text-xs font-italized">
