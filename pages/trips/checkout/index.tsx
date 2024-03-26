@@ -79,6 +79,7 @@ export default function Checkout() {
       mobileNumber1: data.mobileNumber1,
       mobileNumber2: data.mobileNumber2,
       tour_date: data.tour_date,
+      booking_date: new Intl.DateTimeFormat("en-US").format(Date.now()),
       guests: data.guests,
     };
     console.log(content);
@@ -230,7 +231,7 @@ export default function Checkout() {
               />
             </FieldGroup>
           </div>
-          <FieldGroup additionalClass="lg:w-1/4 w-full">
+          {/* <FieldGroup additionalClass="lg:w-1/4 w-full">
             <Label>Tour Date</Label>
             <Controller
               control={control}
@@ -252,7 +253,7 @@ export default function Checkout() {
                 </React.Fragment>
               )}
             />
-          </FieldGroup>
+          </FieldGroup> */}
 
           <Divider className="!my-5" />
 

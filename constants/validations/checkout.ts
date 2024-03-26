@@ -20,7 +20,7 @@ const schema = object().shape({
       schema.min(1, "Guest is required when not same as lead guest"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  tour_date: date().required("Tour Date is a required field."),
+  // tour_date: date().required("Tour Date is a required field."),
 });
 
 const guestSchema = object();
