@@ -78,7 +78,6 @@ export default function Checkout() {
       email: data.email,
       mobileNumber1: data.mobileNumber1,
       mobileNumber2: data.mobileNumber2,
-      tour_date: data.tour_date,
       booking_date: new Intl.DateTimeFormat("en-US").format(Date.now()),
       guests: data.guests,
     };
