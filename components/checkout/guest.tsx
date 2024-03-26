@@ -50,7 +50,7 @@ const StyledButton = styled(Button)`
 export type TGuest = {
   name: string;
   age: string;
-  nationality: string; 
+  nationality: string;
 };
 
 interface ParticipantInputProps {
@@ -59,14 +59,24 @@ interface ParticipantInputProps {
   clearGuests?: boolean;
 }
 
-const GuestInput: React.FC<ParticipantInputProps> = ({ clearGuests, helperText, onChange }) => {
-  const [participant, setParticipant] = useState<{name: string, age: string, nationality: string }>({ name: '', age: '', nationality: '' });
-  const [participantData, setParticipantData] = useState<{name: string, age: string, nationality: string }[]>([]);
+const GuestInput: React.FC<ParticipantInputProps> = ({
+  clearGuests,
+  helperText,
+  onChange,
+}) => {
+  const [participant, setParticipant] = useState<{
+    name: string;
+    age: string;
+    nationality: string;
+  }>({ name: "", age: "", nationality: "" });
+  const [participantData, setParticipantData] = useState<
+    { name: string; age: string; nationality: string }[]
+  >([]);
 
   const setValueChange = React.useCallback(() => {
     if (clearGuests) {
       setParticipantData([]);
-      if (typeof onChange === 'function') onChange([]);
+      if (typeof onChange === "function") onChange([]);
     }
     //eslint-disable-next-line
   }, [clearGuests]);
@@ -79,80 +89,84 @@ const GuestInput: React.FC<ParticipantInputProps> = ({ clearGuests, helperText, 
   const deleteName = (index: number) => {
     setParticipantData((prev) => {
       const newList = prev.filter((_, i) => i !== index);
-      if (typeof onChange === 'function') onChange([...newList]);
+      if (typeof onChange === "function") onChange([...newList]);
       return newList;
     });
   };
 
-const handleInputChange = (event) => {
-  const { name, value } = event.target;
-  setParticipant((prev) => ({ ...prev, [name]: value }));
-};
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setParticipant((prev) => ({ ...prev, [name]: value }));
+  };
 
-// 07 10 2003
+  // 07 10 2003
   const handleAddParticipantClick = () => {
     if (participant.age && participant.name && participant.nationality) {
       setParticipantData((prev) => {
-        if (typeof onChange === 'function') onChange([...prev, participant]);
-        return [...prev, participant]
+        if (typeof onChange === "function") onChange([...prev, participant]);
+        return [...prev, participant];
       });
-      setParticipant({ name: '', age: '', nationality: '' });
-      
+      setParticipant({ name: "", age: "", nationality: "" });
+
       return;
     }
-    
   };
-  const nameList = participantData.length ? participantData.map((data, index) => (
-    <React.Fragment key={`participant-${index}`}>
-      <IndividualNameContainer key={index}>
-      <p className="w-48">{data.name}</p>
-      <p>{data.age}</p>
-      <p className="w-40">{data.nationality}</p>
-        <TrashIcon
-          className="cursor-pointer"
-          onClick={() => deleteName(index)}
-          boxSize={5}
-        />
-      </IndividualNameContainer>
-    </React.Fragment>
-  )) : participantData.length === 0 ? <p>No guests added</p> : null;
+  const nameList = participantData.length ? (
+    participantData.map((data, index) => (
+      <React.Fragment key={`participant-${index}`}>
+        <IndividualNameContainer key={index}>
+          <p className="w-48">{data.name}</p>
+          <p>{data.age}</p>
+          <p className="w-40">{data.nationality}</p>
+          <TrashIcon
+            className="cursor-pointer"
+            onClick={() => deleteName(index)}
+            boxSize={5}
+          />
+        </IndividualNameContainer>
+      </React.Fragment>
+    ))
+  ) : participantData.length === 0 ? (
+    <p>No guests added</p>
+  ) : null;
 
   return (
     <>
       <AddParticipant className="w-full flex-col [&>input]:w-full [&>input]:h-10 lg:flex-row">
         <Input
-            className={Font.className}
-            value={participant?.name}
-            onChange={handleInputChange}
-            name="name"
-            type="text"
-            placeholder="Name"
-          />
-          <Input
-            className={Font.className}
-            value={participant?.age}
-            onChange={handleInputChange}
-            name="age"
-            type="number"
-            placeholder="Age"
-          />
-          <Input
-            className={Font.className}
-            value={participant?.nationality}
-            onChange={handleInputChange}
-            name="nationality"
-            type="text"
-            placeholder="Nationality"
-          />
-          <StyledButton type="primary" onClick={handleAddParticipantClick}>
-            Add Participant
-          </StyledButton>
+          className={Font.className}
+          value={participant?.name}
+          onChange={handleInputChange}
+          name="name"
+          type="text"
+          placeholder="Name"
+        />
+        <Input
+          className={Font.className}
+          value={participant?.age}
+          onChange={handleInputChange}
+          name="age"
+          type="number"
+          placeholder="Age"
+        />
+        <Input
+          className={Font.className}
+          value={participant?.nationality}
+          onChange={handleInputChange}
+          name="nationality"
+          type="text"
+          placeholder="Nationality"
+        />
+        <StyledButton type="primary" onClick={handleAddParticipantClick}>
+          Add Participant
+        </StyledButton>
       </AddParticipant>
-      {helperText && <p className="text-red-700 text-xs font-italized">{helperText}</p>}
+      {helperText && (
+        <p className="text-red-700 text-xs font-italized">{helperText}</p>
+      )}
       <br />
-      <p className='text-lg font-bold'>Guests</p>
+      <p className="text-lg font-bold">Guests</p>
       <div className="flex flex-col gap-1">{nameList}</div>
-     
     </>
   );
 };
