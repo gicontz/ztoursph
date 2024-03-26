@@ -98,7 +98,6 @@ const MainPageBooking = () => {
   const isLoadingData = React.useMemo(() => store.isLoading, [store.isLoading]);
 
   const onSubmit = (data) => {
-    console.log(data);
     if (data.packages)
       router.push(`/packages/${data.packages}`);
   }
