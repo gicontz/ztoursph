@@ -25,7 +25,8 @@ const Panel = styled(Row)`
   width: 50rem;
 
   h2,
-  h4 {
+  h4,
+  h3 {
     color: #23432c;
     font-family: "Source_Serif_Pro";
     font-size: 1.5rem;
