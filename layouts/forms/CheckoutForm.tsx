@@ -53,20 +53,21 @@ const CheckoutForm = () => {
     });
 
     const guests = watch("guests");
-    
     const maxParticipants = 5;
-    const guestErrors = guests && guests?.length < maxParticipants - 1 ? "Your number of guests do not match the estimated number of participants, expected" + ` ${maxParticipants}` : "";
+    const guestErrors = ((guests && guests?.length) ?? 0) < maxParticipants - 1 ? 
+        "Your number of guests do not match the estimated number of participants, expected" + ` ${maxParticipants}` : "";
 
     const handleSubmition = async (data) => {
         const content = {
-        firstname: data.firstname,
-        middleInitial: data.middleInitial,
-        lastname: data.lastname,
-        age: data.age,
-        email: data.email,
-        mobileNumber1: data.mobileNumber1,
-        mobileNumber2: data.mobileNumber2,
-        guests: data.guests,
+            firstname: data.firstname,
+            middleInitial: data.middleInitial,
+            lastname: data.lastname,
+            birthday: data.birthday,
+            age: getAge(data.birthday),
+            email: data.email,
+            mobileNumber1: data.mobileNumber1,
+            mobileNumber2: data.mobileNumber2,
+            guests: data.guests,
         };
     };
     return (
