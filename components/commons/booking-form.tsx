@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import { Divider } from "antd";
+import { DatePicker as Picker, Divider } from "antd";
 import React, { useState } from "react";
-import Datepicker from "./datepicker";
 import { Controller, useForm } from "react-hook-form";
 import TravelersInput from "./travelerInput";
 import Button from "./button";
@@ -10,8 +9,12 @@ import { useCookies } from "react-cookie";
 import dynamic from "next/dynamic";
 import { Added_Trips } from "@constants/added_trips";
 import { TTrip } from "@app/modules/trips/types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "@constants/validations/bookingForm";
 
-const CustomDropDown = dynamic(() => import("./custom-dropdown"), { ssr: false });
+const CustomDropDown = dynamic(() => import("./custom-dropdown"), {
+  ssr: false,
+});
 
 const BookingContainer = styled.div`
   display: flex;
@@ -56,10 +59,32 @@ const StyledButton = styled(Button)`
   font-weight: 500;
 `;
 
+const DatePicker = styled(Picker)<{ hasError: boolean }>`
+:where(.css-dev-only-do-not-override-1qhpsh8).ant-picker-outlined {
+  background-color: #ffffff;
+  border-color: ${({ hasError }) => (hasError ? "rgb(185 28 28)" : "#d9d9d9")};
+}
+
+  a.ant-picker-now-btn {
+    font-size: 0;
+  }
+
+  a.ant-picker-now-btn:after {
+    content: "ABC";
+    font-size: 16px;
+  > div button {
+    background-color #1677ff;
+  }
+`;
+
 type BookingFormProps = {
   onSubmit: (d: any) => void;
   type: string;
-  details: { tourId?: string | number; title: string | undefined; thumbnail: string | undefined };
+  details: {
+    tourId?: string | number;
+    title: string | undefined;
+    thumbnail: string | undefined;
+  };
 };
 
 const BookingForm: React.FC<BookingFormProps> = ({
@@ -67,25 +92,28 @@ const BookingForm: React.FC<BookingFormProps> = ({
   type,
   details,
 }) => {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, formState } = useForm({
+    resolver: yupResolver(schema),
+  });
   const [showTrips, setShowAddToTrips] = useState(false);
-  
+
   const onSubmitFunc = (formData) => {
-      formData.details = details;
-      formData.numberOfTravelers = formData.participants?.length ?? 1;
-      formData.category = type;
-      setShowAddToTrips(true);
-      const tripData = {
-        tripId: formData.details.tourId,
-        title: formData.details.title,
-        date: formData.date,
-        location: formData.locationPickUp,
-        participants: formData.participants,
-        numberOfTraveller: formData.numberOfTravelers,
-        thumbnail: formData.details.thumbnail,
-        category: type,
-      };
-      onSubmit(tripData as TTrip);
+    formData.details = details;
+    formData.numberOfTravelers = formData.participants?.length ?? 1;
+    formData.category = type;
+    setShowAddToTrips(true);
+    const tripData = {
+      tripId: formData.details.tourId,
+      title: formData.details.title,
+      date: formData.date,
+      location: formData.locationPickUp,
+      participants: formData.participants,
+      numberOfTraveller: formData.numberOfTravelers,
+      thumbnail: formData.details.thumbnail,
+      category: type,
+    };
+    console.log(formData);
+    onSubmit(tripData as TTrip);
   };
 
   return (
@@ -101,7 +129,21 @@ const BookingForm: React.FC<BookingFormProps> = ({
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <Datepicker onChange={field.onChange} className="expand" showTime placeholder="Select Date and Time" showNow={false}/>
+            <>
+              <DatePicker
+                hasError={formState?.errors?.date !== undefined}
+                onChange={field.onChange}
+                className="expand"
+                showTime
+                placeholder="Select Date and Time"
+                showNow={false}
+              />
+              {formState?.errors?.date !== undefined && (
+                <p className="text-red-700 text-xs font-italized">
+                  {formState?.errors?.date?.message}
+                </p>
+              )}
+            </>
           )}
         />
 
@@ -115,7 +157,11 @@ const BookingForm: React.FC<BookingFormProps> = ({
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <TravelersInput onChange={field.onChange} />
+            <TravelersInput
+              onChange={field.onChange}
+              hasError={formState.errors.participants !== undefined}
+              helperText={formState.errors.participants?.message}
+            />
           )}
         />
 
@@ -130,6 +176,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
           rules={{ required: true }}
           render={({ field }) => (
             <CustomDropDown
+              hasError={formState?.errors.locationPickUp !== undefined}
+              helperText={formState?.errors.locationPickUp?.message}
               onChange={field.onChange}
               placeholder="Enter pick-up location"
               buttonName="Add location"
