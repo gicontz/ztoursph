@@ -9,6 +9,10 @@ import Skeleton from "@components/commons/skeleton";
 import { getPackageBySlug, usePackages } from "@app/modules/packages/actions";
 import ImageTemplate from "@components/commons/image-template";
 import BookingForm from "@components/commons/booking-form";
+import { addToTrips } from "@app/modules/trips/actions";
+import { useCookies } from "react-cookie";
+import { Added_Trips } from "@constants/added_trips";
+import { useTripsContext } from "@providers/trips";
 
 const Panel = styled(Row)`
   display: flex;
@@ -56,12 +60,22 @@ const PackageDetail = styled.div`
 export default function Packages() {
   const router = useRouter();
   const slug = router.query.slug;
+  const [booking, setBooking] = useCookies([Added_Trips]);
   const [store, dispatch] = usePackages();
+  const { tripDispatch } = useTripsContext();
 
   React.useEffect(() => {
     if (typeof slug === "string") getPackageBySlug(dispatch, slug);
     //eslint-disable-next-line
   }, [slug]);
+
+  const handleSubmit = (trip) => {
+    addToTrips(tripDispatch, trip);
+    const data = booking[Added_Trips]
+      ? booking[Added_Trips].slice().concat(trip)
+      : [trip];
+    setBooking(Added_Trips, data);
+  };
 
   const parsedPackageDetails = store.selectedPackage ? (
     parse(store.selectedPackage.package_details)
@@ -169,7 +183,7 @@ export default function Packages() {
           </div>
 
           <BookingForm
-            onSubmit={(e) => console.log(e)}
+            onSubmit={handleSubmit}
             details={detail}
             type="packages"
           />

@@ -49,7 +49,7 @@ const StyledButton = styled(Button)`
 
 export type TGuest = {
   name: string;
-  age: string;
+  age: number;
   nationality: string;
 };
 
@@ -57,21 +57,17 @@ interface ParticipantInputProps {
   onChange?: (e: TGuest[]) => void;
   helperText?: string;
   clearGuests?: boolean;
+  leadGuest?: TGuest;
 }
 
 const GuestInput: React.FC<ParticipantInputProps> = ({
   clearGuests,
   helperText,
+  leadGuest,
   onChange,
 }) => {
-  const [participant, setParticipant] = useState<{
-    name: string;
-    age: string;
-    nationality: string;
-  }>({ name: "", age: "", nationality: "" });
-  const [participantData, setParticipantData] = useState<
-    { name: string; age: string; nationality: string }[]
-  >([]);
+  const [participant, setParticipant] = useState<TGuest>({ name: "", age: 0, nationality: "" });
+  const [participantData, setParticipantData] = useState<TGuest[]>([]);
 
   const setValueChange = React.useCallback(() => {
     if (clearGuests) {
@@ -106,33 +102,37 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
         if (typeof onChange === "function") onChange([...prev, participant]);
         return [...prev, participant];
       });
-      setParticipant({ name: "", age: "", nationality: "" });
+      setParticipant({ name: "", age: 0, nationality: "" });
 
       return;
     }
   };
-  const nameList = participantData.length ? (
-    participantData.map((data, index) => (
-      <React.Fragment key={`participant-${index}`}>
-        <IndividualNameContainer key={index}>
-          <p className="w-48">{data.name}</p>
-          <p>{data.age}</p>
-          <p className="w-40">{data.nationality}</p>
-          <TrashIcon
-            className="cursor-pointer"
-            onClick={() => deleteName(index)}
-            boxSize={5}
-          />
-        </IndividualNameContainer>
-      </React.Fragment>
-    ))
-  ) : participantData.length === 0 ? (
-    <p>No guests added</p>
-  ) : null;
+
+  const NameList = () => 
+    participantData.length ? (
+      participantData.map((data, index) => (
+        <React.Fragment key={`participant-${index}`}>
+          <div className="flex flex-auto items-center justify-center border border-green-50" key={index}>
+            <div className="flex flex-auto text-center">
+              <p className="w-1/3 truncate">{data.name}</p>
+              <p className="w-1/3">{data.age}</p>
+              <p className="w-1/3 truncate">{data.nationality}</p>
+            </div>
+            <TrashIcon
+              className="cursor-pointer"
+              onClick={() => deleteName(index)}
+              boxSize={5}
+            />
+          </div>
+        </React.Fragment>
+      ))) : 
+      participantData.length === 0 ? 
+      (<p>No guests added</p>) 
+      : null;
 
   return (
     <>
-      <AddParticipant className="w-full flex-col [&>input]:w-full [&>input]:h-10 lg:flex-row">
+      <AddParticipant className="w-full flex flex-col items-center [&>input]:w-full [&>input]:h-10 lg:flex-row">
         <Input
           className={Font.className}
           value={participant?.name}
@@ -166,7 +166,16 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
       )}
       <br />
       <p className="text-lg font-bold">Guests</p>
-      <div className="flex flex-col gap-1">{nameList}</div>
+      <div className="flex flex-col gap-1">
+        <label className="font-bold text-sm">Lead Guests</label>
+        <div className="flex space-x-2 flex-auto mb-2 text-center [&>p]:py-2">
+            <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.name}</p>
+            <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.age}</p>
+            <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.nationality}</p>
+        </div>
+        <label className="font-bold text-sm">Other Guest/s</label>
+        <NameList />
+      </div>
     </>
   );
 };
