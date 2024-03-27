@@ -167,11 +167,13 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
       <br />
       <p className="text-lg font-bold">Guests</p>
       <div className="flex flex-col gap-1">
+        <label className="font-bold text-sm">Lead Guests</label>
         <div className="flex space-x-2 flex-auto mb-2 text-center [&>p]:py-2">
             <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.name}</p>
             <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.age}</p>
             <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.nationality}</p>
         </div>
+        <label className="font-bold text-sm">Other Guest/s</label>
         <NameList />
       </div>
     </>
