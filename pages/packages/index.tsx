@@ -4,10 +4,13 @@ import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React, { useState } from "react";
 import Loading from "@components/commons/loading";
-import { getPackages, usePackages } from "@app/modules/packages/actions";
+import {
+  getPackages as getPackagesApi,
+} from "@app/services/packages";
 import PackageCard from "@components/listing/trip-card";
 import HeaderText from "@components/commons/header-text";
 import { TCategory } from "@app/modules/trips/types";
+import { useQuery } from "@tanstack/react-query";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -58,18 +61,12 @@ export default function Tours() {
     pageNumber: 1,
     totalItems: 0,
   });
-  const [store, dispatch] = usePackages();
-
-  React.useEffect(() => {
-    const { pageNumber } = state;
-    getPackages(dispatch, { pageNumber, pageSize });
-    //eslint-disable-next-line
-  }, []);
+  const packagesQuery = useQuery({ queryKey: ["packages"], queryFn: () => getPackagesApi({ pageNumber: state.pageNumber, pageSize: 4 }) });
+  
+  const packageData = packagesQuery.data
 
   const handleLoadMore = () => {
-    if (store.totalRecords > state.totalItems) {
-      const { pageNumber } = state;
-      getPackages(dispatch, { pageNumber: pageNumber + 1, pageSize });
+    if (packageData.totalRecords > state.totalItems) {
       setState((s) => ({
         ...s,
         pageNumber: s.pageNumber + 1,
@@ -78,7 +75,7 @@ export default function Tours() {
     }
   };
   
-  const trips = store.packages.map((tour) => ({
+  const packages = packageData?.records.map((tour) => ({
     ...tour,
     title: tour.package_title,
     slug: tour.package_slug,
@@ -99,10 +96,10 @@ export default function Tours() {
       </Row>
 
       <Row>
-        {store?.packages.length !== 0 && store.packages && (
+        {packageData?.records.length !== 0 && packageData?.records && (
           <>
             <ListCardsContainer>
-              {trips?.map((data, key) => (
+              {packages?.map((data, key) => (
                 <PackageCard key={key} data={data} />
               ))}
             </ListCardsContainer>
@@ -110,9 +107,9 @@ export default function Tours() {
         )}
       </Row>
       <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
-        {store.isLoading && <Loading />}
-        {store.packages.length > 0 &&
-          store.packages.length !== store.totalRecords && (
+        {packagesQuery.isLoading && <Loading />}
+        {packageData?.records.length > 0 &&
+          packageData?.records.length !== packageData?.totalRecords && (
             <LoadMoreButton onClick={handleLoadMore} type="primary">
               Load More Tours
             </LoadMoreButton>

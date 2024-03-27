@@ -18,7 +18,11 @@ const __ = async (req: NextApiRequest, res: NextApiResponse) => {
       .json({ status: result.status, message: result.statusText, error });
   }
   const data = await result.json();
-  return res.json(data);
+  return res.json({
+    status: result.status,
+    records: data.data.records,
+    totalRecords: data.data.totalRecords,
+  });
 };
 
 export default __;

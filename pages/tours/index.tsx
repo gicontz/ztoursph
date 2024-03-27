@@ -4,10 +4,11 @@ import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React, { useState } from "react";
 import Loading from "@components/commons/loading";
-import { getTours, useTours } from "@app/modules/tours/actions";
 import TourCard from "@components/listing/trip-card";
 import HeaderText from "@components/commons/header-text";
 import { TCategory } from "@app/modules/trips/types";
+import { useQuery, keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
+import { getTours } from "@app/services/tours";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -57,33 +58,29 @@ export default function Tours() {
   const [state, setState] = useState({
     pageNumber: 1,
     totalItems: 0,
+    tours: [] as any[],
   });
-  const [store, dispatch] = useTours();
+  const { data, isFetching, fetchNextPage } = useInfiniteQuery(
+    { 
+      queryKey: ["tours_list", state.pageNumber],
+      queryFn: (data) => getTours({ pageNumber: data.pageParam, pageSize }),
+      initialPageParam: 1,
+      getNextPageParam: (_, allPages) => {
+        return allPages.length + 1;
+      }
+    });
 
-  React.useEffect(() => {
-    const { pageNumber } = state;
-    getTours(dispatch, { pageNumber, pageSize });
-    //eslint-disable-next-line
-  }, []);
 
-  const handleLoadMore = () => {
-    if (store.totalRecords > state.totalItems) {
-      const { pageNumber } = state;
-      getTours(dispatch, { pageNumber: pageNumber + 1, pageSize });
-      setState((s) => ({
-        ...s,
-        pageNumber: s.pageNumber + 1,
-        totalItems: s.totalItems + pageSize,
-      }));
-    }
-  };
+  const numberOfTours = data?.pages.reduce((a, { records }) => records.length + a, 0);
+  const totalTours = data?.pages[0].totalRecords;
+  const records = data?.pages.map(({ records }) => records);
 
-  const trips = store.tours.map((tour) => ({
+  const trips = records?.map((list) => list.map((tour) => ({
     ...tour,
     title: tour.tour_title,
     slug: tour.tour_slug,
     category: 'tours' as TCategory,
-  }));
+  })));
 
   return (
     <Layout contained>
@@ -99,21 +96,23 @@ export default function Tours() {
       </Row>
 
       <Row>
-        {store?.tours.length !== 0 && store.tours && (
+        {numberOfTours !== 0 && records && (
           <>
             <ListCardsContainer>
-              {trips?.map((data, key) => (
-                <TourCard key={key} data={data} />
+              {trips?.map((data, key1) => (
+                data.map((data, key2) => (
+                  <TourCard key={`${key1}-${key2}`} data={data} />
+                ))
               ))}
             </ListCardsContainer>
           </>
         )}
       </Row>
       <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
-        {store.isLoading && <Loading />}
-        {store.tours.length > 0 &&
-          store.tours.length !== store.totalRecords && (
-            <LoadMoreButton onClick={handleLoadMore} type="primary">
+        {isFetching && <Loading />}
+        {totalTours &&
+          totalTours !== numberOfTours && (
+            <LoadMoreButton onClick={() => fetchNextPage()} type="primary">
               Load More Tours
             </LoadMoreButton>
           )}

@@ -7,7 +7,7 @@ import TourCard from "./trip-card";
 import Skeleton from "@components/commons/skeleton";
 import HeaderText from "@components/commons/header-text";
 import { TCategory } from "@app/modules/trips/types";
-import { dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 const ListCardsContainer = styled.div`
   width: 100%;
@@ -45,7 +45,7 @@ const Description = styled.div`
 `;
 
 const MainPageListing = () => {
-  const toursQuery = useQuery({ queryKey: ["tours"], queryFn: () => getToursApi({ pageNumber: 1, pageSize: 4 }), staleTime: 1 * 60 * 1000 });
+  const toursQuery = useQuery({ queryKey: ["tours"], queryFn: () => getToursApi({ pageNumber: 1, pageSize: 4 }) });
   
   const tripRecords = toursQuery.data?.records;
 
