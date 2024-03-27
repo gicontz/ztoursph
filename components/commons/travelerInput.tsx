@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Button from "./button";
-import { Input } from "antd";
 import styled from "@emotion/styled";
 import { TrashIcon } from "./icons";
 import { Poppins } from "next/font/google";
+import Input from "./input";
 
 const Font = Poppins({
   weight: "400",
@@ -33,10 +33,6 @@ const AddParticipant = styled.div`
   height: 100%;
 `;
 
-const StyledInput = styled(Input)`
-  padding: 0.7rem;
-`;
-
 const StyledButton = styled(Button)`
   height: 2.9rem;
   &.ant-btn-primary {
@@ -52,10 +48,16 @@ const StyledButton = styled(Button)`
 `;
 
 interface ParticipantInputProps {
+  hasError?: boolean;
+  helperText?: string;
   onChange?: (e: string[]) => void;
 }
 
-const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
+const TravelersInput: React.FC<ParticipantInputProps> = ({
+  onChange,
+  helperText,
+  hasError,
+}) => {
   const [participant, setParticipant] = useState<string>("");
   const [names, setNames] = useState<string[]>([]);
 
@@ -70,14 +72,14 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
   const handleAddParticipantClick = () => {
     if (participant) {
       setNames((prev) => {
-        if (typeof onChange === 'function') onChange([...prev, participant]);
+        if (typeof onChange === "function") onChange([...prev, participant]);
         return [...prev, participant];
       });
       setParticipant("");
       return;
     }
   };
-  
+
   const nameList = names.map((name, index) => (
     <React.Fragment key={`name-${index}`}>
       <p className="text-sm -mb-[0.5rem] font-thin font-['Source_Serif_Pro']">
@@ -98,8 +100,9 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
     <>
       {nameList}
       <AddParticipant>
-        <StyledInput
-          className={Font.className}
+        <Input
+          hasError={hasError}
+          className={`${Font.className} px-3`}
           value={participant}
           onChange={handleInputChange}
           type="text"
@@ -109,6 +112,9 @@ const TravelersInput: React.FC<ParticipantInputProps> = ({ onChange }) => {
           Add Participant
         </StyledButton>
       </AddParticipant>
+      {helperText !== undefined && (
+        <p className="text-red-700 text-xs font-italized">{helperText}</p>
+      )}
     </>
   );
 };

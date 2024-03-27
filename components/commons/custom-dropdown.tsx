@@ -12,6 +12,8 @@ interface CustomDropDownProps extends SelectProps {
   buttonName?: string;
   toAddItemPlaceholder?: string;
   addClass?: string;
+  hasError?: boolean;
+  helperText?: string;
 }
 
 const Font = Poppins({
@@ -44,63 +46,88 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> = forwardRef<typeof Select, CustomDropDownProps>(({
-  defaultOption = [""],
-  dropdownPlaceholder = "Please enter item",
-  buttonName = "Add Item",
-  toAddItemPlaceholder,
-  addClass,
-  ...props
-}, ref) => {
-  const [items, setItems] = useState(defaultOption);
-  const [name, setName] = useState("");
-  const inputRef = useRef<InputRef>(null);
+const StyledSelect = styled(Select)<{ hasError: boolean }>`
+  :where(.css-dev-only-do-not-override-1qhpsh8).ant-select-outlined:not(
+      .ant-select-customize-input
+    )
+    .ant-select-selector {
+    border: 1px solid
+      ${({ hasError }) => (hasError ? "rgb(185 28 28)" : "#d9d9d9")};
+    background: #ffffff;
+  }
+`;
 
-  const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
+const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> =
+  forwardRef<typeof Select, CustomDropDownProps>(
+    (
+      {
+        hasError,
+        helperText,
+        defaultOption = [""],
+        dropdownPlaceholder = "Please enter item",
+        buttonName = "Add Item",
+        toAddItemPlaceholder,
+        addClass,
+        ...props
+      },
+      ref
+    ) => {
+      const [items, setItems] = useState(defaultOption);
+      const [name, setName] = useState("");
+      const inputRef = useRef<InputRef>(null);
 
-  const addItem = (index) => {
-    if (name) {
-      setItems([...items, name || `New item ${index++}`]);
-      setName("");
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 0);
-    }
-  };
-  return (
-    <Select
-      ref={ref as any}
-      placeholder={dropdownPlaceholder}
-      className={`${Font.className} ${addClass}`}
-      dropdownRender={(menu) => (
+      const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setName(event.target.value);
+      };
+
+      const addItem = (index) => {
+        if (name) {
+          setItems([...items, name || `New item ${index++}`]);
+          setName("");
+          setTimeout(() => {
+            inputRef.current?.focus();
+          }, 0);
+        }
+      };
+      return (
         <>
-          <div className={Font.className}>{menu}</div>
-          <InputContainer>
-            <Input
-              ref={inputRef}
-              className={Font.className}
-              value={name}
-              onChange={onNameChange}
-              placeholder={toAddItemPlaceholder}
-              onKeyDown={(e) => e.stopPropagation()}
-            />
-            <StyledButton
-              onClick={addItem}
-              type="primary"
-              icon={<PlusOutlined />}>
-              {buttonName}
-            </StyledButton>
-          </InputContainer>
+          <StyledSelect
+            hasError={hasError ?? false}
+            ref={ref as any}
+            placeholder={dropdownPlaceholder}
+            className={`${Font.className} ${addClass}`}
+            dropdownRender={(menu) => (
+              <>
+                <div className={Font.className}>{menu}</div>
+                <InputContainer>
+                  <Input
+                    ref={inputRef}
+                    className={Font.className}
+                    value={name}
+                    onChange={onNameChange}
+                    placeholder={toAddItemPlaceholder}
+                    onKeyDown={(e) => e.stopPropagation()}
+                  />
+                  <StyledButton
+                    onClick={addItem}
+                    type="primary"
+                    icon={<PlusOutlined />}>
+                    {buttonName}
+                  </StyledButton>
+                </InputContainer>
+              </>
+            )}
+            options={items.map((item) => ({ label: item, value: item }))}
+            {...props}
+          />
+          {helperText && (
+            <p className="text-red-700 text-xs font-italized">{helperText}</p>
+          )}
         </>
-      )}
-      options={items.map((item) => ({ label: item, value: item }))}
-      {...props}
-    />
+      );
+    }
   );
-});
 
-CustomDropDown.displayName = 'CustomDropDown';
+CustomDropDown.displayName = "CustomDropDown";
 
 export default CustomDropDown;
