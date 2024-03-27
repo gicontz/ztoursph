@@ -24,7 +24,8 @@ const Panel = styled(Row)`
   margin-bottom: 1rem;
   width: 50rem;
 
-  h2 {
+  h2,
+  h4 {
     color: #23432c;
     font-family: "Source_Serif_Pro";
     font-size: 1.5rem;
@@ -63,7 +64,7 @@ export default function Tours() {
   const slug = router.query.slug;
   const [store, dispatch] = useTours();
   const { tripDispatch } = useTripsContext();
-  
+
   React.useEffect(() => {
     if (typeof slug === "string") getTourBySlug(dispatch, slug);
     //eslint-disable-next-line
@@ -88,7 +89,9 @@ export default function Tours() {
   );
 
   const priceContent =
-  (store.selectedTour?.discount ?? 0) > 0 && store.selectedTour?.discount && !store.isLoading ? (
+    (store.selectedTour?.discount ?? 0) > 0 &&
+    store.selectedTour?.discount &&
+    !store.isLoading ? (
       <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
         <p className=" text-[1rem] line-through opacity-90">
           ₱ {store.selectedTour.price}
@@ -115,7 +118,7 @@ export default function Tours() {
     title: store.selectedTour?.tour_title,
     thumbnail: store.selectedTour?.thumbnail,
   };
-  console.log(detail)
+  console.log(detail);
 
   return (
     <Layout>
@@ -183,11 +186,7 @@ export default function Tours() {
             <StyledDivider />
           </div>
 
-          <BookingForm
-            onSubmit={handleSubmit}
-            details={detail}
-            type="tours"
-          />
+          <BookingForm onSubmit={handleSubmit} details={detail} type="tours" />
         </Row>
       </Panel>
       <br />
