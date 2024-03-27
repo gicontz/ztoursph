@@ -166,7 +166,8 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
             src={data.thumbnail}
             alt="Scenic Forest"
             blurDataURL={blurImageData}
-            layout="fill"
+            fill
+            sizes="320px 216px"
           />
         </Link>
         <ActionButton onClick={() => setLike(!like)}>

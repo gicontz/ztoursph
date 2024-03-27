@@ -144,7 +144,7 @@ const PackageCard = ({ data }) => {
             src={data.thumbnail}
             alt="Scenic Forest"
             blurDataURL={blurImageData}
-            layout="fill"
+            fill
           />
         </Link>
         <ActionButton onClick={() => setLike(!like)}>

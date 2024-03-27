@@ -2,11 +2,12 @@ import { PanelSection } from "@components/commons/common";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
-import { getTours, useTours } from "@app/modules/tours/actions";
+import { getTours as getToursApi, getTourBySlug as getTourBySlugApi, getTrips as getTripsApi } from "@app/services/tours";
 import TourCard from "./trip-card";
 import Skeleton from "@components/commons/skeleton";
 import HeaderText from "@components/commons/header-text";
 import { TCategory } from "@app/modules/trips/types";
+import { dehydrate, QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const ListCardsContainer = styled.div`
   width: 100%;
@@ -44,14 +45,11 @@ const Description = styled.div`
 `;
 
 const MainPageListing = () => {
-  const [store, dispatch] = useTours();
+  const toursQuery = useQuery({ queryKey: ["tours"], queryFn: () => getToursApi({ pageNumber: 1, pageSize: 4 }), staleTime: 1 * 60 * 1000 });
+  
+  const tripRecords = toursQuery.data?.records;
 
-  React.useEffect(() => {
-    getTours(dispatch, { pageNumber: 1, pageSize: 4 });
-    //eslint-disable-next-line
-  }, []);
-
-  const trips = store.tours.map((tour) => ({
+  const trips = tripRecords?.map((tour) => ({
     ...tour,
     title: tour.tour_title,
     slug: tour.tour_slug,
@@ -72,7 +70,7 @@ const MainPageListing = () => {
         </p>
         <Link href={"/tours"}>View All Tours</Link>
       </Description>
-      {!store.isLoading && store.tours ? (
+      {!toursQuery.isLoading && tripRecords ? (
         <ListCardsContainer>
           {trips?.slice(0, 4).map((data, key) => (
             <TourCard key={key} data={data} />
