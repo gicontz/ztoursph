@@ -8,7 +8,6 @@ import DropdownShowcase from "@components/commons/dropdown-showcase";
 import styled from "@emotion/styled";
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
 import { getPackages } from "@app/services/packages";
-// import { getPackages, usePackages } from "@app/modules/packages/actions";
 import { useRouter } from "next/router";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -19,7 +18,7 @@ const ContainerCard = styled.div`
   justify-content: center;
   margin: 0 auto;
   width: fit-content;
-  heigth: fit-content;
+  height: fit-content;
   gap: 0.5rem;
   padding: 1rem 1.1rem;
   box-shadow: 0px 0px 5px black;
@@ -50,7 +49,7 @@ export default function MainPageBooking() {
   const router = useRouter();
   const { handleSubmit, control } = useForm();
 
-  const { data, isFetching, fetchNextPage, isLoading } = useInfiniteQuery({
+  const { data, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: ["package_list"],
     queryFn: async (data) => {
       return await getPackages({
@@ -111,49 +110,44 @@ export default function MainPageBooking() {
           <Controller
             name="packages"
             control={control}
-            render={({ field }) => {
-              return (
-                <DropdownShowcase
-                  onChange={field.onChange}
-                  showSearch
-                  loadMore={isFetching}
-                  onPopupScroll={HandleLoadMore}
-                  data={option}
-                  optionLabelProp="customLabel"
-                  placeholder="I want to go"
-                  filterOption={filterOption}
-                  prefixIcon={<MapIcon />}
-                />
-              );
-            }}
+            render={({ field }) => (
+              <DropdownShowcase
+                onChange={field.onChange}
+                showSearch
+                loadMore={isFetching}
+                onPopupScroll={HandleLoadMore}
+                data={option}
+                optionLabelProp="customLabel"
+                placeholder="I want to go"
+                filterOption={filterOption}
+                prefixIcon={<MapIcon />}
+              />
+            )}
           />
 
           <Controller
             name="date"
             control={control}
-            render={({ field }) => {
-              return <RangePickerComponent onChange={field.onChange} />;
-            }}
+            render={({ field }) => (
+              <RangePickerComponent onChange={field.onChange} />
+            )}
           />
 
           <Controller
             name="pax"
             control={control}
-            render={({ field }) => {
-              return (
-                <AutoComplete
-                  onChange={field.onChange}
-                  className="w-10"
-                  options={optionTravellers}
-                  placeholder="Travellers"
-                  prefixicon={<TravellersIcon />}
-                  filterOption={(inputValue, option) =>
-                    typeof inputValue === "number" &&
-                    option?.label === inputValue
-                  }
-                />
-              );
-            }}
+            render={({ field }) => (
+              <AutoComplete
+                onChange={field.onChange}
+                className="w-10"
+                options={optionTravellers}
+                placeholder="Travellers"
+                prefixicon={<TravellersIcon />}
+                filterOption={(inputValue, option) =>
+                  typeof inputValue === "number" && option?.label === inputValue
+                }
+              />
+            )}
           />
 
           <Button
