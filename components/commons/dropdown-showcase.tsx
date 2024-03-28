@@ -85,13 +85,15 @@ const DropDownSearchList = ({ ...data }): JSX.Element => {
   );
 };
 
-interface DropdownShowcaseProps extends DropdownProps {
-  data: {
-    title: string;
-    description: string;
-    slug: string;
-    url: React.ComponentProps<typeof Image>["src"];
-  }[];
+export interface DropdownShowcaseProps extends DropdownProps {
+  data:
+    | {
+        title: string;
+        description: string;
+        slug: string;
+        url: React.ComponentProps<typeof Image>["src"];
+      }[]
+    | undefined;
   loadMore?: boolean;
 }
 
@@ -126,6 +128,7 @@ const DropdownShowcase: React.FC<DropdownShowcaseProps> = ({
       showSearch
       options={option}
       optionLabelProp="customLabel"
+      loading={loadMore}
       {...rest}
     />
   );

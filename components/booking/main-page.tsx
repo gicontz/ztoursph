@@ -7,8 +7,10 @@ import AutoComplete from "@components/commons/autocomplete";
 import DropdownShowcase from "@components/commons/dropdown-showcase";
 import styled from "@emotion/styled";
 import { MapIcon, TravellersIcon } from "@components/commons/icons";
-import { getPackages, usePackages } from "@app/modules/packages/actions";
+import { getPackages } from "@app/services/packages";
+// import { getPackages, usePackages } from "@app/modules/packages/actions";
 import { useRouter } from "next/router";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const ContainerCard = styled.div`
   display: flex;
@@ -44,46 +46,49 @@ const ContainerCard = styled.div`
   }
 `;
 
-const MainPageBooking = () => {
+export default function MainPageBooking() {
   const router = useRouter();
-  const pageSize = 5;
   const { handleSubmit, control } = useForm();
-  const [store, dispatch] = usePackages();
-  const [state, setState] = React.useState({
-    pageNumber: 1,
-    totalItems: pageSize,
-  });
-  const { pageNumber } = state;
 
-  React.useEffect(() => {
-    getPackages(dispatch, { pageNumber, pageSize });
-    //eslint-disable-next-line
-  }, [state]);
+  const { data, isFetching, fetchNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ["package_list"],
+    queryFn: async (data) => {
+      return await getPackages({
+        pageNumber: data.pageParam,
+        pageSize: 5,
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (_, allPages) => {
+      return allPages.length + 1;
+    },
+  });
+
+  const numberOfTours = data?.pages.reduce(
+    (a, { records }) => records?.length + a,
+    0
+  );
+  const totalTours = data?.pages[0].totalRecords;
+  const records = data?.pages.map(({ records }) => records);
+
+  const option = records?.flatMap((package_list) =>
+    package_list?.map((packages) => ({
+      title: packages?.package_title,
+      description: packages?.package_details,
+      slug: packages?.package_slug,
+      url: packages?.thumbnail,
+    }))
+  );
 
   const HandleLoadMore = debounce((e) => {
     const isAtBottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
 
-    if (isAtBottom && store.totalRecords > state.totalItems) {
-      setState((prev) => {
-        const numberOfItems = prev.totalItems + pageNumber;
-        return {
-          pageNumber: prev.pageNumber + 1,
-          totalItems:
-            store.totalRecords > numberOfItems
-              ? numberOfItems
-              : store.totalRecords,
-        };
-      });
+    if (isAtBottom && !isFetching && totalTours !== numberOfTours) {
+      fetchNextPage();
+      console.log("Bottom!");
     }
   });
-
-  const option = store.packages.map((e) => ({
-    title: e.package_title,
-    description: e.package_details,
-    slug: e.package_slug,
-    url: e.thumbnail,
-  }));
 
   const optionTravellers = Array.from({ length: 5 }, (_, index) => ({
     label: index + 1,
@@ -95,12 +100,9 @@ const MainPageBooking = () => {
       .toLowerCase()
       .includes(input.toLowerCase());
 
-  const isLoadingData = React.useMemo(() => store.isLoading, [store.isLoading]);
-
-  const onSubmit = (data) => {
-    if (data.packages)
-      router.push(`/packages/${data.packages}`);
-  }
+  const onSubmit = (data: { packages: any }) => {
+    if (data.packages) router.push(`/packages/${data.packages}`);
+  };
 
   return (
     <div className="relative mx-auto w-full">
@@ -114,8 +116,7 @@ const MainPageBooking = () => {
                 <DropdownShowcase
                   onChange={field.onChange}
                   showSearch
-                  loading={isLoadingData}
-                  loadMore={isLoadingData}
+                  loadMore={isFetching}
                   onPopupScroll={HandleLoadMore}
                   data={option}
                   optionLabelProp="customLabel"
@@ -165,6 +166,4 @@ const MainPageBooking = () => {
       </form>
     </div>
   );
-};
-
-export default MainPageBooking;
+}
