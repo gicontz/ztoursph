@@ -24,7 +24,9 @@ const Panel = styled(Row)`
   margin-bottom: 1rem;
   width: 50rem;
 
-  h2 {
+  h2,
+  h4,
+  h3 {
     color: #23432c;
     font-family: "Source_Serif_Pro";
     font-size: 1.5rem;
@@ -88,7 +90,9 @@ export default function Packages() {
   );
 
   const priceContent =
-  (store.selectedPackage?.discount ?? 0) > 0 && store.selectedPackage?.discount && !store.isLoading ? (
+    (store.selectedPackage?.discount ?? 0) > 0 &&
+    store.selectedPackage?.discount &&
+    !store.isLoading ? (
       <div className=" px-2 py-2 font-semibold w-full bg-gray-100 flex gap-2 items-center">
         <p className=" text-[1rem] line-through opacity-90">
           ₱ {store.selectedPackage.price}
@@ -96,7 +100,8 @@ export default function Packages() {
         <p className="text-2xl ">
           ₱{" "}
           {store.selectedPackage.price -
-            (store.selectedPackage?.discount / 100) * store.selectedPackage.price}
+            (store.selectedPackage?.discount / 100) *
+              store.selectedPackage.price}
         </p>
         <div className="text-xs px-1 bg-[rgb(35,67,44)] text-white">
           -{store.selectedPackage.discount}%
