@@ -10,6 +10,8 @@ import { MapIcon, TravellersIcon } from "@components/commons/icons";
 import { getPackages } from "@app/services/packages";
 import { useRouter } from "next/router";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "@constants/validations/bookingComponent";
 
 const ContainerCard = styled.div`
   display: flex;
@@ -47,7 +49,9 @@ const ContainerCard = styled.div`
 
 export default function MainPageBooking() {
   const router = useRouter();
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, formState } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const { data, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: ["package_list"],
@@ -112,8 +116,9 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <DropdownShowcase
-                onChange={field.onChange}
+                onChange={field.onChange as any}
                 showSearch
+                hasError={formState.errors.packages !== undefined}
                 loadMore={isFetching}
                 onPopupScroll={HandleLoadMore}
                 data={option}
@@ -129,7 +134,10 @@ export default function MainPageBooking() {
             name="date"
             control={control}
             render={({ field }) => (
-              <RangePickerComponent onChange={field.onChange} />
+              <RangePickerComponent
+                hasError={formState.errors.date !== undefined}
+                onChange={field.onChange}
+              />
             )}
           />
 
@@ -140,6 +148,7 @@ export default function MainPageBooking() {
               <AutoComplete
                 onChange={field.onChange}
                 className="w-10"
+                hasError={formState.errors.pax !== undefined}
                 options={optionTravellers}
                 placeholder="Travellers"
                 prefixicon={<TravellersIcon />}

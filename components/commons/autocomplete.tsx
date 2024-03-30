@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { AutoCompleteProps } from "antd";
 import { AutoComplete as AntAutoComplete } from "antd";
+import React from "react";
 import { ReactNode } from "react";
 
 const StyledAutoComplete = styled(AntAutoComplete)`
@@ -8,7 +9,7 @@ const StyledAutoComplete = styled(AntAutoComplete)`
   width: 100%;
 `;
 
-const AutoCompleteWrapper = styled.div<{ icon?: boolean }>`
+const AutoCompleteWrapper = styled.div<{ icon?: boolean; hasError?: boolean }>`
   position: relative;
   width: 14rem;
 
@@ -28,6 +29,8 @@ const AutoCompleteWrapper = styled.div<{ icon?: boolean }>`
 
   .ant-select .ant-select-selector {
     text-indent: ${(props) => (props.icon ? "calc(2rem - 8px)" : "")};
+    border-color: ${({ hasError }) =>
+      hasError ? "rgb(185 28 28)" : "#d9d9d9"};
   }
 
   @media screen and (max-width: 821px) {
@@ -37,16 +40,29 @@ const AutoCompleteWrapper = styled.div<{ icon?: boolean }>`
 
 interface AutoComplete extends AutoCompleteProps {
   prefixicon?: ReactNode;
+  helperText?: string;
+  hasError?: boolean;
 }
 
-const AutoComplete: React.FC<AutoComplete> = ({ ...rest }) => {
+const AutoComplete: React.FC<AutoComplete> = ({
+  helperText,
+  hasError,
+  ...rest
+}) => {
   return (
-    <AutoCompleteWrapper icon={rest?.prefixicon ? true : false}>
-      {rest?.prefixicon && (
-        <div className="prefix-icon-wrapper">{rest?.prefixicon}</div>
+    <React.Fragment>
+      <AutoCompleteWrapper
+        hasError={hasError}
+        icon={rest?.prefixicon ? true : false}>
+        {rest?.prefixicon && (
+          <div className="prefix-icon-wrapper">{rest?.prefixicon}</div>
+        )}
+        <StyledAutoComplete {...rest} />
+      </AutoCompleteWrapper>
+      {helperText !== undefined && (
+        <p className="text-red-700 text-xs font-italized">{helperText}</p>
       )}
-      <StyledAutoComplete {...rest} />
-    </AutoCompleteWrapper>
+    </React.Fragment>
   );
 };
 

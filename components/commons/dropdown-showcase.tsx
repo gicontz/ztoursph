@@ -128,6 +128,8 @@ const DropdownShowcase: React.FC<DropdownShowcaseProps> = ({
       showSearch
       options={option}
       optionLabelProp="customLabel"
+      hasError={rest.hasError}
+      helperText={rest?.helperText}
       loading={loadMore}
       {...rest}
     />
