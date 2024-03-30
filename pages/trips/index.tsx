@@ -33,7 +33,8 @@ export default function Trips() {
   }, [tripStore.trips]);
 
   const getTripsData = useCallback(() => {
-    getTrips(dispatch, tripStore.trips.map(({ tripId }) => tripId ) ?? []);
+    const tripIds = tripStore.trips.map(({ tripId }) => tripId );
+    if (tripIds) getTrips(dispatch, tripIds);
   }, [tripStore.trips]);
 
   const myTrips = useMemo(() => {

@@ -8,6 +8,7 @@ import checkoutSchema from "@constants/validations/checkout";
 import dynamic from "next/dynamic";
 import { classNames } from "@app/utils/helpers";
 import { disableFutureDates, getAge } from "@constants/dates";
+import Dropdown from "@components/commons/dropdown";
 
 const Input = dynamic(() => import("@components/commons/input"), {
     ssr: false,
@@ -41,16 +42,41 @@ const FieldGroup = ({
     </div>
 );
 
+interface Props {
+    onViewItinerary: (data: any) => void;
+    onCheckout: (data: any) => void;
+}
 
-const CheckoutForm = () => {
+const CheckoutForm = ({
+    onViewItinerary,
+    onCheckout
+}: Props) => {
     const {
         handleSubmit,
         control,
         formState: { errors },
         watch,
+        trigger,
     } = useForm({
         resolver: yupResolver(checkoutSchema),
     });
+
+    const handleViewItinerary = (e) => {
+        e.preventDefault();
+        new Promise(
+            (resolve) => {
+                trigger().then((valid) => {
+                    if (valid) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                });
+            }
+        ).then((valid) => {
+            if (typeof onViewItinerary === 'function' && valid) onViewItinerary(watch());
+        });
+    }
 
     const handleSubmition = async (data) => {
         const content = {
@@ -62,8 +88,8 @@ const CheckoutForm = () => {
             email: data.email,
             mobileNumber1: data.mobileNumber1,
             mobileNumber2: data.mobileNumber2,
-            guests: data.guests,
         };
+        if (typeof onCheckout === 'function') onCheckout(content);
     };
     return (
         <form
@@ -79,14 +105,14 @@ const CheckoutForm = () => {
                 <FieldGroup>
                     <Controller
                     control={control}
-                    name="firstname"
+                    name="firstName"
                     render={({ field }) => (
                         <Input
                         type="text"
                         placeholder="First Name"
                         onChange={field.onChange}
-                        hasError={errors?.firstname !== undefined}
-                        helperText={errors?.firstname?.message as string}
+                        hasError={errors?.firstName !== undefined}
+                        helperText={errors?.firstName?.message as string}
                         />
                     )}
                     />
@@ -110,14 +136,14 @@ const CheckoutForm = () => {
                 <FieldGroup>
                     <Controller
                     control={control}
-                    name="lastname"
+                    name="lastName"
                     render={({ field }) => (
                         <Input
                         type="text"
                         placeholder="Last Name"
                         onChange={field.onChange}
-                        hasError={errors?.lastname !== undefined}
-                        helperText={errors?.lastname?.message as string}
+                        hasError={errors?.lastName !== undefined}
+                        helperText={errors?.lastName?.message as string}
                         />
                     )}
                     />
@@ -137,6 +163,22 @@ const CheckoutForm = () => {
                                 disabledDate={disableFutureDates}
                                 onChange={field.onChange} />
                         )}
+                    />
+                </FieldGroup>
+                <FieldGroup>
+                    <Controller
+                    control={control}
+                    name="sex"
+                    render={({ field }) => (
+                        <Dropdown 
+                            className="!h-[47px]"
+                            onChange={field.onChange}
+                            placeholder="Sex"
+                            options={[{ label: "Male", value: "M" }, { label: "Female", value: "F" }]}
+                            hasError={errors.sex !== undefined}
+                            helperText={errors.sex?.message}
+                        />
+                    )}
                     />
                 </FieldGroup>
                 <FieldGroup>
@@ -207,7 +249,7 @@ const CheckoutForm = () => {
             </div>
 
             <div className="flex space-x-3 justify-center h-10 !mt-10">
-                <Button className="h-full">View Itinerary</Button>
+                <Button className="h-full" onClick={handleViewItinerary}>View Itinerary</Button>
                 <Button className="h-full" type="primary" htmlType="submit">
                     Checkout
                 </Button>

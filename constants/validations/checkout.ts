@@ -1,17 +1,12 @@
 import { max } from "lodash";
 import { object, string, number, array, boolean, date } from "yup";
 
-const guestSchema = object().shape({
-        name: string().required("Name is a required field."),
-        nationality: string().required("Nationality is a required field."),
-        age: number().required("Age is a required field."),
-});
-
 const schema = object().shape({
-    firstname: string().required("Firstname is a required field."),
+    firstName: string().required("Firstname is a required field."),
     middleInitial: string()
         .max(2),
-    lastname: string().required("Lastname is a required field."),
+    lastName: string().required("Lastname is a required field."),
+    sex: string().oneOf(["M", "F"]).required("Sex is a required field."),
     birthday: date().required("Birthday is a required field."),
     nationality: string().required("Nationality is a required field."),
     mobileNumber1: number().required("Mobile 1 is a required field."),
