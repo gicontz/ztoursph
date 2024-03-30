@@ -79,7 +79,6 @@ export default function Tours() {
   );
   const totalTours = data?.pages[0].totalRecords;
   const records = data?.pages.map(({ records }) => records);
-  console.log(records);
 
   const trips = records?.map((list) =>
     list.map((tour) => ({

@@ -1,0 +1,31 @@
+
+export enum NameSuffix {
+    None = '',
+    Jr = 'Jr',
+    Sr = 'Sr',
+    II = 'II',
+    III = 'III',
+    IV = 'IV',
+    V = 'V',
+    VI = 'VI',
+    VII = 'VII',
+    VIII = 'VIII',
+    IX = 'IX',
+    X = 'X',
+    XI = 'XI',
+    XII = 'XII',
+    XIII = 'XIII',
+    XIV = 'XIV',
+    XV = 'XV',
+    XVI = 'XVI',
+    XVII = 'XVII',
+    XVIII = 'XVIII',
+    XIX = 'XIX',
+    XX = 'XX',
+    XXI = 'XXI',
+    XXII = 'XXII',
+    XXIII = 'XXIII',
+    XXIV = 'XXIV',
+};
+
+export const NameSuffixValues = Object.values(NameSuffix);

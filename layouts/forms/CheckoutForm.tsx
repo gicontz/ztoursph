@@ -52,11 +52,6 @@ const CheckoutForm = () => {
         resolver: yupResolver(checkoutSchema),
     });
 
-    const guests = watch("guests");
-    const maxParticipants = 5;
-    const guestErrors = ((guests && guests?.length) ?? 0) < maxParticipants - 1 ? 
-        "Your number of guests do not match the estimated number of participants, expected" + ` ${maxParticipants}` : "";
-
     const handleSubmition = async (data) => {
         const content = {
             firstname: data.firstname,
@@ -72,10 +67,10 @@ const CheckoutForm = () => {
     };
     return (
         <form
-            className="flex flex-col space-y-4 lg:w-1/2 w-full lg:mx-auto my-24"
+            className="flex flex-col space-y-4 lg:w-1/2 w-full lg:mx-auto my-12"
             onSubmit={handleSubmit(handleSubmition)}>
             <h4 className={`text-2xl font-bold ${secondaryFont.className}`}>
-            Checkout Details
+                Checkout Details
             </h4>
             <Divider className="!my-2" />
             <p className="text-lg font-bold">Lead Guest Information</p>
@@ -211,37 +206,9 @@ const CheckoutForm = () => {
                 </FieldGroup>
             </div>
 
-            <Divider className="!my-5" />
-
-            <p className="text-lg font-bold mb-2">Guest/s Name Information</p>
-
-            <Controller
-                control={control}
-                name="guests"
-                render={({ field }) => (
-                    <Guest
-                        leadGuest={{
-                            name: [watch("firstname"), watch("lastname")].filter(Boolean).join(' '),
-                            age: getAge(watch("birthday")),
-                            nationality: watch("nationality")
-                        }}
-                        onChange={field.onChange}
-                        helperText={guestErrors}
-                    />
-                )}
-            />
-
-            <Controller
-                control={control}
-                name="maxParticipants"
-                render={({ field }) => (
-                    <input type="hidden" {...field} value={3} />
-                )}
-            />
-
-            <div className="flex space-x-3 justify-center h-10">
+            <div className="flex space-x-3 justify-center h-10 !mt-10">
                 <Button className="h-full">View Itinerary</Button>
-                <Button className="h-full" type="primary" htmlType="submit" disabled={guestErrors.length > 0 && errors !== undefined}>
+                <Button className="h-full" type="primary" htmlType="submit">
                     Checkout
                 </Button>
             </div>

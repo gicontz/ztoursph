@@ -89,7 +89,6 @@ export default function MainPageBooking() {
 
     if (isAtBottom && !isFetching && totalTours !== numberOfTours) {
       fetchNextPage();
-      console.log("Bottom!");
     }
   });
 

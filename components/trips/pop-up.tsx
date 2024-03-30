@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { PlaneIcon } from "@components/commons/icons";
 import { Poppins, Source_Serif_4 } from "next/font/google";
@@ -10,6 +10,7 @@ import { useCookies } from "react-cookie";
 import { StyledDivider } from "@components/commons/common";
 import { Added_Trips } from "@constants/added_trips";
 import { useTripsContext } from "@providers/trips";
+import { getTrips } from "@app/modules/trips/actions";
 
 const font = Poppins({
   weight: "400",
@@ -34,7 +35,12 @@ const Container = styled.div`
 `;
 
 const PopupAddTrips = ({ type }) => {
-  const { tripStore } = useTripsContext();
+  const { tripStore, tripDispatch } = useTripsContext();
+  const [cookie] = useCookies([Added_Trips]);
+  
+  useEffect(() => {
+    getTrips(tripDispatch, cookie[Added_Trips] ?? []);
+  }, []);
 
   const bookingData = tripStore.trips.reverse();
   const currentBooking = bookingData.shift();

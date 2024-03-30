@@ -1,3 +1,4 @@
+import { classNames } from "@app/utils/helpers";
 import styled from "@emotion/styled";
 import { Source_Serif_4 } from "next/font/google";
 import React from "react";
@@ -13,13 +14,6 @@ const SourceSans = Source_Serif_4({
   weight: ["900"],
 });
 
-const TextHeader = styled.h1`
-  font-size: 6rem;
-  font-weight: bold;
-  @media screen and (max-width: 700px) {
-    font-size: 4rem;
-  }
-`;
 const TextDescription = styled.h2`
   width: 70%;
   font-weight: 300;
@@ -71,7 +65,7 @@ const PageBanner: React.FC<PageBannerProps> = ({
 }) => {
   return (
     <Panel bannerImage={bannerImage}>
-      <TextHeader className={`${SourceSans.className}`}>{title}</TextHeader>
+      <h1 className={classNames(SourceSans.className, "font-bold text-5xl lg:text-8xl")}>{title}</h1>
       <TextDescription>{description}</TextDescription>
     </Panel>
   );

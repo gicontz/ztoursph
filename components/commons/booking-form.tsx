@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { DatePicker as Picker, Divider } from "antd";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import TravelersInput from "./travelerInput";
 import Button from "./button";
 import PopupAddTrips from "@components/trips/pop-up";
 import { useCookies } from "react-cookie";
@@ -11,6 +10,12 @@ import { Added_Trips } from "@constants/added_trips";
 import { TTrip } from "@app/modules/trips/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "@constants/validations/bookingForm";
+import Dropdown from "./dropdown";
+import { useDialog } from "@providers/dialog";
+import ManageGuestList from "@app/layouts/modals/ManageGuestList";
+import LOCAL_STORAGE from "@constants/localstorage";
+import { classNames } from "@app/utils/helpers";
+import { disablePastDatesAndToday } from "@constants/dates";
 
 const CustomDropDown = dynamic(() => import("./custom-dropdown"), {
   ssr: false,
@@ -78,7 +83,7 @@ const DatePicker = styled(Picker)<{ hasError: boolean }>`
 `;
 
 type BookingFormProps = {
-  onSubmit: (d: any) => void;
+  onSubmit?: (d: any) => void;
   type: string;
   details: {
     tourId?: string | number;
@@ -92,10 +97,28 @@ const BookingForm: React.FC<BookingFormProps> = ({
   type,
   details,
 }) => {
-  const { handleSubmit, control, formState } = useForm({
+  const { handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
+  const [openDialog, closeDialog] = useDialog();
   const [showTrips, setShowAddToTrips] = useState(false);
+  const [guests, setGuests] = useState([]);
+  
+  const handleGuests = (guests) => {
+    setGuests(guests);
+  }
+
+  const theGuests = guests.length > 0 ? guests : typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]") : [];
+  const options = theGuests.map((data) => ({
+    label: classNames(
+      data.firstName, 
+      data.middleInitial, 
+      data.lastName, 
+      data.suffix && `, ${data.suffix}`, 
+      data.age, 
+      data.nationality.toUpperCase()),
+    value: data.id,
+  }));
 
   const onSubmitFunc = (formData) => {
     formData.details = details;
@@ -112,8 +135,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
       thumbnail: formData.details.thumbnail,
       category: type,
     };
-    console.log(formData);
-    onSubmit(tripData as TTrip);
+    
+    if (typeof onSubmit === 'function') onSubmit(tripData);
+  };
+
+  const handleManageGuests = () => {
+    openDialog({
+      children: <ManageGuestList onClose={closeDialog} onChange={handleGuests}/>,
+    });
   };
 
   return (
@@ -131,16 +160,17 @@ const BookingForm: React.FC<BookingFormProps> = ({
           render={({ field }) => (
             <>
               <DatePicker
-                hasError={formState?.errors?.date !== undefined}
+                hasError={errors?.date !== undefined}
                 onChange={field.onChange}
                 className="expand"
-                showTime
                 placeholder="Select Date and Time"
                 showNow={false}
+                showToday={false}
+                disabledDate={disablePastDatesAndToday}
               />
-              {formState?.errors?.date !== undefined && (
+              {errors?.date !== undefined && (
                 <p className="text-red-700 text-xs font-italized">
-                  {formState?.errors?.date?.message}
+                  {errors?.date?.message}
                 </p>
               )}
             </>
@@ -150,18 +180,21 @@ const BookingForm: React.FC<BookingFormProps> = ({
         <StyledDivider />
         <LabelHeader>
           <h3>Participants</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>You must select your participants, you can manage your guest list&nbsp;
+            <span 
+              className="text-xs font-bold text-blue-400 cursor-pointer hover:opacity-70 active:opacity-50"
+              onClick={handleManageGuests}>here</span></p>
         </LabelHeader>
         <Controller
           name="participants"
           control={control}
           rules={{ required: true }}
           render={({ field }) => (
-            <TravelersInput
+            <Dropdown 
+              mode="multiple"
               onChange={field.onChange}
-              hasError={formState.errors.participants !== undefined}
-              helperText={formState.errors.participants?.message}
-            />
+              className="w-full"
+              options={options}/>
           )}
         />
 
@@ -176,8 +209,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
           rules={{ required: true }}
           render={({ field }) => (
             <CustomDropDown
-              hasError={formState?.errors.locationPickUp !== undefined}
-              helperText={formState?.errors.locationPickUp?.message}
+              hasError={errors.locationPickUp !== undefined}
+              helperText={errors.locationPickUp?.message}
               onChange={field.onChange}
               placeholder="Enter pick-up location"
               buttonName="Add location"

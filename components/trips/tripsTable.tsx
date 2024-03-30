@@ -72,7 +72,6 @@ interface TripsTableProps {
 const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
   const route = useRouter();
   const { tripDispatch } = useTripsContext();
-  const [openDialog, closeDialog] = useDialog();
   const [cookies, setCookie] = useCookies([Added_Trips]);
   const [checkoutData, setCheckoutData] = React.useState<TData[]>(data);
   const [checkoutDetails, setCheckoutDetails] = React.useState<TPreCheckoutCalculation | null>(null);
@@ -110,7 +109,28 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     return calculations;
   }, [data]);
 
-  const removeItem = (id: string | number) => {
+  // const handleUpdatePax = (id: string | number) => (newPax: number) => {
+  //   if (newPax === 0) {
+  //     openDialog({
+  //       children: <ConfirmationDialog
+  //         title="Remove Trip"
+  //         message="Are you sure you want to remove this trip?"
+  //         onOk={() => removeItem(id)}
+  //         onCancel={handleCancel}
+  //       />
+  //     });
+  //     return;
+  //   }
+  //   setPaxToTrips(tripDispatch, { id, pax: newPax });
+  //   const newData = {
+  //     booking: checkoutData.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller }))
+  //   };
+  //   newData.booking.find((e) => e.id === id)!.pax = newPax;
+  //   setCheckoutData(prev => prev.map((e) => ({ ...e, numberOfTraveller: e.tripId === id ? newPax : e.numberOfTraveller })));
+  //   handleCalc(newData);
+  // };
+
+  const handleRemove = (id: string | number) => {
     setCheckoutData(prev => {
       const removedList = prev.filter((e) => e.tripId !== id);
       const newData = {
@@ -121,36 +141,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       handleCalc(newData);
       return removedList;
     });
-    closeDialog();
-  };
-
-  const handleCancel = () => {
-    handleCalc();
-    closeDialog();
   }
-
-  const handleUpdatePax = (id: string | number) => (newPax: number) => {
-    if (newPax === 0) {
-      openDialog({
-        children: <ConfirmationDialog
-          title="Remove Trip"
-          message="Are you sure you want to remove this trip?"
-          onOk={() => removeItem(id)}
-          onCancel={handleCancel}
-        />
-      });
-      return;
-    }
-    setPaxToTrips(tripDispatch, { id, pax: newPax });
-    const newData = {
-      booking: checkoutData.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller }))
-    };
-    newData.booking.find((e) => e.id === id)!.pax = newPax;
-    setCheckoutData(prev => prev.map((e) => ({ ...e, numberOfTraveller: e.tripId === id ? newPax : e.numberOfTraveller })));
-    handleCalc(newData);
-  };
-
-  console.log(checkoutDetails);
 
   const Trips = () => checkoutData.map((e, i) => (
     <PackageCard
@@ -161,7 +152,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       date={e.date}
       pickup={e.pickup}
       price={e.price}
-      onUpdatePrice={handleUpdatePax(e.tripId)}
+      onRemove={() => handleRemove(e.tripId)}
     />
   ));
 

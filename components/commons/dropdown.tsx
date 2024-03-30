@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Select, SelectProps } from "antd";
 import styled from "@emotion/styled";
+import { classNames } from "@app/utils/helpers";
 
 const SelectWrapper = styled.div<{ icon?: boolean; hasError?: boolean }>`
   position: relative;
@@ -29,8 +30,7 @@ const SelectWrapper = styled.div<{ icon?: boolean; hasError?: boolean }>`
 `;
 
 const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
-  width: 19rem;
-  height: 3.5rem;
+  height: 100%;
 
   @media screen and (max-width: 821px) {
     width: 100%;
@@ -39,21 +39,23 @@ const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
 
 export interface DropdownProps extends SelectProps {
   prefixIcon?: ReactNode;
+  className?: string;
   hasError?: boolean;
   helperText?: string;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   prefixIcon,
+  className,
   hasError,
   helperText,
   ...rest
 }) => {
   return (
     <React.Fragment>
-      <SelectWrapper hasError={hasError} icon={prefixIcon ? true : false}>
+      <SelectWrapper className={classNames("h-10", className)} hasError={hasError} icon={prefixIcon ? true : false}>
         {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}
-        <StyledSelect {...rest} />
+        <StyledSelect {...rest} className="w-full" />
       </SelectWrapper>
       {helperText !== undefined && (
         <p className="text-red-700 text-xs font-italized">{helperText}</p>

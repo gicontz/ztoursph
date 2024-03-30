@@ -119,7 +119,6 @@ export const DialogProvider: FunctionComponent<DialogProps> = (props: DialogProp
   const { children, ...others } = props;
   const [dialogs, setDialogs] = React.useState<DialogParams[]>([]);
   const createDialog = (option: DialogOption) => {
-    console.log('dialog creted')
     const dialog = { ...option, open: true };
     setDialogs((ds) => [...ds, dialog]);
   };

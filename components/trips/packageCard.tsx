@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import IncreaseCount from "./increaseCount";
 import { blurImageData } from "@constants/image";
+import { TrashIcon } from "@components/commons/icons";
+import ConfirmationDialog from "@app/layouts/modals/ConfirmationDialog";
+import { useDialog } from "@providers/dialog";
 
 const Rows = styled.div`
   display: flex;
@@ -61,14 +64,25 @@ const PackageCard = ({
   pickup,
   pax = 1,
   price,
-  onUpdatePrice,
+  onRemove = () => {},
 }) => {
-  const [count, setCount] = useState(pax);
+  const [openDialog, closeDialog] = useDialog();
 
-  const handleCount = (newCount) => {
-    setCount(newCount);
-    onUpdatePrice(newCount);
-  };
+  const handleConfirm = () => {
+    onRemove();
+    closeDialog();
+  }
+
+  const handleRemove = () => {
+    openDialog({
+      children: <ConfirmationDialog
+        title="Remove Trip"
+        message="Are you sure you want to remove this trip?"
+        onOk={handleConfirm}
+        onCancel={closeDialog}
+      />
+    });
+  }
 
   return (
     <Rows>
@@ -100,10 +114,12 @@ const PackageCard = ({
         </div>
       </CardDetail>
       <h4>₱{price}</h4>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <IncreaseCount number={pax} onChange={handleCount} />
-      </div>
-      <h4 className="w-full">₱{count * price}</h4>
+      </div> */}
+      <h4>{pax}</h4>
+      <h4 className="w-full">₱{pax * price}</h4>
+      <TrashIcon className="cursor-pointer text-red-700" onClick={handleRemove} />
     </Rows>
   );
 };

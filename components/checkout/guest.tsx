@@ -1,9 +1,17 @@
-import React, { useState } from "react";
-import { Input } from "antd";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Poppins } from "next/font/google";
 import Button from "@components/commons/button";
 import { TrashIcon } from "@components/commons/icons";
+import { NameSuffix, NameSuffixValues } from "@app/types/Guest";
+import { classNames } from "@app/utils/helpers";
+import Dropdown from "@components/commons/dropdown";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { guestSchema } from "@constants/validations/guestList";
+import Input from "@components/commons/input";
+import { v4 as uuid } from "uuid";
+import LOCAL_STORAGE from "@constants/localstorage";
 
 const Font = Poppins({
   weight: "400",
@@ -48,7 +56,11 @@ const StyledButton = styled(Button)`
 `;
 
 export type TGuest = {
-  name: string;
+  id?: string;
+  firstName: string;
+  lastName: string;
+  middleInitial: string;
+  suffix: NameSuffix;
   age: number;
   nationality: string;
 };
@@ -56,31 +68,17 @@ export type TGuest = {
 interface ParticipantInputProps {
   onChange?: (e: TGuest[]) => void;
   helperText?: string;
-  clearGuests?: boolean;
-  leadGuest?: TGuest;
 }
 
 const GuestInput: React.FC<ParticipantInputProps> = ({
-  clearGuests,
   helperText,
-  leadGuest,
   onChange,
 }) => {
-  const [participant, setParticipant] = useState<TGuest>({ name: "", age: 0, nationality: "" });
-  const [participantData, setParticipantData] = useState<TGuest[]>([]);
-
-  const setValueChange = React.useCallback(() => {
-    if (clearGuests) {
-      setParticipantData([]);
-      if (typeof onChange === "function") onChange([]);
-    }
-    //eslint-disable-next-line
-  }, [clearGuests]);
-
-  React.useEffect(() => {
-    setValueChange();
-    //eslint-disable-next-line
-  }, [clearGuests]);
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: yupResolver(guestSchema)
+  });
+  const guestsData = localStorage.getItem(LOCAL_STORAGE.guests);
+  const [participantData, setParticipantData] = useState<TGuest[]>(JSON.parse(guestsData ?? "[]"));
 
   const deleteName = (index: number) => {
     setParticipantData((prev) => {
@@ -90,33 +88,32 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
     });
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setParticipant((prev) => ({ ...prev, [name]: value }));
+  const handleAddParticipantClick = (formData) => {
+    const newGuest = { id: uuid(), ...formData };
+    setParticipantData((prev) => {
+      if (typeof onChange === "function") onChange([...prev, newGuest]);
+      return [...prev, newGuest];
+    });
+    reset();
   };
-
-  // 07 10 2003
-  const handleAddParticipantClick = () => {
-    if (participant.age && participant.name && participant.nationality) {
-      setParticipantData((prev) => {
-        if (typeof onChange === "function") onChange([...prev, participant]);
-        return [...prev, participant];
-      });
-      setParticipant({ name: "", age: 0, nationality: "" });
-
-      return;
-    }
-  };
+  
+  const fieldErrors = {
+    firstName: errors.firstName !== undefined,
+    lastName: errors.lastName !== undefined,
+    middleInitial: errors.middleInitial !== undefined,
+    age: errors.age !== undefined,
+    nationality: errors.nationality !== undefined,
+  }
 
   const NameList = () => 
     participantData.length ? (
       participantData.map((data, index) => (
         <React.Fragment key={`participant-${index}`}>
-          <div className="flex flex-auto items-center justify-center border border-green-50" key={index}>
+          <div className="flex flex-auto items-center justify-center border border-green-50" key={data.id}>
             <div className="flex flex-auto text-center">
-              <p className="w-1/3 truncate">{data.name}</p>
+              <p className="w-1/3 truncate">{classNames(data.firstName, data.middleInitial, data.lastName, data.suffix && `, ${data.suffix}`)}</p>
               <p className="w-1/3">{data.age}</p>
-              <p className="w-1/3 truncate">{data.nationality}</p>
+              <p className="w-1/3 truncate">{data.nationality.toUpperCase()}</p>
             </div>
             <TrashIcon
               className="cursor-pointer"
@@ -132,50 +129,109 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
 
   return (
     <>
-      <AddParticipant className="w-full flex flex-col items-center [&>input]:w-full [&>input]:h-10 lg:flex-row">
-        <Input
-          className={Font.className}
-          value={participant?.name}
-          onChange={handleInputChange}
-          name="name"
-          type="text"
-          placeholder="Name"
+      <form 
+        onSubmit={handleSubmit(handleAddParticipantClick)}
+        className="w-full flex flex-col gap-4 items-center lg:flex-row lg:space-x-2 lg:gap-0">
+        <Controller
+          control={control}
+          name="firstName"
+          render={({ field }) => (
+            <Input
+              className={classNames(Font.className, errors.firstName && "border border-red-700")}
+              value={field.value}
+              onChange={field.onChange}
+              type="text"
+              placeholder="First Name"
+              hasError={fieldErrors.firstName}
+              helperText={errors.firstName?.message}
+            />
+          )}
         />
-        <Input
-          className={Font.className}
-          value={participant?.age}
-          onChange={handleInputChange}
+        <Controller
+          control={control}
+          name="middleInitial"
+          render={({ field }) => (
+            <Input
+            className={Font.className}
+            value={field.value}
+            onChange={field.onChange}
+            maxLength={2}
+            type="text"
+            placeholder="Middle Initial"
+            hasError={fieldErrors.middleInitial}
+            helperText={errors.middleInitial?.message}
+          />
+          )}
+        />
+        <Controller
+          control={control}
+          name="lastName"
+          render={({ field }) => (
+            <Input
+            className={Font.className}
+            value={field.value}
+            onChange={field.onChange}
+            type="text"
+            placeholder="Last Name"
+            hasError={fieldErrors.lastName}
+            helperText={errors.lastName?.message}
+          />
+          )}
+        />
+        <Controller
+          control={control}
           name="age"
-          type="number"
-          placeholder="Age"
+          render={({ field }) => (
+            <Input
+            className={Font.className}
+            value={field.value}
+            onChange={field.onChange}
+            type="number"
+            placeholder="Age"
+            hasError={fieldErrors.age}
+            helperText={errors.age?.message}
+          />
+          )}
         />
-        <Input
-          className={Font.className}
-          value={participant?.nationality}
-          onChange={handleInputChange}
+        <Controller
+          control={control}
+          name="suffix"
+          render={({ field }) => (
+            <Dropdown 
+              className="mt-1"
+              placeholder="Suffix"
+              defaultValue={NameSuffix.None}
+              value={field.value}
+              onChange={field.onChange}
+              options={NameSuffixValues.map((value) => ({ label: value === NameSuffix.None ? "None" : value, value }))}
+            />
+          )}
+        />
+        <Controller
+          control={control}
           name="nationality"
-          type="text"
-          placeholder="Nationality"
+          render={({ field }) => (
+            <Input
+            className={Font.className}
+            value={field.value}
+            onChange={field.onChange}
+            type="text"
+            placeholder="Nationality"
+            hasError={fieldErrors.nationality}
+            helperText={errors.nationality?.message}
+          />
+          )}
         />
-        <StyledButton type="primary" onClick={handleAddParticipantClick}>
+        <StyledButton type="primary" htmlType="submit" className="!h-10">
           Add Participant
         </StyledButton>
-      </AddParticipant>
+      </form>
       {helperText && (
         <p className="text-red-700 text-xs font-italized">{helperText}</p>
       )}
       <br />
       <p className="text-lg font-bold">Guests</p>
-      <div className="flex flex-col gap-1">
-        <label className="font-bold text-sm">Lead Guests</label>
-        <div className="flex space-x-2 flex-auto mb-2 text-center [&>p]:py-2">
-            <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.name}</p>
-            <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.age}</p>
-            <p className="h-10 w-1/3 bg-gray-200">{leadGuest?.nationality}</p>
-        </div>
-        <label className="font-bold text-sm">Other Guest/s</label>
-        <NameList />
-      </div>
+      <NameList />
     </>
   );
 };

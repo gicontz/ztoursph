@@ -118,7 +118,6 @@ export default function Tours() {
     title: store.selectedTour?.tour_title,
     thumbnail: store.selectedTour?.thumbnail,
   };
-  console.log(detail);
 
   return (
     <Layout>
