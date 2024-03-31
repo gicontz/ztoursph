@@ -50,4 +50,46 @@ export type TItinerary = {
     booking_date: string;
     guests: Array<TGuestItinerary>;
     booked_tours: Array<TBookedTour>;
+};
+
+export type TCheckoutParticipant = {
+    name: string;
+    age: number;
+    nationality: string;
+};
+
+export type TCheckoutTrips = {
+    userEmail: string;
+    first_name: string;
+    middle_init: string;
+    last_name: string;
+    packages: {
+        id: string | number;
+        pax: number;
+        date: string;
+        participants: TCheckoutParticipant[];
+    }[]
+};
+
+export type TCreateBooking = {
+    userEmail: string;
+    first_name: string;
+    middle_init: string;
+    last_name: string;
+    packages: {
+        id: string | number;
+        pax: number;
+        date: string;
+        participants: TCheckoutParticipant[];
+    }[]
+};
+
+export type TPaymentData = {
+    userId: string;
+    bookingId: string;
+    amount: number;
+    status: string;
+    paymentType: string;
+    success_response?: string;
+    failed_response?: string;
 }

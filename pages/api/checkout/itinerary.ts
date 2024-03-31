@@ -17,12 +17,13 @@ const __ = async (req: NextApiRequest, res: NextApiResponse) => {
             .status(result.status)
             .json({ status: result.status, message: result.statusText, error });
     }
-    const blob = await result.blob();
-    res.setHeader('Content-Disposition', 'attachment; filename=itinerary.pdf');
-    res.setHeader('Content-Type', 'application/pdf')
-    res.setHeader('Content-Length', blob.size.toString())
-    res.setHeader('Content-Encoding', '')
-    return res.status(201).send(blob);
+    const blob = await result.arrayBuffer();
+    res.setHeader('content-type', 'application/pdf');
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="itinerary-${new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '')}.pdf"`,
+    );
+    return res.end(Buffer.from(blob));
 };
 
 export default __;

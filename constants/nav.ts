@@ -28,3 +28,5 @@ export const MENU_LINKS = [
     href: "/contact-us",
   },
 ];
+
+export const PAYMENT_REDIRECT = "/booking-confirmation"

@@ -115,6 +115,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <DropdownShowcase
+                className="!h-14 w-80"
                 onChange={field.onChange as any}
                 showSearch
                 hasError={formState.errors.packages !== undefined}

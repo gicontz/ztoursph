@@ -2,12 +2,12 @@ import { PanelSection } from "@components/commons/common";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import React from "react";
-import { getTours as getToursApi, getTourBySlug as getTourBySlugApi, getTrips as getTripsApi } from "@app/services/tours";
+import { getTours as getToursApi } from "@app/services/tours";
 import TourCard from "./trip-card";
 import Skeleton from "@components/commons/skeleton";
 import HeaderText from "@components/commons/header-text";
 import { TCategory } from "@app/modules/trips/types";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const ListCardsContainer = styled.div`
   width: 100%;

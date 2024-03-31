@@ -2,6 +2,7 @@ import "@app/styles/globals.css";
 import { SessionProvider } from 'next-auth/react';
 import { Providers } from '@providers/chakra';
 import type { AppProps } from "next/app";
+import DialogProvider from '../providers/dialog';
 import PageWrapper from "@components/pages/pageWrapper";
 import { useState } from "react";
 import {
@@ -9,7 +10,7 @@ import {
   HydrationBoundary,
   QueryClient,
   QueryClientProvider,
-} from '@tanstack/react-query'
+} from '@tanstack/react-query';
 import { getTours } from "@app/services/tours";
 
 export async function getStaticProps() {
@@ -34,7 +35,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             <PageWrapper>
               <QueryClientProvider client={queryClient}>
                 <HydrationBoundary state={pageProps.dehydratedState}>
-                  <Component {...pageProps} />
+                  <DialogProvider>
+                    <Component {...pageProps} />
+                  </DialogProvider>
                 </HydrationBoundary>
               </QueryClientProvider>
             </PageWrapper>

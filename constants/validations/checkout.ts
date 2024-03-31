@@ -9,8 +9,8 @@ const schema = object().shape({
     sex: string().oneOf(["M", "F"]).required("Sex is a required field."),
     birthday: date().required("Birthday is a required field."),
     nationality: string().required("Nationality is a required field."),
-    mobileNumber1: number().required("Mobile 1 is a required field."),
-    mobileNumber2: number().required("Mobile 2 is a required field."),
+    mobileNumber1: string().matches(/^\d{10}$/, 'Mobile number must be exactly 10 digits').required("Mobile 1 is a required field."),
+    mobileNumber2: string().matches(/^\d{10}$/, 'Mobile number must be exactly 10 digits').required("Mobile 2 is a required field."),
     email: string()
         .email("Email must be valid email")
         .required("Email is a required field."),

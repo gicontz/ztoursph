@@ -14,11 +14,6 @@ const Input = dynamic(() => import("@components/commons/input"), {
     ssr: false,
 });
 
-const font = Poppins({
-    weight: "400",
-    subsets: ["latin"],
-    });
-
 const secondaryFont = Source_Serif_4({
     weight: "800",
     subsets: ["latin"],
@@ -78,23 +73,17 @@ const CheckoutForm = ({
         });
     }
 
-    const handleSubmition = async (data) => {
+    const handleSubmission = async (data) => {
         const content = {
-            firstname: data.firstname,
-            middleInitial: data.middleInitial,
-            lastname: data.lastname,
-            birthday: data.birthday,
+            ...data,
             age: getAge(data.birthday),
-            email: data.email,
-            mobileNumber1: data.mobileNumber1,
-            mobileNumber2: data.mobileNumber2,
         };
         if (typeof onCheckout === 'function') onCheckout(content);
     };
     return (
         <form
             className="flex flex-col space-y-4 lg:w-1/2 w-full lg:mx-auto my-12"
-            onSubmit={handleSubmit(handleSubmition)}>
+            onSubmit={handleSubmit(handleSubmission)}>
             <h4 className={`text-2xl font-bold ${secondaryFont.className}`}>
                 Checkout Details
             </h4>
@@ -208,6 +197,7 @@ const CheckoutForm = ({
                             type="number"
                             placeholder="Mobile Number 1"
                             onChange={field.onChange}
+                            maxLength={10}
                             hasError={errors?.mobileNumber1 !== undefined}
                             helperText={errors?.mobileNumber1?.message as string}
                         />
@@ -224,6 +214,7 @@ const CheckoutForm = ({
                             type="number"
                             placeholder="Mobile Number 2"
                             onChange={field.onChange}
+                            maxLength={10}
                             hasError={errors?.mobileNumber2 !== undefined}
                             helperText={errors?.mobileNumber2?.message as string}
                         />

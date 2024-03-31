@@ -65,8 +65,8 @@ const Dialog: FunctionComponent<Props> = ({ children, open, onClose }) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const handleBackDropClick = () => {
-    setDialogState({ open: false });
-    onClose && onClose();
+    // setDialogState({ open: false });
+    // onClose && onClose();
   };
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -84,12 +84,9 @@ const Dialog: FunctionComponent<Props> = ({ children, open, onClose }) => {
   }, [open]);
 
   return (
+    dialogState.open ?
     <div 
-        className={
-            classNames(
-            "fixed top-0 left-0 z-10 flex items-center justify-center p-0 m-0 w-full h-full bg-[rgba(0, 0, 0, 0.5)]", 
-            dialogState.open ? "flex" : "hidden")
-        }
+        className="flex fixed top-0 left-0 z-10 flex items-center justify-center p-0 m-0 border-box w-full h-[100vh] bg-[rgba(0, 0, 0, 0.5)]"
         onClick={handleBackDropClick}>
       <div 
         ref={ref} 
@@ -98,6 +95,7 @@ const Dialog: FunctionComponent<Props> = ({ children, open, onClose }) => {
         {children}
       </div>
     </div>
+    : <></>
   );
 };
 

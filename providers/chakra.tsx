@@ -9,13 +9,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <ChakraProvider>
-      <DialogProvider>
-        <CookiesProvider defaultSetOptions={{ path: '/' }}>
-          <TripsContext.Provider value={{ tripStore, tripDispatch }}>
-              {children}
-          </TripsContext.Provider>
-        </CookiesProvider>
-      </DialogProvider>
+      <CookiesProvider defaultSetOptions={{ path: '/' }}>
+        <TripsContext.Provider value={{ tripStore, tripDispatch }}>
+            {children}
+        </TripsContext.Provider>
+      </CookiesProvider>
     </ChakraProvider>
   )
 }

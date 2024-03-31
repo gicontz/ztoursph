@@ -4,7 +4,6 @@ import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
 import { Poppins, Source_Serif_4 } from "next/font/google";
 import React, { useCallback, useEffect, useMemo } from "react";
-import dynamic from "next/dynamic";
 import { classNames } from "@app/utils/helpers";
 import CheckoutForm from "@app/layouts/forms/CheckoutForm";
 import LOCAL_STORAGE from "@constants/localstorage";
@@ -15,6 +14,9 @@ import { useTripsContext } from "@providers/trips";
 import { getTrips, useTours } from "@app/modules/tours/actions";
 import { getItinerary } from "@app/services/checkout";
 import itineraryJson from "@constants/test/itineray.json";
+import { getAge } from "@constants/dates";
+import { useDialog } from "@providers/dialog";
+import CreateBooking from "@app/layouts/modals/CreateBooking";
 
 const font = Poppins({
   weight: "400",
@@ -31,6 +33,7 @@ export default function Checkout() {
   const [cookies] = useCookies([Added_Trips]);
   const [ store, dispatch ] = useTours();
   const { tripStore, tripDispatch } = useTripsContext();
+  const [openDialog, closeDialog] = useDialog();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const trips = cookies[Added_Trips] ?? [];
@@ -49,19 +52,20 @@ export default function Checkout() {
       ...t,
       id: t.tripId,
       pax: t.numberOfTraveller,
-      subtotal: (parseInt(store.trips.find(({ id }) => id === t.tripId)?.price as any, 10)) * t.numberOfTraveller,
+      pickup_time: "07:00 AM",
+      description: t.title,
+      subtotal: ((parseInt(store.trips.find(({ id }) => id === t.tripId)?.price as any, 10)) * t.numberOfTraveller).toString(),
     }));
   }, [store.trips, trips]);
 
   const guests = typeof localStorage !== 'undefined' ? 
   JSON.parse(localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]").map((g) => ({
+      id: g.id,
       name: classNames(g.firstName, g.middleInitial, g.lastName, g.suffix && `, ${g.suffix}`),
       age: g.age,
-      natinality: g.nationality,
+      nationality: g.nationality,
   })) : 
   [];
-
-  console.log(store.trips, pricedTrips);
 
   useEffect(() => {
     if (guests.length === 0) {
@@ -73,16 +77,44 @@ export default function Checkout() {
   const handleViewItinerary = (data) => {
     const content = {
       ...data,
+      booking_date: new Date().toISOString(),
+      age: getAge(data.birthday),
+      mobileNumber1: parseInt(data.mobileNumber1),
+      mobileNumber2: parseInt(data.mobileNumber2),
       guests,
       booked_tours: pricedTrips,
     };
-    getItinerary({ content: { ...itineraryJson }} as any).then((res) => {
-      console.log(res)
-    });;
+    getItinerary({ content } as any).then((res) => {
+      const newTab = window.open(res.data.blobUrl, '_blank');
+      newTab?.focus();
+    });
   };
 
   const handleCheckout = (data) => {
+    const namedPackages = pricedTrips.map((p) => ({
+      ...p,
+      participants: p.participants.map((id) => ({
+        ...guests.find((g) => g.id === id)
+      }))
+    }));
+    console.log(data);
+    
+    const payload = {
+      userEmail: data.email,
+      first_name: data.firstName,
+      middle_init: data.middleInitial,
+      last_name: data.lastName,
+      mobile_number1: data.mobileNumber1,
+      mobile_number2: data.mobileNumber2,
+      birthday: data.birthday,
+      sex: data.sex,
+      nationality: data.nationality,
+      packages: namedPackages,
+    };
 
+    openDialog({
+      children: <CreateBooking bookingInfo={payload} onClose={closeDialog} />
+    });
   }
 
   return (
