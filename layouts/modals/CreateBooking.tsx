@@ -4,6 +4,7 @@ import { classNames } from "@app/utils/helpers";
 import { CloseIcon } from "@chakra-ui/icons";
 import Button from "@components/commons/button";
 import Loading from "@components/commons/loading";
+import { PAYMENT_REDIRECT } from "@constants/nav";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
@@ -11,6 +12,19 @@ import { useEffect, useState } from "react";
 interface Props {
     bookingInfo: TCreateBooking;
     onClose?: () => void;
+}
+
+let APP_SERVER = '';
+
+export const getStaticProps = async () => {
+    APP_SERVER = process.env.APP_SERVER || '';
+    console.log(process.env.APP_SERVER)
+    return {
+        props: {
+            APP_SERVER
+        }
+    }
+
 }
 
 const CreateBooking = ({ bookingInfo, onClose }: Props) => {
@@ -24,6 +38,8 @@ const CreateBooking = ({ bookingInfo, onClose }: Props) => {
 
     const bookingDetails = data?.data;
 
+    const redirectUrl = `${window.location.origin}${PAYMENT_REDIRECT}`;
+
     const handlePay = () => {
         mutatePayment({
             paymentData: {
@@ -31,7 +47,12 @@ const CreateBooking = ({ bookingInfo, onClose }: Props) => {
                 amount: bookingDetails.total_amt,
                 userId: bookingDetails.user.id,
                 status: 'PENDING',
-                paymentType: 'CREDIT CARD'
+                paymentType: 'CREDIT CARD',
+                redirectUrl: {
+                    sucess: redirectUrl,
+                    failed: redirectUrl,
+                    cancel: redirectUrl,
+                }
             }
         });
     }

@@ -29,4 +29,4 @@ export const MENU_LINKS = [
   },
 ];
 
-export const PAYMENT_REDIRECT = "/booking-confirmation"
+export const PAYMENT_REDIRECT =  "/booking-confirmation";
