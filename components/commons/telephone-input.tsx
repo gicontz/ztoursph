@@ -18,12 +18,14 @@ const SelectWrapper = styled.div<{ hasError?: boolean }>`
     align-items: center;
     justify-content: center;
     .ant-select-selector {
+      border-color: ${({ hasError }) =>
+        hasError ? "rgb(185 28 28)" : "#d9d9d9"};
       border-radius: 3px 0 0 3px;
     }
   }
 
   .ant-input-outlined {
-    text-indent: calc(5rem - 8px);
+    text-indent: calc(4rem - 8px);
     border-color: ${({ hasError }) =>
       hasError ? "rgb(185 28 28)" : "#d9d9d9"};
   }
@@ -51,7 +53,7 @@ export interface DropdownProps extends InputProps {
   helperText?: string;
 }
 
-const TelephoneInput: React.FC<DropdownProps> = ({
+const MobileNumberInput: React.FC<DropdownProps> = ({
   onGetNumber,
   className,
   hasError,
@@ -114,11 +116,11 @@ const TelephoneInput: React.FC<DropdownProps> = ({
           className="w-full"
         />
       </SelectWrapper>
-      {helperText !== undefined && (
+      {helperText && (
         <p className="text-red-700 text-xs font-italized">{helperText}</p>
       )}
     </React.Fragment>
   );
 };
 
-export default TelephoneInput;
+export default MobileNumberInput;
