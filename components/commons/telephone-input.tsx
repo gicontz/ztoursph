@@ -112,7 +112,6 @@ const TelephoneInput: React.FC<DropdownProps> = ({
           {...rest}
           onChange={onChangeInputHandler}
           className="w-full"
-          minLength={10}
         />
       </SelectWrapper>
       {helperText !== undefined && (
