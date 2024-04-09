@@ -61,7 +61,9 @@ export type TData = {
   date: string;
   pickup: string;
   price: number;
+  discount: number;
   numberOfTraveller: number;
+  ages: number[];
 };
 
 interface TripsTableProps {
@@ -104,37 +106,16 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
   const checkoutCalculations = useCallback(async (newData?: TPreCheckout) => {
     const baseData = newData?.booking;
     setLoading(tripDispatch, true);
-    const calculations = await calculateTrips({ booking: baseData ?? checkoutData.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller })) });
+    const calculations = await calculateTrips({ booking: baseData ?? checkoutData.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller, ages: e.ages })) });
     setLoading(tripDispatch, false);
     return calculations;
   }, [data]);
-
-  // const handleUpdatePax = (id: string | number) => (newPax: number) => {
-  //   if (newPax === 0) {
-  //     openDialog({
-  //       children: <ConfirmationDialog
-  //         title="Remove Trip"
-  //         message="Are you sure you want to remove this trip?"
-  //         onOk={() => removeItem(id)}
-  //         onCancel={handleCancel}
-  //       />
-  //     });
-  //     return;
-  //   }
-  //   setPaxToTrips(tripDispatch, { id, pax: newPax });
-  //   const newData = {
-  //     booking: checkoutData.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller }))
-  //   };
-  //   newData.booking.find((e) => e.id === id)!.pax = newPax;
-  //   setCheckoutData(prev => prev.map((e) => ({ ...e, numberOfTraveller: e.tripId === id ? newPax : e.numberOfTraveller })));
-  //   handleCalc(newData);
-  // };
 
   const handleRemove = (id: string | number) => {
     setCheckoutData(prev => {
       const removedList = prev.filter((e) => e.tripId !== id);
       const newData = {
-        booking: removedList.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller }))
+        booking: removedList.map((e) => ({ id: e.tripId, pax: e.numberOfTraveller, ages: e.ages }))
       };
       setCookie(Added_Trips, cookies[Added_Trips].filter((e) => e.tripId !== id));
       removeToTrips(tripDispatch, id);
@@ -151,6 +132,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       pax={checkoutDetails?.subTotals.find((s) => s.id === e.tripId)?.pax ?? e.numberOfTraveller}
       date={e.date}
       pickup={e.pickup}
+      // discount={e.discount}
       price={e.price}
       onRemove={() => handleRemove(e.tripId)}
     />

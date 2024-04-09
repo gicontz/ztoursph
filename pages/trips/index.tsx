@@ -10,6 +10,8 @@ import { getTrips, useTours } from "@app/modules/tours/actions";
 import { getTrips as getTheTrips } from "@app/modules/trips/actions";
 import { useCookies } from "react-cookie";
 import { Added_Trips } from "@constants/added_trips";
+import LOCAL_STORAGE from "@constants/localstorage";
+import { TGuest } from "@components/checkout/guest";
 
 const Panel = styled(Row)`
   margin: 2rem auto;
@@ -38,12 +40,17 @@ export default function Trips() {
   }, [tripStore.trips]);
 
   const myTrips = useMemo(() => {
+    const guestsData = typeof localStorage !== 'undefined' ? localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]" : "[]";
+    const guests: TGuest[] = JSON.parse(guestsData);
     const trips = tripStore.trips.map((trip) => {
+      const ages = trip.participants.map((p) => guests.find(({ id }) => id === p)?.age ?? 0);
       return {
         ...trip,
         imageUrl: trip.thumbnail,
         pickup: trip.location,
+        discount: 0,
         numberOfTraveller: trip.numberOfTraveller,
+        ages,
       }
     });
     return trips.map((t) => ({
