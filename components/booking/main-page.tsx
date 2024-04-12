@@ -68,7 +68,7 @@ export default function MainPageBooking() {
   });
 
   const numberOfTours = data?.pages.reduce(
-    (a, { records }) => records?.length + a,
+    (a, d) => d.records?.length + a,
     0
   );
   const totalTours = data?.pages[0].totalRecords;
