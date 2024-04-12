@@ -2067,6 +2067,11 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
+country-codes-list@^1.6.11:
+  version "1.6.11"
+  resolved "https://registry.yarnpkg.com/country-codes-list/-/country-codes-list-1.6.11.tgz#fd8241c9a833447677a1b8efdd0e1cd19a1fc176"
+  integrity sha512-MsHoJ83tGyv9tFspeI8yHBomiTH4rruHxdWhNWGG9d1ykXgLyawh/VykmYPH5KqduY+9Q2RUNlL2/KGkXJqANA==
+
 cross-spawn@^7.0.0, cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"
