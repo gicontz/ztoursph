@@ -77,7 +77,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       mobileNumber2: Object.values(data.mobileNumber2).join("-"),
       age: getAge(data.birthday),
     };
-    console.log(content);
+    
     if (typeof onCheckout === "function") onCheckout(content);
   };
 

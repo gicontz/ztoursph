@@ -49,7 +49,7 @@ const CreateBooking = ({ bookingInfo, onClose }: Props) => {
                 status: 'PENDING',
                 paymentType: 'CREDIT CARD',
                 redirectUrl: {
-                    sucess: redirectUrl,
+                    success: redirectUrl,
                     failed: redirectUrl,
                     cancel: redirectUrl,
                 }
@@ -65,7 +65,6 @@ const CreateBooking = ({ bookingInfo, onClose }: Props) => {
         <div className="flex flex-col justify-center space-y-8 px-10 pt-4 pb-10 shadow min-w-[350px]">
             <h2 className="flex items-center justify-between text-lg font-bold">
                 <span>{isPending ? 'Creating your Booking...' : 'Booked Trips Created!'}</span>
-                <CloseIcon className="!w-4 !h-4 cursor-pointer hover:opacity-70 active:opacity-50" onClick={onClose}/>
             </h2>
             <hr className="!mt-1"/>
             {

@@ -94,7 +94,7 @@ export type TPaymentData = {
     success_response?: string;
     failed_response?: string;
     redirectUrl?: {
-        sucess: string;
+        success: string;
         failed: string;
         cancel: string
     }
