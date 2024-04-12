@@ -9,3 +9,4 @@ export { default as LinkedInIcon } from "./linkedin";
 export { default as TelephoneIcon } from "./telephone";
 export { default as TrashIcon } from "./trash";
 export { default as PlaneIcon } from "./plane";
+export { default as SuccesfulRecieptIcon } from "./succesful";
