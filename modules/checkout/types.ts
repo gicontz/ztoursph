@@ -4,6 +4,7 @@ import { TCategory } from "../trips/types";
 export type TBooking = {
     id: string | number;
     pax: number;
+    ages: number[];
     category?: TCategory;
 };
 

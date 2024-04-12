@@ -52,8 +52,6 @@ export default function Checkout() {
       ...t,
       id: t.tripId,
       pax: t.numberOfTraveller,
-      pickup_time: "07:00 AM",
-      description: t.title,
       subtotal: ((parseInt(store.trips.find(({ id }) => id === t.tripId)?.price as any, 10)) * t.numberOfTraveller).toString(),
     }));
   }, [store.trips, trips]);
@@ -77,6 +75,7 @@ export default function Checkout() {
   const handleViewItinerary = (data) => {
     const content = {
       ...data,
+      referenceNumber: "PENDING",
       booking_date: new Date().toISOString(),
       age: getAge(data.birthday),
       mobileNumber1: parseInt(data.mobileNumber1),
@@ -97,7 +96,6 @@ export default function Checkout() {
         ...guests.find((g) => g.id === id)
       }))
     }));
-    console.log(data);
     
     const payload = {
       userEmail: data.email,
