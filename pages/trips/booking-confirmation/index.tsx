@@ -6,9 +6,14 @@ import {
   primaryColor,
   secondaryFont,
 } from "@app/layouts/fonts/fonts";
-import { SuccesfulRecieptIcon } from "@components/commons/icons";
+import {
+  SuccesfulBookingIcon,
+  FailedBookingIcon,
+  PendingBookingIcon,
+} from "@components/commons/icons";
 import Link from "next/link";
 import Button from "@components/commons/button";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 
 const Container = styled(Row)`
   * {
@@ -20,13 +25,16 @@ const Container = styled(Row)`
 function BookingConfirmation() {
   return (
     <Container
-      className={`${MainFont.className} h-screen relative flex justify-center align-middle items-center`}>
-      <Link href={"/"} className="absolute top-2 left-2">
-        Back to homepage
+      className={`${MainFont.className} relative flex justify-center align-middle items-center`}>
+      <Link href={"/"} className="absolute top-3 left-4 flex items-center">
+        <ChevronLeftIcon /> Back to homepage
       </Link>
       <div className="h-1/2 flex flex-col items-center space-y-5">
-        <div className="w-fit h-fit flex flex-col align-center justify-self-center items-center space-y-2">
-          <SuccesfulRecieptIcon />
+        <div className="mt-24   w-fit h-fit flex flex-col align-center justify-center items-center space-y-2">
+          <div>
+            {/* <FailedBookingIcon /><PendingBookingIcon /> */}
+            <SuccesfulBookingIcon />
+          </div>
           <h4
             className={`text-3xl w-fit text-[${primaryColor}] ${secondaryFont.className}`}>
             Booking is {`Successful`}
