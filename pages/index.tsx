@@ -16,7 +16,8 @@ const Banner = styled(FullWidth)`
   background-repeat: no-repeat;
   background-position: center top;
   height: 500px;
-  padding-top: 100px;
+  padding-top: 200px;
+  padding-bottom: 100px;
   &::before {
     content: "";
     background-color: rgba(0, 0, 0, 0.3);
@@ -55,8 +56,10 @@ export default function Home() {
           <TagLine>Travel Way Beyond Your Borders! </TagLine>
           <div className="text-right">
             <Phrase>
-            Explore and seize the ethereal beauty and
-              <br />paradisiacal vibe of the Last Frontier of the Philippines – Palawan.
+              Explore and seize the ethereal beauty and
+              <br />
+              paradisiacal vibe of the Last Frontier of the Philippines –
+              Palawan.
             </Phrase>
           </div>
         </Row>

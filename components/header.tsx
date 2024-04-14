@@ -5,7 +5,7 @@ import Logo from "@assets/images/logo.png";
 import MainNav from "./navs/main";
 import MobileNavs from "./navs/mobile";
 
-const Header = () => {
+const Header = ({ sticky }) => {
   return (
     <Flex w="100%" gap={4} className={`bg-transparent p-4`}>
       <Box p="2" className="flex items-center">
@@ -14,8 +14,8 @@ const Header = () => {
       </Box>
       <Spacer />
       <Center gap="2">
-        <MainNav />
-        <MobileNavs />
+        <MainNav sticky={sticky} />
+        <MobileNavs sticky={sticky} />
       </Center>
     </Flex>
   );
