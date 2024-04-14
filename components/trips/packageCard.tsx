@@ -13,6 +13,7 @@ const PackageCard = ({
   pickup,
   pax = 1,
   price,
+  subTotal,
   onRemove = () => {},
 }) => {
   const [openDialog, closeDialog] = useDialog();
@@ -70,7 +71,7 @@ const PackageCard = ({
       </div>
       <div>
         <p className="mx-auto block space-x-5">
-          <span>₱{pax * price}</span>
+          <span>₱{subTotal}</span>
           <TrashIcon className="cursor-pointer text-red-700" onClick={handleRemove} />
         </p>
       </div>

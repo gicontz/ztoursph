@@ -30,6 +30,7 @@
     "next-auth": "^4.24.5",
     "node-html-parser": "^6.1.12",
     "react": "^18",
+    "react-barcode": "^1.5.1",
     "react-cookie": "^7.1.0",
     "react-dom": "^18",
     "react-hook-form": "^7.49.3",
