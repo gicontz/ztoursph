@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Row } from "@components/commons/common";
-import { fontSize, MainFont, secondaryFont } from "@app/layouts/fonts/fonts";
+import { MainFont, secondaryFont } from "@app/layouts/fonts/fonts";
 import {
   SuccesfulBookingIcon,
   FailedBookingIcon,
@@ -27,7 +27,7 @@ function BookingConfirmation() {
       className={`${MainFont.className} relative flex justify-center align-middle items-center`}>
       <Link
         href={"/"}
-        className={`absolute top-3 left-4 flex items-center hover:opacity-90 hover:underline text-cs-green `}>
+        className={`text-p-clamp absolute top-3 left-4 flex items-center hover:opacity-90 hover:underline text-cs-green `}>
         <ChevronLeftIcon /> Back to homepage
       </Link>
       <div className="h-1/2 flex flex-col items-center space-y-5">
