@@ -8,11 +8,11 @@ import { useTripsContext } from "@providers/trips";
 import { getTrips } from "@app/modules/trips/actions";
 import { useCookies } from "react-cookie";
 import { Added_Trips } from "@constants/added_trips";
+import { classNames } from "@app/utils/helpers";
 
 const Container = styled.div`
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
   color: black;
   padding: 0 10px;
   z-index: 10;
@@ -74,7 +74,6 @@ const NavPanel = styled.ul<{ visible?: boolean }>`
 const Hamburger = styled.div`
   width: 20px;
   height: 2px;
-  background-color: black;
   border-radius: 5px;
   z-index: 20;
   transition: all 0.5s ease;
@@ -84,7 +83,6 @@ const Hamburger = styled.div`
     position: absolute;
     width: 20px;
     height: 2px;
-    background: black;
     border-radius: 5px;
     transition: all 0.5s ease;
   }
@@ -96,7 +94,7 @@ const Hamburger = styled.div`
   }
 `;
 
-const MobileNavs: FunctionComponent = () => {
+const MobileNavs = ({ sticky }) => {
   const [state, setState] = useState({
     toggle: false,
   });
@@ -114,7 +112,7 @@ const MobileNavs: FunctionComponent = () => {
     <Container className="flex lg:hidden">
       <Tooltip label="My Trips">
         <Link href="/trips" className="relative">
-          <MdOutlineAirplaneTicket color="black" size="2em" />
+          <MdOutlineAirplaneTicket color={sticky ? 'black' : 'white'} size="2em" />
           {tripStore.trips.length > 0 && <span className="absolute -right-1 -mt-4 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">{tripStore.trips.length}</span>}
         </Link>
       </Tooltip>
@@ -131,7 +129,7 @@ const MobileNavs: FunctionComponent = () => {
         id="screen1_menu_check"
         onChange={(v) => handleToggle(v.target.checked)}
       />
-      <Hamburger className="hamburger-menu" />
+      <Hamburger className={classNames("hamburger-menu", sticky || state.toggle ? "bg-black [&:after]:bg-black [&:before]:bg-black" : "bg-white [&:after]:bg-white [&:before]:bg-white")} />
       <NavPanel visible={state.toggle}>
         {MENU_LINKS.map(({ label, href }) => (
           <li key={label}>

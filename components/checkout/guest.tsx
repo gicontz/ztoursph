@@ -12,6 +12,7 @@ import { guestSchema } from "@constants/validations/guestList";
 import Input from "@components/commons/input";
 import { v4 as uuid } from "uuid";
 import LOCAL_STORAGE from "@constants/localstorage";
+import { primaryColor, secondaryFont } from "@app/layouts/font/font";
 
 const Font = Poppins({
   weight: "400",
@@ -74,11 +75,18 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
   helperText,
   onChange,
 }) => {
-  const { control, handleSubmit, reset, formState: { errors } } = useForm({
-    resolver: yupResolver(guestSchema)
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(guestSchema),
   });
   const guestsData = localStorage.getItem(LOCAL_STORAGE.guests);
-  const [participantData, setParticipantData] = useState<TGuest[]>(JSON.parse(guestsData ?? "[]"));
+  const [participantData, setParticipantData] = useState<TGuest[]>(
+    JSON.parse(guestsData ?? "[]")
+  );
 
   const deleteName = (index: number) => {
     setParticipantData((prev) => {
@@ -96,22 +104,31 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
     });
     reset();
   };
-  
+
   const fieldErrors = {
     firstName: errors.firstName !== undefined,
     lastName: errors.lastName !== undefined,
     middleInitial: errors.middleInitial !== undefined,
     age: errors.age !== undefined,
     nationality: errors.nationality !== undefined,
-  }
+  };
 
-  const NameList = () => 
+  const NameList = () =>
     participantData.length ? (
       participantData.map((data, index) => (
         <React.Fragment key={`participant-${index}`}>
-          <div className="flex flex-auto items-center justify-center border border-green-50" key={data.id}>
+          <div
+            className="flex flex-auto items-center justify-center border border-green-50"
+            key={data.id}>
             <div className="flex flex-auto text-center">
-              <p className="w-1/3 truncate">{classNames(data.firstName, data.middleInitial, data.lastName, data.suffix && `, ${data.suffix}`)}</p>
+              <p className="w-1/3 truncate">
+                {classNames(
+                  data.firstName,
+                  data.middleInitial,
+                  data.lastName,
+                  data.suffix && `, ${data.suffix}`
+                )}
+              </p>
               <p className="w-1/3">{data.age}</p>
               <p className="w-1/3 truncate">{data.nationality.toUpperCase()}</p>
             </div>
@@ -122,14 +139,14 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
             />
           </div>
         </React.Fragment>
-      ))) : 
-      participantData.length === 0 ? 
-      (<p>No guests added</p>) 
-      : null;
+      ))
+    ) : participantData.length === 0 ? (
+      <p>No guests added</p>
+    ) : null;
 
   return (
     <>
-      <form 
+      <form
         onSubmit={handleSubmit(handleAddParticipantClick)}
         className="w-full flex flex-col gap-4 items-center lg:flex-row lg:space-x-2 lg:gap-0">
         <Controller
@@ -137,7 +154,10 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="firstName"
           render={({ field }) => (
             <Input
-              className={classNames(Font.className, errors.firstName && "border border-red-700")}
+              className={classNames(
+                Font.className,
+                errors.firstName && "border border-red-700"
+              )}
               value={field.value}
               onChange={field.onChange}
               type="text"
@@ -152,15 +172,15 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="middleInitial"
           render={({ field }) => (
             <Input
-            className={Font.className}
-            value={field.value}
-            onChange={field.onChange}
-            maxLength={2}
-            type="text"
-            placeholder="Middle Initial"
-            hasError={fieldErrors.middleInitial}
-            helperText={errors.middleInitial?.message}
-          />
+              className={Font.className}
+              value={field.value}
+              onChange={field.onChange}
+              maxLength={2}
+              type="text"
+              placeholder="Middle Initial"
+              hasError={fieldErrors.middleInitial}
+              helperText={errors.middleInitial?.message}
+            />
           )}
         />
         <Controller
@@ -168,14 +188,14 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="lastName"
           render={({ field }) => (
             <Input
-            className={Font.className}
-            value={field.value}
-            onChange={field.onChange}
-            type="text"
-            placeholder="Last Name"
-            hasError={fieldErrors.lastName}
-            helperText={errors.lastName?.message}
-          />
+              className={Font.className}
+              value={field.value}
+              onChange={field.onChange}
+              type="text"
+              placeholder="Last Name"
+              hasError={fieldErrors.lastName}
+              helperText={errors.lastName?.message}
+            />
           )}
         />
         <Controller
@@ -183,27 +203,30 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="age"
           render={({ field }) => (
             <Input
-            className={Font.className}
-            value={field.value}
-            onChange={field.onChange}
-            type="number"
-            placeholder="Age"
-            hasError={fieldErrors.age}
-            helperText={errors.age?.message}
-          />
+              className={Font.className}
+              value={field.value}
+              onChange={field.onChange}
+              type="number"
+              placeholder="Age"
+              hasError={fieldErrors.age}
+              helperText={errors.age?.message}
+            />
           )}
         />
         <Controller
           control={control}
           name="suffix"
           render={({ field }) => (
-            <Dropdown 
+            <Dropdown
               className="mt-1"
               placeholder="Suffix"
               defaultValue={NameSuffix.None}
               value={field.value}
               onChange={field.onChange}
-              options={NameSuffixValues.map((value) => ({ label: value === NameSuffix.None ? "None" : value, value }))}
+              options={NameSuffixValues.map((value) => ({
+                label: value === NameSuffix.None ? "None" : value,
+                value,
+              }))}
             />
           )}
         />
@@ -212,14 +235,14 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="nationality"
           render={({ field }) => (
             <Input
-            className={Font.className}
-            value={field.value}
-            onChange={field.onChange}
-            type="text"
-            placeholder="Nationality"
-            hasError={fieldErrors.nationality}
-            helperText={errors.nationality?.message}
-          />
+              className={Font.className}
+              value={field.value}
+              onChange={field.onChange}
+              type="text"
+              placeholder="Nationality"
+              hasError={fieldErrors.nationality}
+              helperText={errors.nationality?.message}
+            />
           )}
         />
         <StyledButton type="primary" htmlType="submit" className="!h-10">
@@ -230,7 +253,10 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
         <p className="text-red-700 text-xs font-italized">{helperText}</p>
       )}
       <br />
-      <p className="text-lg font-bold">Guests</p>
+      <p
+        className={`text-lg font-bold ${secondaryFont.className} text-[${primaryColor}]`}>
+        Guests
+      </p>
       <NameList />
     </>
   );

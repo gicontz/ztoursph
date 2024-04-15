@@ -90,7 +90,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
   const handleCalc = async (newData?: TPreCheckout) => {
     try {
       const calculations = await checkoutCalculations(newData);
-      const { data: d} = calculations;
+      const { data: d } = calculations;
       if (d) {
         setCheckoutDetails(d);
         const newCookieData = cookies[Added_Trips].map((e) => ({ ...e, numberOfTraveller: d.subTotals.find((s) => s.id === e.tripId)?.pax ?? e.numberOfTraveller }));
@@ -133,10 +133,13 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       date={e.date}
       pickup={e.pickup}
       // discount={e.discount}
+      subTotal={checkoutDetails?.subTotals.find((s) => s.id === e.tripId)?.subTotal ?? 0}
       price={e.price}
       onRemove={() => handleRemove(e.tripId)}
     />
   ));
+
+  console.log(checkoutDetails);
 
   return (
     <Panel>

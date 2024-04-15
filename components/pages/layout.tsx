@@ -1,10 +1,12 @@
 import { Row } from "@components/commons/common";
 import MainPageFooter from "@components/footer/main-page";
 import Header from "@components/header";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Poppins } from "next/font/google";
 import { InView, useInView } from "react-intersection-observer";
 import CookiesPopUp from "@components/cookies/cookies-popup";
+import { classNames } from "@app/utils/helpers";
+import { useScroll } from "@app/utils/hooks";
 
 const defaultFont = Poppins({
   weight: "400",
@@ -13,14 +15,23 @@ const defaultFont = Poppins({
 
 const Layout = ({ contained = false, children }) => {
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: true });
+  const scrollY = useScroll();
+  const sticky = scrollY >= 50;
 
   return (
     <main
-      className={`relative flex flex-col overflow-x-hidden sm:w-[100%] h-[100vh] App ${defaultFont.className}`}>
+      className={`relative flex flex-col overflow-x-hidden sm:w-[100%] ${defaultFont.className}`}
+    >
       <Row
         ref={ref}
-        className={`top-0 left-0 w-full !max-w-full bg-white ease-in-out duration-300 sticky opacity-1 z-20`}>
-        <Header />
+        className={classNames(
+          "top-0 left-0 w-full !max-w-full ease-in-out duration-300 opacity-1 z-20",
+          sticky
+            ? "bg-white shadow-md fixed"
+            : "bg-transparent text-white absolute"
+        )}
+      >
+        <Header sticky={sticky} />
       </Row>
       <CookiesPopUp />
       {contained ? <div className="grow px-3">{children}</div> : children}

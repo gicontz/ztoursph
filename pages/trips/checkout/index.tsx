@@ -1,4 +1,3 @@
-
 import { Row } from "@components/commons/common";
 import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
@@ -31,7 +30,7 @@ const Container = styled(Row)`
 export default function Checkout() {
   const router = useRouter();
   const [cookies] = useCookies([Added_Trips]);
-  const [ store, dispatch ] = useTours();
+  const [store, dispatch] = useTours();
   const { tripStore, tripDispatch } = useTripsContext();
   const [openDialog, closeDialog] = useDialog();
 
@@ -39,7 +38,7 @@ export default function Checkout() {
   const trips = cookies[Added_Trips] ?? [];
 
   const getTripsData = useCallback(() => {
-    const tripIds = trips.map(({ tripId }) => tripId );
+    const tripIds = trips.map(({ tripId }) => tripId);
     if (tripIds) getTrips(dispatch, tripIds);
   }, [dispatch, trips]);
 
@@ -52,18 +51,31 @@ export default function Checkout() {
       ...t,
       id: t.tripId,
       pax: t.numberOfTraveller,
-      subtotal: ((parseInt(store.trips.find(({ id }) => id === t.tripId)?.price as any, 10)) * t.numberOfTraveller).toString(),
+      subtotal: (
+        parseInt(
+          store.trips.find(({ id }) => id === t.tripId)?.price as any,
+          10
+        ) * t.numberOfTraveller
+      ).toString(),
     }));
   }, [store.trips, trips]);
 
-  const guests = typeof localStorage !== 'undefined' ? 
-  JSON.parse(localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]").map((g) => ({
-      id: g.id,
-      name: classNames(g.firstName, g.middleInitial, g.lastName, g.suffix && `, ${g.suffix}`),
-      age: g.age,
-      nationality: g.nationality,
-  })) : 
-  [];
+  const guests =
+    typeof localStorage !== "undefined"
+      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]").map(
+          (g) => ({
+            id: g.id,
+            name: classNames(
+              g.firstName,
+              g.middleInitial,
+              g.lastName,
+              g.suffix && `, ${g.suffix}`
+            ),
+            age: g.age,
+            nationality: g.nationality,
+          })
+        )
+      : [];
 
   useEffect(() => {
     if (guests.length === 0) {
@@ -84,7 +96,7 @@ export default function Checkout() {
       booked_tours: pricedTrips,
     };
     getItinerary({ content } as any).then((res) => {
-      const newTab = window.open(res.data.blobUrl, '_blank');
+      const newTab = window.open(res.data.blobUrl, "_blank");
       newTab?.focus();
     });
   };
@@ -93,10 +105,10 @@ export default function Checkout() {
     const namedPackages = pricedTrips.map((p) => ({
       ...p,
       participants: p.participants.map((id) => ({
-        ...guests.find((g) => g.id === id)
-      }))
+        ...guests.find((g) => g.id === id),
+      })),
     }));
-    
+
     const payload = {
       userEmail: data.email,
       first_name: data.firstName,
@@ -111,9 +123,9 @@ export default function Checkout() {
     };
 
     openDialog({
-      children: <CreateBooking bookingInfo={payload} onClose={closeDialog} />
+      children: <CreateBooking bookingInfo={payload} onClose={closeDialog} />,
     });
-  }
+  };
 
   return (
     <>
@@ -123,9 +135,10 @@ export default function Checkout() {
         description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
       />
       <Container className={font.className}>
-        <CheckoutForm 
+        <CheckoutForm
           onViewItinerary={handleViewItinerary}
-          onCheckout={handleCheckout}/>
+          onCheckout={handleCheckout}
+        />
       </Container>
     </>
   );

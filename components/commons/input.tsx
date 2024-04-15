@@ -25,10 +25,11 @@ const StyledInput = styled(Int)`
 
 const Input: React.FC<CustomInputProps> = ({ hasError, ...rest }) => {
   return (
-    <div className="w-full h-10">
-      <StyledInput className={classNames(hasError ?
-        "border-red-700" :
-        "!border[#d9d9d9]")} {...rest} />
+    <div className={classNames("w-full", rest.className)}>
+      <StyledInput
+        className={classNames(hasError ? "border-red-700" : "!border[#d9d9d9]")}
+        {...rest}
+      />
       {rest.helperText && (
         <p className="text-red-700 text-xs font-italized">{rest.helperText}</p>
       )}
