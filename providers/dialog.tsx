@@ -88,7 +88,7 @@ const Dialog: FunctionComponent<Props> = ({ children, open, onClose }) => {
 
   return dialogState.open ? (
     <div
-      className="fixed inset-0 z-10 flex items-center justify-center p-0 m-0 border-box w-full h-[100vh] bg-[rgba(0, 0, 0, 0.5)]"
+      className="flex fixed top-0 left-0 z-10 flex items-center justify-center p-0 m-0 border-box w-full h-[100vh] bg-[rgba(0, 0, 0, 0.5)]"
       onClick={handleBackDropClick}>
       <div
         ref={ref}
