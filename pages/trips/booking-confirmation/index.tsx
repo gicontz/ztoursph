@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Row } from "@components/commons/common";
-import {
-  MainFont,
-  primaryColor,
-  secondaryFont,
-} from "@app/layouts/fonts/fonts";
+import { fontSize, MainFont, secondaryFont } from "@app/layouts/fonts/fonts";
 import {
   SuccesfulBookingIcon,
   FailedBookingIcon,
@@ -20,13 +16,18 @@ const Container = styled(Row)`
     // border: blue 1px solid;
   }
   padding: 1rem;
+  font-size: ;
 `;
 
 function BookingConfirmation() {
+  const pdf_link =
+    "https://www.rd.usda.gov/sites/default/files/pdf-sample_0.pdf";
   return (
     <Container
       className={`${MainFont.className} relative flex justify-center align-middle items-center`}>
-      <Link href={"/"} className="absolute top-3 left-4 flex items-center">
+      <Link
+        href={"/"}
+        className={`absolute top-3 left-4 flex items-center hover:opacity-90 hover:underline text-cs-green `}>
         <ChevronLeftIcon /> Back to homepage
       </Link>
       <div className="h-1/2 flex flex-col items-center space-y-5">
@@ -36,11 +37,12 @@ function BookingConfirmation() {
             <SuccesfulBookingIcon />
           </div>
           <h4
-            className={`text-3xl w-fit text-[${primaryColor}] ${secondaryFont.className}`}>
+            className={`text-h4-clamp w-fit text-cs-green break-keep ${secondaryFont.className}`}>
             Booking is {`Successful`}
           </h4>
 
-          <p className={`w-2/3 text-center ${MainFont.className}`}>
+          <p
+            className={`text-p-clamp  w-2/3 text-center ${MainFont.className}`}>
             Booking is successful. Your booking reference is{" "}
             <span className="italic ">{`FE05E27f`}</span> other details will be
             found below.{" "}
@@ -54,11 +56,8 @@ function BookingConfirmation() {
           <Button type="primary">Download</Button>
         </div>
         <div className="w-full">
-          <iframe
-            src="https://drive.google.com/file/d/1Ypo4bVp6dvmr4-s5XlJScgz0l04JlcT7/view"
-            width="100%"
-            height="600px"
-          />
+          {/* #zoom=102 is the pdf width in pdf file s3*/}
+          <iframe src={`${pdf_link}#zoom=102`} width="100%" height="600px" />
         </div>
       </div>
     </Container>
