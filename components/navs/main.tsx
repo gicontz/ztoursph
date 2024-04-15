@@ -24,14 +24,14 @@ const Container = styled.div`
   }
 `;
 
-const MainNav = () => {
+const MainNav = ({ sticky }) => {
   const { tripStore, tripDispatch } = useTripsContext();
   const [cookie] = useCookies([Added_Trips]);
-  
+
   useEffect(() => {
     getTrips(tripDispatch, cookie[Added_Trips] ?? []);
   }, []);
-  
+
   return (
     <Container className="hidden lg:!flex">
       {MENU_LINKS.map(({ label, href }) => (
@@ -41,8 +41,15 @@ const MainNav = () => {
       ))}
       <Tooltip label="My Trips">
         <Link href="/trips" className="relative">
-          <MdOutlineAirplaneTicket color="black" size="2em" />
-          {tripStore.trips.length > 0 && <span className="absolute -right-1 -mt-5 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">{tripStore.trips.length}</span>}
+          <MdOutlineAirplaneTicket
+            color={sticky ? "black" : "white"}
+            size="2em"
+          />
+          {tripStore.trips.length > 0 && (
+            <span className="absolute -right-1 -mt-5 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">
+              {tripStore.trips.length}
+            </span>
+          )}
         </Link>
       </Tooltip>
       {/* <Tooltip label="My Account">
