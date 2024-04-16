@@ -23,11 +23,11 @@ const Panel = styled(Row)`
 export default function Trips() {
   const { tripStore, tripDispatch } = useTripsContext();
   const [cookie] = useCookies([Added_Trips]);
-  
+
   useEffect(() => {
     getTheTrips(tripDispatch, cookie[Added_Trips] ?? []);
   }, []);
-  
+
   const [store, dispatch] = useTours();
 
   useEffect(() => {
@@ -35,15 +35,20 @@ export default function Trips() {
   }, [tripStore.trips]);
 
   const getTripsData = useCallback(() => {
-    const tripIds = tripStore.trips.map(({ tripId }) => tripId );
+    const tripIds = tripStore.trips.map(({ tripId }) => tripId);
     if (tripIds) getTrips(dispatch, tripIds);
-  }, [tripStore.trips]);
+  }, [dispatch, tripStore.trips]);
 
   const myTrips = useMemo(() => {
-    const guestsData = typeof localStorage !== 'undefined' ? localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]" : "[]";
+    const guestsData =
+      typeof localStorage !== "undefined"
+        ? localStorage.getItem(LOCAL_STORAGE.guests) ?? "[]"
+        : "[]";
     const guests: TGuest[] = JSON.parse(guestsData);
     const trips = tripStore.trips.map((trip) => {
-      const ages = trip.participants.map((p) => guests.find(({ id }) => id === p)?.age ?? 0);
+      const ages = trip.participants.map(
+        (p) => guests.find(({ id }) => id === p)?.age ?? 0
+      );
       return {
         ...trip,
         imageUrl: trip.thumbnail,
@@ -51,12 +56,12 @@ export default function Trips() {
         discount: 0,
         numberOfTraveller: trip.numberOfTraveller,
         ages,
-      }
+      };
     });
     return trips.map((t) => ({
       ...t,
-      price: store.trips.find(({ id }) => id === t.tripId )?.price ?? 0,
-    }))
+      price: store.trips.find(({ id }) => id === t.tripId)?.price ?? 0,
+    }));
   }, [tripStore.trips, store.trips]);
 
   const isLoading = store.isLoading && tripStore.isLoading;
@@ -65,7 +70,38 @@ export default function Trips() {
     <Layout>
       <PageTitle title="My Trips" bgImage={BannerImage} />
       <Panel>
-        <TripsTable data={myTrips} isLoading={isLoading}/>
+        <div className="text-base mb-3">
+          <p>
+            <span>***</span> 2yrs old children and below are subject for 50%
+            discount
+          </p>
+          <p>
+            <span>**</span> 3yrs to 6yrs of age children are subject for 20%
+            discount
+          </p>
+          <p>
+            <span>*</span> 7yrs old and above children are considered adult
+            price
+          </p>
+          <p className="font-bold">Discounts are automatically applied</p>
+        </div>
+        <TripsTable data={myTrips} isLoading={isLoading} />
+        <div>
+          <p>
+            For <strong>Senior Citizen and PWDs </strong>
+            <br/>
+            <span>Discounts can be claimed upon arrival</span>
+          </p>
+          <p>
+            Kindly bring your <strong>Valid IDs and log book</strong> as required by the
+            provisions
+          </p>
+          <p>
+            under the Implementing Rules and Regulations of <strong>Republic Act No.
+            9994</strong>
+          </p>
+          <p><strong>For Filipino Citizens only</strong></p>
+        </div>
       </Panel>
     </Layout>
   );

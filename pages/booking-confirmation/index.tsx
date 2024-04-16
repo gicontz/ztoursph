@@ -2,13 +2,37 @@ import PageTitle from "@components/pages/page-title";
 import React from "react";
 import BannerImage from "@assets/images/banner.jpg";
 import Layout from "@components/pages/layout";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getBookingInfo } from "@app/services/booking";
 import Loading from "@components/commons/loading";
 import Barcode from "react-barcode";
 import { format } from "date-fns";
 import { classNames } from "@app/utils/helpers";
 import Button from "@components/commons/button";
+import { Breadcrumb } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import LOCAL_STORAGE from "@constants/localstorage";
+import { useRouter } from "next/router";
+import { getPayments } from "@app/services/checkout";
+import { TPaymentData } from "@app/modules/checkout/types";
+import { PAYMENT_REDIRECT } from "@constants/nav";
+
+const breadCrumbItems = [
+  {
+    title: (
+      <Link href="/">
+        <HomeOutlined />
+      </Link>
+    ),
+  },
+  {
+    title: <Link href="/my-bookings">My Bookings</Link>,
+  },
+  {
+    title: "Booking Confirmation",
+  },
+];
 
 export default function BookingConfirmation() {
   // const bookingId = '05b915f4-fd5d-41f9-8ef7-5c392629f4ca'; // UNPAID
@@ -76,6 +100,10 @@ export default function BookingConfirmation() {
                 Contact Number: {mainGuest.mobile_number1}
               </p>
             </div>
+            <iframe
+              src={`${bookingDetails.itineraryUri}`}
+              className="w-full my-3 h-[800px]"
+            />
           </div>
         </div>
       )}
