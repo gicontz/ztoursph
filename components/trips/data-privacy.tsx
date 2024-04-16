@@ -28,6 +28,9 @@ const content = {
     "The Company reserves the right to amend this Agreement at any time. Any amendments shall be effective upon posting of the revised Agreement on the Company's website.",
 };
 
+const ValueOfEmptyCanvas =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC";
+
 const DataPrivacyPopup = () => {
   const [openSignature, setOpenSignature] = useState(false);
   const [identifySignature, setIdentifySignature] = useState({
@@ -55,22 +58,26 @@ const DataPrivacyPopup = () => {
   };
 
   const handleSaveSignature = () => {
-    setIdentifySignature((prev) => ({
-      ...prev,
-      signature_src: signatureCanvas.current
-        .getTrimmedCanvas()
-        .toDataURL("image/png"),
-    }));
-    setOpenSignature(false);
+    if (
+      signatureCanvas.current.getTrimmedCanvas().toDataURL("image/png") !==
+      ValueOfEmptyCanvas
+    ) {
+      setIdentifySignature((prev) => ({
+        ...prev,
+        signature_src: signatureCanvas.current
+          .getTrimmedCanvas()
+          .toDataURL("image/png"),
+      }));
+      setOpenSignature(false);
+    }
   };
 
   const handleClearSignature = () => {
     signatureCanvas.current.clear();
   };
-
   return !openSignature ? (
     <div
-      className={`flex flex-col space-y-3 m-auto p-5 h-54 w-[30rem] ${MainFont.className}`}>
+      className={`flex flex-col space-y-3 m-auto p-5 h-54 w-full ${MainFont.className}`}>
       <h3 className={`${headerStyle} text-3xl `}>Data Privacy Agreement</h3>
       <div className="text-sm">
         This Data Privacy Agreement (&quot;Agreement&quot;) is entered into as
@@ -116,7 +123,7 @@ const DataPrivacyPopup = () => {
     </div>
   ) : (
     <div
-      className={`relative flex flex-col space-y-3 m-auto my-3 p-5 h-fit w-[30rem] ${MainFont.className}`}>
+      className={`relative flex flex-col space-y-3 m-auto my-3 p-5 h-fit w-full ${MainFont.className}`}>
       <div
         className={`absolute top-2 right-2 text-scheme-green flex justify-end items-center ${secondaryFont.className}}`}
         onClick={() => setOpenSignature(false)}>
@@ -131,14 +138,16 @@ const DataPrivacyPopup = () => {
         ref={signatureCanvas}
         penColor="black"
         canvasProps={{
-          width: 500,
-          height: 150,
+          width: window.innerWidth / signatureCanvas.width,
+          height: window.innerHeight / signatureCanvas.height,
           className: "sigCanvas border w-full",
         }}
       />
       <div className="flex space-x-3 justify-end">
-        <p onClick={handleSaveSignature}>Save</p>
-        <p onClick={handleClearSignature}> Clear</p>
+        <Button onClick={handleClearSignature}> Clear</Button>
+        <Button type="primary" onClick={handleSaveSignature}>
+          Save
+        </Button>
       </div>
     </div>
   );
