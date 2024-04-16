@@ -68,7 +68,7 @@ export default function BookingConfirmation() {
         paymentType: "CREDIT CARD",
         redirectUrl: {
           success: redirectUrl,
-          failed: redirectUrl,
+          failure: redirectUrl,
           cancel: redirectUrl,
         },
       },

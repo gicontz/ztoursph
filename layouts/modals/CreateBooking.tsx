@@ -2,11 +2,13 @@ import { TCreateBooking, TPaymentData } from "@app/modules/checkout/types";
 import { createBooking, getPayments } from "@app/services/checkout";
 import Button from "@components/commons/button";
 import Loading from "@components/commons/loading";
+import { Added_Trips } from "@constants/added_trips";
 import LOCAL_STORAGE from "@constants/localstorage";
 import { PAYMENT_REDIRECT } from "@constants/nav";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 interface Props {
   bookingInfo: TCreateBooking;
@@ -27,11 +29,13 @@ export const getStaticProps = async () => {
 
 const CreateBooking = ({ bookingInfo, onClose }: Props) => {
   const [data, setData] = useState<any>(null);
+  const [_, __, removeCookie] = useCookies([Added_Trips]);
 
   const handleCreateBooking = (d) => {
     setData(d);
     localStorage.setItem(LOCAL_STORAGE.bookingId, d.data.id);
     localStorage.setItem(LOCAL_STORAGE.email, d.data.user.email);
+    removeCookie(Added_Trips);
   };
 
   const { mutate, isPending } = useMutation({
@@ -64,7 +68,7 @@ const CreateBooking = ({ bookingInfo, onClose }: Props) => {
         paymentType: "CREDIT CARD",
         redirectUrl: {
           success: redirectUrl,
-          failed: redirectUrl,
+          failure: redirectUrl,
           cancel: redirectUrl,
         },
       },
