@@ -94,7 +94,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
 
   const DataPrivacyPopUp = () => {
     openDataPrivacy({
-      children: <DataPrivacyPopup />,
+      children: <DataPrivacyPopup onCloseItself={() => closeDataPrivacy()} />,
     });
   };
 

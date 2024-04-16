@@ -101,7 +101,7 @@ export default function BookingConfirmation() {
               </p>
             </div>
             <iframe
-              src={`${bookingDetails.itineraryUri}`}
+              src={`${data.bookingDetails.itineraryUri}`}
               className="w-full my-3 h-[800px]"
             />
           </div>

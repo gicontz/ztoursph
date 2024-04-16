@@ -1,7 +1,9 @@
 import { MainFont, secondaryFont } from "@app/layouts/font/font";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import Button from "@components/commons/button";
-import React, { useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useEffect, useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
 const headerStyle = `font-bold text-xl text-cs-green text-scheme-green text-justify  ${secondaryFont.className}`;
@@ -31,11 +33,19 @@ const content = {
 const ValueOfEmptyCanvas =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC";
 
-const DataPrivacyPopup = () => {
+const DataPrivacyPopup = ({ onCloseItself }) => {
+  const route = useRouter();
   const [openSignature, setOpenSignature] = useState(false);
   const [identifySignature, setIdentifySignature] = useState({
     signature_src: undefined,
   });
+
+  useEffect(() => {
+    if (route.pathname !== "/trips") {
+      onCloseItself();
+    }
+  }, [route.pathname]);
+
   const signatureCanvas = useRef() as any;
   const styledContent = Object.entries(content).map(
     ([title, description], i) => {
@@ -74,6 +84,11 @@ const DataPrivacyPopup = () => {
 
   const handleClearSignature = () => {
     signatureCanvas.current.clear();
+  };
+
+  const handleOnProceed = () => {
+    setOpenSignature(false);
+    route.push("/trips/checkout");
   };
   return !openSignature ? (
     <div
@@ -116,7 +131,8 @@ const DataPrivacyPopup = () => {
         </template>
         <Button
           type="primary"
-          disabled={identifySignature.signature_src === undefined}>
+          disabled={identifySignature.signature_src === undefined}
+          onClick={handleOnProceed}>
           I agree and Continue
         </Button>
       </div>
