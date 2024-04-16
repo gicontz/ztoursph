@@ -85,13 +85,16 @@ export default function Checkout() {
   }, [guests]);
 
   const handleViewItinerary = (data) => {
+    const mobileNumber1 = `${data.mobileNumber1.countryCode}-${data.mobileNumber1.number}`;
+    const mobileNumber2 = `${data.mobileNumber2.countryCode}-${data.mobileNumber2.number}`;
+
     const content = {
       ...data,
       referenceNumber: "PENDING",
       booking_date: new Date().toISOString(),
       age: getAge(data.birthday),
-      mobileNumber1: parseInt(data.mobileNumber1),
-      mobileNumber2: parseInt(data.mobileNumber2),
+      mobileNumber1: mobileNumber1,
+      mobileNumber2: mobileNumber2,
       guests,
       booked_tours: pricedTrips,
     };

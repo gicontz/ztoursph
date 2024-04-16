@@ -17,6 +17,8 @@ const Layout = ({ contained = false, children }) => {
   const { ref, inView } = useInView({ threshold: 0, triggerOnce: true });
   const scrollY = useScroll();
   const sticky = scrollY >= 50;
+  const isHome =
+    typeof window !== "undefined" && window.location.pathname === "/";
 
   return (
     <main
@@ -26,12 +28,14 @@ const Layout = ({ contained = false, children }) => {
         ref={ref}
         className={classNames(
           "top-0 left-0 w-full !max-w-full ease-in-out duration-300 opacity-1 z-20",
-          sticky
-            ? "bg-white shadow-md fixed"
-            : "bg-transparent text-white absolute"
+          isHome
+            ? sticky
+              ? "bg-white shadow-md fixed"
+              : "bg-transparent text-white absolute"
+            : "bg-white"
         )}
       >
-        <Header sticky={sticky} />
+        <Header sticky={sticky || !isHome} />
       </Row>
       <CookiesPopUp />
       {contained ? <div className="grow px-3">{children}</div> : children}
