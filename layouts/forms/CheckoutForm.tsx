@@ -201,9 +201,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <TelephoneInput
                 type="number"
                 placeholder="Mobile Number 1"
-                onGetNumber={(d) => {
-                  if (d.countryCode && d.number) field.onChange(d);
-                }}
+                onGetNumber={field.onChange}
                 maxLength={10}
                 hasError={errors?.mobileNumber1 !== undefined}
                 helperText={
@@ -223,9 +221,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <TelephoneInput
                 type="number"
                 placeholder="Mobile Number 2"
-                onGetNumber={(d) => {
-                  if (d.countryCode && d.number) field.onChange(d);
-                }}
+                onGetNumber={field.onChange}
                 maxLength={10}
                 hasError={errors?.mobileNumber2 !== undefined}
                 helperText={

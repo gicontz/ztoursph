@@ -170,7 +170,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
         <Form onSubmit={handleSubmit(onSubmitFunc)}>
           <LabelHeader>
             <h3>Date of {type}</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>
+              Your tour date, booking within the day is possible but subject for
+              the availability of boats.
+            </p>
+            <p className="-mt-1">
+              To ensure your booking, please book at least 3 days before your
+              desired date.
+            </p>
           </LabelHeader>
           <Controller
             name="date"
@@ -204,7 +211,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
               list&nbsp;
               <span
                 className="text-xs font-bold text-blue-400 cursor-pointer hover:opacity-70 active:opacity-50"
-                onClick={() => setManageGuest(true)}>
+                onClick={() => setManageGuest(true)}
+              >
                 here
               </span>
             </p>
@@ -226,7 +234,18 @@ const BookingForm: React.FC<BookingFormProps> = ({
           <StyledDivider />
           <LabelHeader>
             <h3>Pick up location</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>
+              Set your pickup location, if for tours kindly indicate your hotel
+              or accommodation name.
+            </p>
+            <p className="-mt-1">
+              For transportations, you can indicate your hotel name or just
+              follow instructions from the above details
+            </p>
+            <p className="-mt-1 text-red-500">
+              <strong><em>Disclaimer: </em></strong>
+              Long distanced pick-up locations may have additional charges. You&#x2019;ll be charged separately for this.
+            </p>
           </LabelHeader>
           <Controller
             name="locationPickUp"

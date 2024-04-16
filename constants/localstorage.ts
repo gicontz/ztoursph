@@ -1,6 +1,8 @@
 
 const LOCAL_STORAGE = {
-    guests: 'guests'
+    guests: 'guests',
+    email: 'email',
+    bookingId: 'bookingId',
 };
 
 export default LOCAL_STORAGE;
