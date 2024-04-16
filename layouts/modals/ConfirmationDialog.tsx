@@ -19,7 +19,7 @@ const ConfirmationDialog: React.FC<Props> = ({
     onCancel = () => {},
 }) => {
     return (
-        <div className="flex flex-col shadow p-4 rounded-lg">
+        <div className="flex flex-col shadow p-4 rounded-lg w-full max-w-[350px] mx-auto">
             <h4 className="text-lg font-bold mb-1">{title}</h4>
             <div>
                 <p>{message}</p>
