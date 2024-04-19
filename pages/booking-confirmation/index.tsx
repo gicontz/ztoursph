@@ -36,6 +36,7 @@ const breadCrumbItems = [
 
 export default function BookingConfirmation() {
   const router = useRouter();
+  console.log(router.query.id);
   const bookingId: string =
     (router.query.id as string) ??
     (typeof localStorage !== "undefined" &&
@@ -133,7 +134,7 @@ export default function BookingConfirmation() {
             </div>
             <div className="flex flex-col justify-center text-center">
               <QRCode
-                value={`${typeof window !== "undefined" ? window.location.href : ""}/?id=${bookingDetails.reference_id}`}
+                value={`${typeof window !== "undefined" ? window.location.href : ""}/?id=${bookingDetails.id}`}
               />
               <h4 className="text-lg font-bold mt-3">
                   {bookingDetails.reference_id.toUpperCase()}
