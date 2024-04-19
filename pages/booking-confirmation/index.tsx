@@ -92,7 +92,7 @@ export default function BookingConfirmation() {
       ) : data?.data ? (
         <div className="p-8 w-full max-w-[1400px] mx-auto">
           <Breadcrumb items={breadCrumbItems} />
-          <div className="flex justify-between my-5">
+          <div className="flex justify-between my-5 text-center flex-col-reverse flex-col lg:flex-row lg:text-left">
             <div className="flex flex-col">
               <h2
                 className={classNames(
@@ -134,6 +134,7 @@ export default function BookingConfirmation() {
             </div>
             <div className="flex flex-col justify-center text-center">
               <QRCode
+                className="mx-auto lg:mx-0"
                 value={`${typeof window !== "undefined" ? window.location.origin : ""}${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
               />
               <h4 className="text-lg font-bold mt-3">
