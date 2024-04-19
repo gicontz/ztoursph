@@ -134,7 +134,7 @@ export default function BookingConfirmation() {
             </div>
             <div className="flex flex-col justify-center text-center">
               <QRCode
-                value={`${typeof window !== "undefined" ? AppRoutes.BOOKING_CONFIRMATION : ""}?id=${bookingDetails.id}`}
+                value={`${typeof window !== "undefined" ? window.location.origin : ""}${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
               />
               <h4 className="text-lg font-bold mt-3">
                   {bookingDetails.reference_id.toUpperCase()}
