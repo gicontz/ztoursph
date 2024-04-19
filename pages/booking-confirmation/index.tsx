@@ -16,7 +16,7 @@ import LOCAL_STORAGE from "@constants/localstorage";
 import { useRouter } from "next/router";
 import { getPayments } from "@app/services/checkout";
 import { TPaymentData } from "@app/modules/checkout/types";
-import { PAYMENT_REDIRECT } from "@constants/nav";
+import { AppRoutes, PAYMENT_REDIRECT } from "@constants/nav";
 
 const breadCrumbItems = [
   {
@@ -134,7 +134,7 @@ export default function BookingConfirmation() {
             </div>
             <div className="flex flex-col justify-center text-center">
               <QRCode
-                value={`${typeof window !== "undefined" ? window.location.href : ""}/?id=${bookingDetails.id}`}
+                value={`${typeof window !== "undefined" ? AppRoutes.BOOKING_CONFIRMATION : ""}?id=${bookingDetails.id}`}
               />
               <h4 className="text-lg font-bold mt-3">
                   {bookingDetails.reference_id.toUpperCase()}

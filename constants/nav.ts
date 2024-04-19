@@ -29,4 +29,15 @@ export const MENU_LINKS = [
   },
 ];
 
+export enum AppRoutes {
+  HOME = "/",
+  TOURS = "/tours",
+  PACKAGES = "/packages",
+  DEALS_PROMOS = "/deals-promos",
+  SERVICES = "/services",
+  ABOUT_US = "/about-us",
+  CONTACT_US = "/contact-us",
+  BOOKING_CONFIRMATION = "/booking-confirmation",
+}
+
 export const PAYMENT_REDIRECT =  "/booking-confirmation";
