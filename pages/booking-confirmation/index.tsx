@@ -5,7 +5,7 @@ import Layout from "@components/pages/layout";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getBookingInfo } from "@app/services/booking";
 import Loading from "@components/commons/loading";
-import Barcode from "react-barcode";
+import QRCode from "react-qr-code";
 import { format } from "date-fns";
 import { classNames } from "@app/utils/helpers";
 import Button from "@components/commons/button";
@@ -40,6 +40,7 @@ export default function BookingConfirmation() {
     (router.query.id as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.bookingId));
+      console.log(bookingId)
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => getBookingInfo(bookingId),
@@ -90,7 +91,7 @@ export default function BookingConfirmation() {
       ) : data?.data ? (
         <div className="p-8 w-full max-w-[1400px] mx-auto">
           <Breadcrumb items={breadCrumbItems} />
-          <div className="flex items-center justify-between my-5">
+          <div className="flex justify-between my-5">
             <div className="flex flex-col">
               <h2
                 className={classNames(
@@ -110,7 +111,7 @@ export default function BookingConfirmation() {
                   { style: "currency", currency: "PHP" }
                 )}
               </h4>
-              <h4>
+              <h4 className="text-lg">
                 Booking Reference:&nbsp;
                 <span className="font-bold">
                   {bookingDetails.reference_id.toUpperCase()}
@@ -131,12 +132,11 @@ export default function BookingConfirmation() {
               )}
             </div>
             <div className="flex flex-col justify-center text-center">
-              <Barcode
-                value={bookingDetails.reference_id}
-                displayValue={false}
+              <QRCode
+                value={`${typeof window !== "undefined" ? window.location.href : ""}/?id=${bookingDetails.reference_id}`}
               />
-              <h4 className="text-base font-bold">
-                {bookingDetails.reference_id.toUpperCase()}
+              <h4 className="text-lg font-bold mt-3">
+                  {bookingDetails.reference_id.toUpperCase()}
               </h4>
             </div>
           </div>
