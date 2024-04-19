@@ -1,5 +1,5 @@
 import PageTitle from "@components/pages/page-title";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BannerImage from "@assets/images/banner.jpg";
 import Layout from "@components/pages/layout";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,6 +17,14 @@ import { useRouter } from "next/router";
 import { getPayments } from "@app/services/checkout";
 import { TPaymentData } from "@app/modules/checkout/types";
 import { AppRoutes, PAYMENT_REDIRECT } from "@constants/nav";
+import { PDFFile } from "@app/layouts/pdfs/booking";
+import dynamic from "next/dynamic";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
+
+const BookingPdf = dynamic(() => import("@app/layouts/pdfs/booking"), {
+  ssr: false,
+});
 
 const breadCrumbItems = [
   {
@@ -35,13 +43,13 @@ const breadCrumbItems = [
 ];
 
 export default function BookingConfirmation() {
+  const [file, setFile] = useState<PDFFile>(null);
   const router = useRouter();
-  console.log(router.query.id);
+
   const bookingId: string =
     (router.query.id as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.bookingId));
-      console.log(bookingId)
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => getBookingInfo(bookingId),
@@ -83,6 +91,12 @@ export default function BookingConfirmation() {
       mutationFn: (param: { paymentData: TPaymentData }) => getPayments(param),
       onSuccess: (d) => processPayment(d),
     });
+
+  useEffect(() => {
+    if (data && data.data?.itineraryUri) {
+      setFile(data.data?.itineraryUri);
+    }
+  }, [data]);
 
   return (
     <Layout>
@@ -131,14 +145,26 @@ export default function BookingConfirmation() {
                   PAY NOW
                 </Button>
               )}
+              <a
+                className="mt-2"
+                href={file as string}
+                target="_blank"
+                download="itinerary.pdf"
+              >
+                <Button type="primary" className="w-full">
+                  Download Itinerary
+                </Button>
+              </a>
             </div>
             <div className="flex flex-col justify-center text-center">
               <QRCode
                 className="mx-auto lg:mx-0"
-                value={`${typeof window !== "undefined" ? window.location.origin : ""}${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
+                value={`${
+                  typeof window !== "undefined" ? window.location.origin : ""
+                }${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
               />
               <h4 className="text-lg font-bold mt-3">
-                  {bookingDetails.reference_id.toUpperCase()}
+                {bookingDetails.reference_id.toUpperCase()}
               </h4>
             </div>
           </div>
@@ -158,10 +184,8 @@ export default function BookingConfirmation() {
               </p>
             </div>
           </div>
-          <iframe
-          src={`${bookingDetails.itineraryUri}`}
-          className="w-full my-3 h-[800px]"
-          />
+
+          <BookingPdf file={file} />
         </div>
       ) : (
         <div className="p-8 w-full max-w-[1400px] mx-auto">
