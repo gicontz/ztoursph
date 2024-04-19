@@ -36,10 +36,12 @@ const breadCrumbItems = [
 
 export default function BookingConfirmation() {
   const router = useRouter();
+  console.log(router.query.id);
   const bookingId: string =
     (router.query.id as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.bookingId));
+  console.log(bookingId);
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => getBookingInfo(bookingId),
@@ -47,13 +49,47 @@ export default function BookingConfirmation() {
 
   const paymentStatus = data?.data?.paymentStatus;
   const mainGuest = data?.data?.mainGuest;
+  const bookingDetails = data?.data;
+
+  const redirectUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}${PAYMENT_REDIRECT}`
+      : "";
+
+  const processPayment = (d: { data: { redirectUrl: string } }) => {
+    window.location.href = d.data.redirectUrl;
+  };
+
+  const handlePay = () => {
+    mutatePayment({
+      paymentData: {
+        bookingId: bookingDetails.id,
+        amount: bookingDetails.total_amt,
+        userId: mainGuest.id,
+        status: "PENDING",
+        paymentType: "CREDIT CARD",
+        redirectUrl: {
+          success: redirectUrl,
+          failure: redirectUrl,
+          cancel: redirectUrl,
+        },
+      },
+    });
+  };
+
+  const { mutate: mutatePayment, isPending: preparePaymentLoading } =
+    useMutation({
+      mutationKey: ["payNow"],
+      mutationFn: (param: { paymentData: TPaymentData }) => getPayments(param),
+      onSuccess: (d) => processPayment(d),
+    });
 
   return (
     <Layout>
       <PageTitle title="Booking Confirmation" bgImage={BannerImage} />
       {isLoading ? (
         <Loading />
-      ) : (
+      ) : data?.data ? (
         <div className="p-8 w-full max-w-[1400px] mx-auto">
           <Breadcrumb items={breadCrumbItems} />
           <div className="flex justify-between my-5 text-center flex-col-reverse flex-col lg:flex-row lg:text-left">
@@ -75,17 +111,23 @@ export default function BookingConfirmation() {
                   { style: "currency", currency: "PHP" }
                 )}
               </h4>
-              <h4>
+              <h4 className="text-lg">
                 Booking Reference:&nbsp;
                 <span className="font-bold">
-                  {data.data.reference_id.toUpperCase()}
+                  {bookingDetails.reference_id.toUpperCase()}
                 </span>
               </h4>
               <h4 className="text-gray-500">
-                Booking Date: {format(data.data.created_date, "MMM dd, yyyy")}
+                Booking Date:{" "}
+                {format(bookingDetails.created_date, "MMM dd, yyyy")}
               </h4>
-              {paymentStatus !== "PAID" && (
-                <Button type="primary">PAY NOW</Button>
+              {paymentStatus !== "PAID" && paymentStatus !== "CANCELED" && (
+                <Button
+                  type="primary"
+                  onClick={handlePay}
+                  loading={preparePaymentLoading}>
+                  PAY NOW
+                </Button>
               )}
             </div>
             <div className="flex flex-col justify-center text-center">
@@ -95,7 +137,7 @@ export default function BookingConfirmation() {
                   typeof window !== "undefined" ? window.location.origin : ""
                 }${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
               />
-              <h4 className="text-base font-bold">
+              <h4 className="text-lg font-bold mt-3">
                 {bookingDetails.reference_id.toUpperCase()}
               </h4>
             </div>
@@ -115,11 +157,15 @@ export default function BookingConfirmation() {
                 Contact Number: {mainGuest.mobile_number1}
               </p>
             </div>
-            <iframe
-              src={`${data.bookingDetails.itineraryUri}`}
-              className="w-full my-3 h-[800px]"
-            />
           </div>
+          <iframe
+            src={`${bookingDetails.itineraryUri}`}
+            className="w-full my-3 h-[800px]"
+          />
+        </div>
+      ) : (
+        <div className="p-8 w-full max-w-[1400px] mx-auto">
+          <h2>Booking not found</h2>
         </div>
       )}
     </Layout>
