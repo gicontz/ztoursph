@@ -159,7 +159,8 @@ const StyledLink = styled(Link)`
 const MainPageFooter = () => {
   const { handleSubmit, control } = useForm();
 
-  const onSubmit: SubmitHandler<{ email: string }> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<{ email: string }> = (data) =>
+    console.log(data);
 
   return (
     <FooterContainer>
@@ -172,7 +173,7 @@ const MainPageFooter = () => {
             </li>
             <li>
               <StyledLink href="/faq">FAQ</StyledLink>
-          </li>
+            </li>
             <li>
               <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
             </li>
@@ -182,10 +183,26 @@ const MainPageFooter = () => {
         <Contents>
           <HeaderText>Tours</HeaderText>
           <ul>
-            <li><StyledLink href="/packages/expedition-tour">Expedition Tour</StyledLink></li>
-            <li><StyledLink href="/tours/el-nido-island-hopping-tour-a">Elnido Island Hopping Tour A</StyledLink></li>
-            <li><StyledLink href="/tours/el-nido-island-hopping-tour-b">Elnido Island Hopping Tour B</StyledLink></li>
-            <li><StyledLink href="/tours/el-nido-island-hopping-tour-c">Elnido Island Hopping Tour C</StyledLink></li>
+            <li>
+              <StyledLink href="/packages/expedition-tour">
+                Expedition Tour
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink href="/tours/el-nido-island-hopping-tour-a">
+                Elnido Island Hopping Tour A
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink href="/tours/el-nido-island-hopping-tour-b">
+                Elnido Island Hopping Tour B
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink href="/tours/el-nido-island-hopping-tour-c">
+                Elnido Island Hopping Tour C
+              </StyledLink>
+            </li>
           </ul>
         </Contents>
 
@@ -205,7 +222,9 @@ const MainPageFooter = () => {
         <Contents>
           <HeaderText>Contact</HeaderText>
           <ul>
-            <li><StyledLink href="/contact-us">Contact us</StyledLink></li>
+            <li>
+              <StyledLink href="/contact-us">Contact us</StyledLink>
+            </li>
           </ul>
         </Contents>
       </PanelContents>
@@ -214,7 +233,9 @@ const MainPageFooter = () => {
         <HeaderText>Sign-up to our Newsletter</HeaderText>
         <div>
           <p>
-          Hola! If you want to get updated and catch the latest offers of ZTours.ph, just type your email and shoot it by clicking the &quot;Submit&quot; button.
+            Hola! If you want to get updated and catch the latest offers of
+            ZTours.ph, just type your email and shoot it by clicking the
+            &quot;Submit&quot; button.
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
@@ -223,7 +244,7 @@ const MainPageFooter = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  className="h-10"
+                  className="h-10 text-base lg:text-lg"
                   placeholder="ztoursph@gmail.com"
                   type="email"
                 />

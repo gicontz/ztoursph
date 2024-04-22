@@ -222,17 +222,28 @@ const Contact = () => {
                 <Form onSubmit={handleSubmit(handleMessage)}>
                   <Label {...register("name")}>
                     <p>Name</p>
-                    <InputStyled id="name" type="text" />
+                    <InputStyled
+                      className="text-base lg:text-lg"
+                      id="name"
+                      type="text"
+                    />
                   </Label>
                   <Label {...register("email")}>
                     <p>Email</p>
-                    <InputStyled id="email" type="email" />
+                    <InputStyled
+                      className="text-base lg:text-lg"
+                      id="email"
+                      type="email"
+                    />
                   </Label>
                   <Label {...register("message")}>
                     <p>Message</p>
-                    <TextAreaStyled id="message" rows={5} />
+                    <TextAreaStyled
+                      className="text-base lg:text-lg"
+                      id="message"
+                      rows={5}
+                    />
                   </Label>
-                  <Label></Label>
                   <SubmitButton htmlType="submit" type="primary">
                     Send Message
                   </SubmitButton>

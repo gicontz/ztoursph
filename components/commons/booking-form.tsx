@@ -188,7 +188,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                 <DatePicker
                   hasError={errors?.date !== undefined}
                   onChange={field.onChange}
-                  className="expand"
+                  className="expand text-base lg:text-lg"
                   placeholder="Select Date and Time"
                   showNow={false}
                   showToday={false}
@@ -211,8 +211,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               list&nbsp;
               <span
                 className="text-xs font-bold text-blue-400 cursor-pointer hover:opacity-70 active:opacity-50"
-                onClick={() => setManageGuest(true)}
-              >
+                onClick={() => setManageGuest(true)}>
                 here
               </span>
             </p>
@@ -225,7 +224,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               <Dropdown
                 mode="multiple"
                 onChange={field.onChange}
-                className="w-full"
+                className="w-full text-base lg:text-lg"
                 options={options}
               />
             )}
@@ -243,8 +242,11 @@ const BookingForm: React.FC<BookingFormProps> = ({
               follow instructions from the above details
             </p>
             <p className="-mt-1 text-red-500">
-              <strong><em>Disclaimer: </em></strong>
-              Long distanced pick-up locations may have additional charges. You&#x2019;ll be charged separately for this.
+              <strong>
+                <em>Disclaimer: </em>
+              </strong>
+              Long distanced pick-up locations may have additional charges.
+              You&#x2019;ll be charged separately for this.
             </p>
           </LabelHeader>
           <Controller
@@ -255,6 +257,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               <CustomDropDown
                 hasError={errors.locationPickUp !== undefined}
                 helperText={errors.locationPickUp?.message}
+                className="text-base lg:text-lg"
                 onChange={field.onChange}
                 placeholder="Enter pick-up location"
                 buttonName="Add location"

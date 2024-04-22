@@ -67,10 +67,7 @@ export default function MainPageBooking() {
     },
   });
 
-  const numberOfTours = data?.pages.reduce(
-    (a, d) => d.records?.length + a,
-    0
-  );
+  const numberOfTours = data?.pages.reduce((a, d) => d.records?.length + a, 0);
   const totalTours = data?.pages[0].totalRecords;
   const records = data?.pages.map(({ records }) => records);
 
@@ -115,7 +112,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <DropdownShowcase
-                className="!h-14 w-80"
+                className="!h-14 w-80 text-base lg:text-lg"
                 onChange={field.onChange as any}
                 showSearch
                 hasError={formState.errors.packages !== undefined}
@@ -135,6 +132,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <RangePickerComponent
+                className="text-base lg:text-lg"
                 hasError={formState.errors.date !== undefined}
                 onChange={field.onChange}
               />
@@ -147,7 +145,7 @@ export default function MainPageBooking() {
             render={({ field }) => (
               <AutoComplete
                 onChange={field.onChange}
-                className="w-10"
+                className="w-10 text-base lg:text-lg"
                 hasError={formState.errors.pax !== undefined}
                 options={optionTravellers}
                 placeholder="Travellers"
