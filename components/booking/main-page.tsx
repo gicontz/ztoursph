@@ -29,14 +29,9 @@ const ContainerCard = styled.div`
   @media screen and (max-width: 821px) {
     width: 100%;
     border-radius: 0;
+    box-shadow: none;
     transform: translate(0%, 0%);
-  }
-
-  @media screen and (max-width: 821px) {
     flex-wrap: wrap;
-  }
-
-  @media screen and (max-width: 821px) {
     input,
     button,
     .ant-select-selector,
