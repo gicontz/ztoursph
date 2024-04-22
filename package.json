@@ -37,11 +37,8 @@
     "react-hook-form": "^7.49.3",
     "react-icons": "^5.0.1",
     "react-intersection-observer": "^9.8.0",
-<<<<<<< HEAD
     "react-signature-canvas": "^1.0.6",
-=======
     "react-pdf": "^7.7.1",
->>>>>>> ea640355887e9c8a71a54ed3f2b184f8685ecfa0
     "react-qr-code": "^2.0.12",
     "uuid": "^9.0.1",
     "yup": "1.3.3"
