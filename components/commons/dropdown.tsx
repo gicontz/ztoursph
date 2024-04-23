@@ -54,7 +54,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <React.Fragment>
       <SelectWrapper
-        className={classNames("h-10 text-base", className)}
+        className={classNames("h-10 !text-base !lg:text-lg", className)}
         hasError={hasError}
         icon={prefixIcon ? true : false}>
         {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}

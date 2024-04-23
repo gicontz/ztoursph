@@ -39,6 +39,7 @@ const CheckInOut: React.FC<CheckInOutProps> = ({
   return (
     <React.Fragment>
       <CheckInOutPicker
+        className="!text-base !lg:text-lg"
         hasError={hasError}
         {...rest}
         disabledDate={disabledDate}

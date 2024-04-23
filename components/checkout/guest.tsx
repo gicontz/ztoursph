@@ -150,7 +150,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           render={({ field }) => (
             <Input
               className={classNames(
-                `${MainFont.className} text-base lg:text-lg`,
+                `${MainFont.className} text-base`,
                 errors.firstName && "border border-red-700"
               )}
               value={field.value}
@@ -167,7 +167,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="middleInitial"
           render={({ field }) => (
             <Input
-              className={`${MainFont.className} text-base lg:text-lg`}
+              className={`${MainFont.className} text-base`}
               value={field.value}
               onChange={field.onChange}
               maxLength={2}
@@ -183,7 +183,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="lastName"
           render={({ field }) => (
             <Input
-              className={`${MainFont.className} text-base lg:text-lg`}
+              className={`${MainFont.className} text-base`}
               value={field.value}
               onChange={field.onChange}
               type="text"
@@ -198,7 +198,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="age"
           render={({ field }) => (
             <Input
-              className={`${MainFont.className} text-base lg:text-lg`}
+              className={`${MainFont.className} text-base`}
               value={field.value}
               onChange={field.onChange}
               type="number"
@@ -213,7 +213,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="suffix"
           render={({ field }) => (
             <Dropdown
-              className="mt-1 text-base lg:text-lg"
+              className="mt-1 text-base"
               placeholder="Suffix"
               defaultValue={NameSuffix.None}
               value={field.value}
@@ -230,7 +230,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="nationality"
           render={({ field }) => (
             <Input
-              className={`${MainFont.className} text-base lg:text-lg`}
+              className={`${MainFont.className} text-base`}
               value={field.value}
               onChange={field.onChange}
               type="text"

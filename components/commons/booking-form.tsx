@@ -257,7 +257,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               <CustomDropDown
                 hasError={errors.locationPickUp !== undefined}
                 helperText={errors.locationPickUp?.message}
-                className="text-base lg:text-lg"
+                className="[&>.ant-picker-input>input]:text-base"
                 onChange={field.onChange}
                 placeholder="Enter pick-up location"
                 buttonName="Add location"
