@@ -26,7 +26,7 @@ const Panel = styled(PanelSection)`
   gap: 10px;
 `;
 
-const Description = styled.div`
+export const Description = styled.div`
   font-size: 0.9rem;
   display: flex;
   color: #596363;
@@ -40,13 +40,16 @@ const Description = styled.div`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
 `;
 
 const MainPageListing = () => {
-  const toursQuery = useQuery({ queryKey: ["tours"], queryFn: () => getToursApi({ pageNumber: 1, pageSize: 4 }) });
-  
+  const toursQuery = useQuery({
+    queryKey: ["tours"],
+    queryFn: () => getToursApi({ pageNumber: 1, pageSize: 4 }),
+  });
+
   const tripRecords = toursQuery.data?.records;
 
   const trips = tripRecords?.map((tour) => ({
