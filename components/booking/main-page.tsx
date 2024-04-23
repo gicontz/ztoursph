@@ -107,7 +107,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <DropdownShowcase
-                className="h-14 w-80 [&>div>.ant-select>span>input]:text-base"
+                className="h-14 w-80 [&>div>.ant-select-selector>span>input]:text-base [&>div>.ant-select>span>input]:lg:text-sm"
                 onChange={field.onChange as any}
                 showSearch
                 hasError={formState.errors.packages !== undefined}
@@ -127,7 +127,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <RangePickerComponent
-                className="[&>.ant-picker-input>input]:text-base"
+                className="[&>.ant-picker-input>input]:text-base [&>.ant-picker-input>input]:lg:text-sm"
                 hasError={formState.errors.date !== undefined}
                 onChange={field.onChange}
               />
@@ -140,7 +140,7 @@ export default function MainPageBooking() {
             render={({ field }) => (
               <AutoComplete
                 onChange={field.onChange}
-                className="w-10 [&>div>span>input]:text-base"
+                className="w-10 [&>div>span>input]:text-base [&>div>span>input]:lg:text-sm"
                 hasError={formState.errors.pax !== undefined}
                 options={optionTravellers}
                 placeholder="Travellers"

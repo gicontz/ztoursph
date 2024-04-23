@@ -223,7 +223,7 @@ const Contact = () => {
                   <Label {...register("name")}>
                     <p>Name</p>
                     <InputStyled
-                      className="text-base lg:text-lg"
+                      className="text-base lg:text-sm"
                       id="name"
                       type="text"
                     />
@@ -231,7 +231,7 @@ const Contact = () => {
                   <Label {...register("email")}>
                     <p>Email</p>
                     <InputStyled
-                      className="text-base lg:text-lg"
+                      className="text-base lg:text-sm"
                       id="email"
                       type="email"
                     />
@@ -239,7 +239,7 @@ const Contact = () => {
                   <Label {...register("message")}>
                     <p>Message</p>
                     <TextAreaStyled
-                      className="text-base lg:text-lg"
+                      className="text-base lg:text-sm"
                       id="message"
                       rows={5}
                     />

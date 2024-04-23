@@ -244,7 +244,7 @@ const MainPageFooter = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  className="h-10 text-base lg:text-lg"
+                  className="h-10 text-base lg:text-sm"
                   placeholder="ztoursph@gmail.com"
                   type="email"
                 />

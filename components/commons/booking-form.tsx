@@ -188,7 +188,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                 <DatePicker
                   hasError={errors?.date !== undefined}
                   onChange={field.onChange}
-                  className="expand text-base lg:text-lg"
+                  className="expand [&>.ant-picker-input>input]:text-base [&>.ant-picker-input>input]:lg:text-sm"
                   placeholder="Select Date and Time"
                   showNow={false}
                   showToday={false}
@@ -224,7 +224,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               <Dropdown
                 mode="multiple"
                 onChange={field.onChange}
-                className="w-full text-base lg:text-lg"
+                className="w-full [&>div>div>input]:text-base [&>div>div>input]:lg:text-sm"
                 options={options}
               />
             )}
@@ -257,7 +257,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
               <CustomDropDown
                 hasError={errors.locationPickUp !== undefined}
                 helperText={errors.locationPickUp?.message}
-                className="[&>.ant-picker-input>input]:text-base"
+                className="[&>div>div>input]:text-base [&>div>div>input]:lg:text-sm"
                 onChange={field.onChange}
                 placeholder="Enter pick-up location"
                 buttonName="Add location"
