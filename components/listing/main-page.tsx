@@ -30,13 +30,10 @@ export const Description = styled.div`
   font-size: 0.9rem;
   display: flex;
   color: #596363;
-  justify-content: space-between;
+  text-align: justify;
 
   a {
     text-decoration: underline;
-  }
-  p {
-    width: 70%;
   }
 
   @media (max-width: 768px) {
@@ -64,14 +61,16 @@ const MainPageListing = () => {
       <HeaderText underline>
         Pack and Go: Set Your Adventurous Seascapes with ZTours.ph
       </HeaderText>
-      <Description>
+      <Description className="space-x-5 lg:space-x-48 ">
         <p>
           Nothing beats nature&apos;s vibe! Experience the most enchanting
           hideaways, awe-inspiring islands, and underwater adventures tailored
           just for you! So, what are you waiting for? Book your exciting
           adventure with us!
         </p>
-        <Link href={"/tours"}>View All Tours</Link>
+        <Link className="w-fit lg:w-25" href={"/tours"}>
+          View All Tours
+        </Link>
       </Description>
       {!toursQuery.isLoading && tripRecords ? (
         <ListCardsContainer>
