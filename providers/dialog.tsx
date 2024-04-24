@@ -93,7 +93,7 @@ const Dialog: FunctionComponent<Props> = ({ children, open, onClose }) => {
       <div
         ref={ref}
         onClick={handleClick}
-        className="dialog-wrapper block relative z-20 w-[50vw] bg-white rounded-lg box-border">
+        className="dialog-wrapper block relative z-20 w-full md:w-[50vw] bg-white rounded-lg box-border">
         {children}
       </div>
     </div>
