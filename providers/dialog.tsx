@@ -1,9 +1,12 @@
-import { classNames } from '@app/utils/helpers';
-import React, { FunctionComponent, useEffect } from 'react';
+import { classNames } from "@app/utils/helpers";
+import React, { FunctionComponent, useEffect } from "react";
 
 type ProviderContext = readonly [(option: DialogOption) => void, () => void];
 const EMPTY_FUNC = () => {};
-const DialogContext = React.createContext<ProviderContext>([EMPTY_FUNC, EMPTY_FUNC]);
+const DialogContext = React.createContext<ProviderContext>([
+  EMPTY_FUNC,
+  EMPTY_FUNC,
+]);
 export const useDialog = (): ProviderContext => React.useContext(DialogContext);
 
 type DialogParams = {
@@ -14,7 +17,7 @@ type DialogParams = {
   onExited?: () => void;
 };
 
-type DialogOption = Omit<DialogParams, 'open'>;
+type DialogOption = Omit<DialogParams, "open">;
 
 type DialogContainerProps = DialogParams & {
   onClose: () => void;
@@ -76,26 +79,26 @@ const Dialog: FunctionComponent<Props> = ({ children, open, onClose }) => {
   useEffect(() => {
     setDialogState({ open });
     if (open) {
-      window.document.body.style.overflow = 'hidden';
+      window.document.body.style.overflow = "hidden";
     }
     return () => {
-      window.document.body.style.overflow = 'auto';
+      window.document.body.style.overflow = "auto";
     };
   }, [open]);
 
-  return (
-    dialogState.open ?
-    <div 
-        className="flex fixed top-0 left-0 z-10 flex items-center justify-center p-0 m-0 border-box w-full h-[100vh] bg-[rgba(0, 0, 0, 0.5)]"
-        onClick={handleBackDropClick}>
-      <div 
-        ref={ref} 
-        onClick={handleClick} 
+  return dialogState.open ? (
+    <div
+      className="flex fixed top-0 left-0 z-10 flex items-center justify-center p-0 m-0 border-box w-full h-[100vh] bg-[rgba(0, 0, 0, 0.5)]"
+      onClick={handleBackDropClick}>
+      <div
+        ref={ref}
+        onClick={handleClick}
         className="dialog-wrapper block relative z-20 w-[50vw] bg-white rounded-lg box-border">
         {children}
       </div>
     </div>
-    : <></>
+  ) : (
+    <></>
   );
 };
 
@@ -113,7 +116,9 @@ type DialogProps = {
   children: React.ReactNode;
 };
 
-export const DialogProvider: FunctionComponent<DialogProps> = (props: DialogProps) => {
+export const DialogProvider: FunctionComponent<DialogProps> = (
+  props: DialogProps
+) => {
   const { children, ...others } = props;
   const [dialogs, setDialogs] = React.useState<DialogParams[]>([]);
   const createDialog = (option: DialogOption) => {
@@ -140,7 +145,15 @@ export const DialogProvider: FunctionComponent<DialogProps> = (props: DialogProp
           setDialogs((ds) => ds.slice(0, ds.length - 1));
         };
 
-        return <DialogContainer key={i} onClose={closeDialog} onKill={handleKill} {...dialogParams} {...others} />;
+        return (
+          <DialogContainer
+            key={i}
+            onClose={closeDialog}
+            onKill={handleKill}
+            {...dialogParams}
+            {...others}
+          />
+        );
       })}
     </DialogContext.Provider>
   );

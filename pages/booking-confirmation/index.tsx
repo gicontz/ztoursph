@@ -116,8 +116,7 @@ export default function BookingConfirmation() {
                     : paymentStatus === "PAID"
                     ? "text-green-700"
                     : "text-yellow-600"
-                )}
-              >
+                )}>
                 {paymentStatus}
               </h2>
               <h4>
@@ -140,8 +139,7 @@ export default function BookingConfirmation() {
                 <Button
                   type="primary"
                   onClick={handlePay}
-                  loading={preparePaymentLoading}
-                >
+                  loading={preparePaymentLoading}>
                   PAY NOW
                 </Button>
               )}
