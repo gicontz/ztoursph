@@ -69,7 +69,7 @@ export default function Trips() {
   return (
     <Layout>
       <PageTitle title="My Trips" bgImage={BannerImage} />
-      <Panel>
+      <Panel className="px-4">
         <div className="text-base mb-3">
           <p>
             <span>***</span> 2yrs old children and below are subject for 50%
@@ -89,18 +89,20 @@ export default function Trips() {
         <div>
           <p>
             For <strong>Senior Citizen and PWDs </strong>
-            <br/>
+            <br />
             <span>Discounts can be claimed upon arrival</span>
           </p>
           <p>
-            Kindly bring your <strong>Valid IDs and log book</strong> as required by the
-            provisions
+            Kindly bring your <strong>Valid IDs and log book</strong> as
+            required by the provisions
           </p>
           <p>
-            under the Implementing Rules and Regulations of <strong>Republic Act No.
-            9994</strong>
+            under the Implementing Rules and Regulations of{" "}
+            <strong>Republic Act No. 9994</strong>
           </p>
-          <p><strong>For Filipino Citizens only</strong></p>
+          <p>
+            <strong>For Filipino Citizens only</strong>
+          </p>
         </div>
       </Panel>
     </Layout>

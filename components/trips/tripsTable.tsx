@@ -189,7 +189,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
 
   return (
     <Panel>
-      <div className="flex flex-col px-4">
+      <div className="flex flex-col">
         <div className="flex text-center bg-gray-50 p-2 w-full [&>h4]:text-sm [&>h4]:w-1/4 mb-4">
           <h4>Trips</h4>
           <h4>Price</h4>
