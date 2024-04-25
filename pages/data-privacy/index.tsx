@@ -1,6 +1,13 @@
+import { MainFont } from "@app/layouts/font/font";
+import HeaderText from "@components/commons/header-text";
 import Layout from "@components/pages/layout";
+import PageBanner from "@components/pages/page-banner";
+import { Row } from "antd";
+import Image from "next/image";
 import React from "react";
+import Logo from "@assets/images/logo.png";
 
+const descriptionStyle = `text-justify text-lg `;
 const content = {
   Overview:
     "ZTours PH operates tours and manages the manifest of boats, vessels, cars, vans, and similar transport modes. In the course of providing these services, the Company may collect and process personal data. This Agreement sets forth the terms and conditions governing the collection, processing, and protection of such personal data.",
@@ -22,13 +29,39 @@ const content = {
     "The Company reserves the right to amend this Agreement at any time. Any amendments shall be effective upon posting of the revised Agreement on the Company's website.",
 };
 
-const ValueOfEmptyCanvas =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC";
-
 const DataPrivacy = () => {
+  const styledContent = Object.entries(content).map(
+    ([title, description], i) => {
+      return (
+        <>
+          <HeaderText size={2}>{title}</HeaderText>
+          <p className={descriptionStyle}>{description}</p>
+          <br />
+        </>
+      );
+    }
+  );
   return (
     <Layout>
-      <p>Data Privacy</p>
+      <PageBanner
+        title="Data Privacy"
+        description='This Data Privacy Agreement ("Agreement") is entered into as
+        of [date], by and between ZTours PH ("Company"), and the
+        individual or entity agreeing to the terms herein ("User").'
+        bannerImage="https://a.cdn-hotels.com/gdcs/production13/d1585/20120d80-bf76-4553-89f4-0098f94423d8.jpg"
+      />
+      <Row className={`mt-3 px-4 py-2 mx-1 mb-10 ${MainFont.className}`}>
+        <div className="w-fit h-fit space-y-1">
+          {styledContent}
+          <HeaderText size={2}>Contact Information</HeaderText>
+          <Image className="w-1/4 my-2" src={Logo} alt={"Ztours ph"} />
+          <p className={descriptionStyle}>
+            Brgy. Maligaya El Nido, Palawan 5313 El Nido, Philippines
+          </p>
+          <p className={descriptionStyle}>ztoursph@gmail.com </p>
+          <p className={descriptionStyle}>+63 960 353 4800</p>
+        </div>
+      </Row>
     </Layout>
   );
 };
