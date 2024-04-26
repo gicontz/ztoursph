@@ -74,10 +74,37 @@ const StyledCategory = styled(Category)`
 `;
 
 const FreaquentlyAskQuestion = () => {
-  const [category, setCategory] = React.useState("About us");
+  const [category, setCategory] = React.useState<{
+    _cat: string;
+    activeKey: string | undefined;
+  }>({
+    _cat: "About us",
+    activeKey: "1",
+  });
+  const categoryArray = ["About us", "Our Tours", "Legals", "Contact"];
+
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      const [hash, activeKey] = window.location.hash
+        .replace("#", "")
+        .split("-");
+      const _cat = hash.charAt(0).toUpperCase() + hash.slice(1);
+      if (!_cat && !categoryArray.includes(_cat) && !activeKey) {
+        setCategory((prev) => ({ ...prev, activeKey: undefined }));
+      } else if (hash && activeKey) {
+        setCategory({ activeKey, _cat });
+      }
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   const handleCategoryClick = (categoryName) => {
-    setCategory(categoryName);
+    setCategory((prev) => ({ ...prev, _cat: categoryName }));
   };
 
   return (
@@ -92,12 +119,12 @@ const FreaquentlyAskQuestion = () => {
           <div>
             <HeaderText>Question Category</HeaderText>
             <ul>
-              {["About us", "Our Tours", "Legals", "Contact"].map((item) => (
+              {categoryArray.map((item) => (
                 <li key={item}>
                   <StyledButton
                     className={poppins.className}
                     onClick={() => handleCategoryClick(item)}
-                    highlightcategory={String(category === item)}
+                    highlightcategory={String(category._cat === item)}
                     type="link">
                     {item}
                   </StyledButton>
@@ -108,9 +135,12 @@ const FreaquentlyAskQuestion = () => {
 
           <div className="flex flex-col gap-3">
             <h2>
-              Frequently Asked Questions <strong>{category}</strong>
+              Frequently Asked Questions <strong>{category._cat}</strong>
             </h2>
-            <StyledCategory category={category} />
+            <StyledCategory
+              category={category._cat}
+              activeKey={category.activeKey}
+            />
           </div>
         </FAQCategoryContainer>
       </Panel>

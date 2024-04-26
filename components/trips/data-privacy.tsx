@@ -61,7 +61,7 @@ const DataPrivacyPopup = ({ onCloseItself }) => {
       <p className={descriptionStyle}>
         By signing below, the User agrees to the terms and conditions of this{" "}
         <Link
-          href={"/data-privacy"}
+          href={"/faq#legals-2"}
           className="text-scheme-green font-semibold">
           Data Privacy Agreement
         </Link>

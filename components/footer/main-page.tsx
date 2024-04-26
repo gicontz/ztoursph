@@ -12,6 +12,7 @@ import {
 import Button from "@components/commons/button";
 import Link from "next/link";
 import { PanelSection } from "@components/commons/common";
+import { useRouter } from "next/router";
 
 const FooterContainer = styled(PanelSection)`
   display: flex;
@@ -156,11 +157,26 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledLinkPushRouter = styled.button`
+  transition: font-weight 0.1s ease, font-size 0.1s ease, color 0.1s ease;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: #c5fbd8;
+  }
+`;
+
 const MainPageFooter = () => {
   const { handleSubmit, control } = useForm();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<{ email: string }> = (data) =>
     console.log(data);
+
+  const pageReloader = () => {
+    window.location.reload();
+  };
 
   return (
     <FooterContainer>
@@ -178,7 +194,12 @@ const MainPageFooter = () => {
               <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
             </li>
             <li>
-              <StyledLink href="/data-privacy">Data Privacy</StyledLink>
+              <StyledLink href={"/faq#legals-1"}>
+                Term and Conditions
+              </StyledLink>
+            </li>
+            <li>
+              <StyledLink href={"/faq#legals-2"}>Data Privacy</StyledLink>
             </li>
           </ul>
         </Contents>

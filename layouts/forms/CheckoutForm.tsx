@@ -300,7 +300,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
         <div>
           By proceeding with your booking or reservation, you are indicating
           your agreement with the{" "}
-          <Link className="font-semibold" href="/terms-and-condition">
+          <Link className="font-semibold" href="/faq#legals-1">
             Terms and Conditions
           </Link>{" "}
           outlined by Z Tours.ph Travel and Tours. If you have any questions or
