@@ -194,12 +194,14 @@ const MainPageFooter = () => {
               <StyledLink href="/cookies-policy">Cookies Policy</StyledLink>
             </li>
             <li>
-              <StyledLink href={"/faq#legals-1"}>
+              <StyledLink href={"/faq#legals-1"} target="_blank">
                 Term and Conditions
               </StyledLink>
             </li>
             <li>
-              <StyledLink href={"/faq#legals-2"}>Data Privacy</StyledLink>
+              <StyledLink href={"/faq#legals-2"} target="_blank">
+                Data Privacy
+              </StyledLink>
             </li>
           </ul>
         </Contents>
