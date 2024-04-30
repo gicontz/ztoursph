@@ -12,12 +12,7 @@ import { guestSchema } from "@constants/validations/guestList";
 import Input from "@components/commons/input";
 import { v4 as uuid } from "uuid";
 import LOCAL_STORAGE from "@constants/localstorage";
-import { primaryColor, secondaryFont } from "@app/layouts/font/font";
-
-const Font = Poppins({
-  weight: "400",
-  subsets: ["latin"],
-});
+import { MainFont, primaryColor, secondaryFont } from "@app/layouts/font/font";
 
 const IndividualNameContainer = styled.div`
   display: flex;
@@ -155,7 +150,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           render={({ field }) => (
             <Input
               className={classNames(
-                Font.className,
+                `${MainFont.className} text-base lg:text-sm`,
                 errors.firstName && "border border-red-700"
               )}
               value={field.value}
@@ -172,7 +167,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="middleInitial"
           render={({ field }) => (
             <Input
-              className={Font.className}
+              className={`${MainFont.className} text-base lg:text-sm`}
               value={field.value}
               onChange={field.onChange}
               maxLength={2}
@@ -188,7 +183,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="lastName"
           render={({ field }) => (
             <Input
-              className={Font.className}
+              className={`${MainFont.className} text-base lg:text-sm`}
               value={field.value}
               onChange={field.onChange}
               type="text"
@@ -203,7 +198,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="age"
           render={({ field }) => (
             <Input
-              className={Font.className}
+              className={`${MainFont.className} text-base lg:text-sm`}
               value={field.value}
               onChange={field.onChange}
               type="number"
@@ -218,7 +213,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="suffix"
           render={({ field }) => (
             <Dropdown
-              className="mt-1"
+              className="mt-1 text-base"
               placeholder="Suffix"
               defaultValue={NameSuffix.None}
               value={field.value}
@@ -235,7 +230,7 @@ const GuestInput: React.FC<ParticipantInputProps> = ({
           name="nationality"
           render={({ field }) => (
             <Input
-              className={Font.className}
+              className={`${MainFont.className} text-base lg:text-sm`}
               value={field.value}
               onChange={field.onChange}
               type="text"

@@ -22,8 +22,7 @@ const Layout = ({ contained = false, children }) => {
 
   return (
     <main
-      className={`relative flex flex-col overflow-x-hidden sm:w-[100%] ${defaultFont.className}`}
-    >
+      className={`relative flex flex-col overflow-x-hidden sm:w-[100%] ${defaultFont.className}`}>
       <Row
         ref={ref}
         className={classNames(
@@ -33,8 +32,7 @@ const Layout = ({ contained = false, children }) => {
               ? "bg-white shadow-md fixed"
               : "bg-transparent text-white absolute"
             : "bg-white"
-        )}
-      >
+        )}>
         <Header sticky={sticky || !isHome} />
       </Row>
       <CookiesPopUp />

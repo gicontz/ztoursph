@@ -13,6 +13,7 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 import { getTours } from "@app/services/tours";
+import { Description } from "@components/listing/main-page";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -24,21 +25,6 @@ const ListCardsContainer = styled.div`
   width: 100%;
   @media (max-width: 1085px) {
     width: 90%;
-  }
-`;
-
-const Description = styled.div`
-  font-size: 0.9rem;
-  display: flex;
-  color: #596363;
-  justify-content: space-between;
-
-  a {
-    text-decoration: underline;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 0.6rem;
   }
 `;
 

@@ -15,7 +15,7 @@ const Banner = styled(FullWidth)`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
-  height: 500px;
+  height: fit-content;
   padding-top: 200px;
   padding-bottom: 100px;
   &::before {

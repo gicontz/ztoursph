@@ -108,6 +108,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       mobileNumber2: Object.values(data.mobileNumber2).join("-"),
       age: getAge(data.birthday),
     };
+
     if (saveDetail && localStorage.getItem(PREV_LEAD_GUEST)) {
       localStorage.removeItem(PREV_LEAD_GUEST);
       localStorage.setItem(PREV_LEAD_GUEST, JSON.stringify(data));
@@ -141,6 +142,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <Input
                 defaultValue={prevLGD?.firstName}
                 type="text"
+                className="text-base lg:text-sm"
                 placeholder="First Name"
                 onChange={field.onChange}
                 hasError={errors?.firstName !== undefined}
@@ -158,6 +160,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
                 defaultValue={prevLGD?.middleInitial}
                 type="text"
                 placeholder="Middle Initial"
+                className="text-base lg:text-sm"
                 onChange={field.onChange}
                 maxLength={2}
                 hasError={errors?.middleInitial !== undefined}
@@ -175,6 +178,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
                 type="text"
                 defaultValue={prevLGD?.lastName}
                 placeholder="Last Name"
+                className="text-base lg:text-sm"
                 onChange={field.onChange}
                 hasError={errors?.lastName !== undefined}
                 helperText={errors?.lastName?.message as string}
@@ -192,7 +196,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <DatePicker
                 placeholder="Birthday"
-                className="h-12"
+                className="h-12 text-base lg:text-sm"
                 showToday={false}
                 disabledDate={disableFutureDates}
                 onChange={field.onChange}
@@ -206,6 +210,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="sex"
             render={({ field }) => (
               <Dropdown
+                className="!h-[47px] text-base lg:text-sm"
                 defaultValue={prevLGD?.sex}
                 className="!h-[47px]"
                 onChange={field.onChange}
@@ -229,6 +234,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
                 type="text"
                 defaultValue={prevLGD?.nationality}
                 placeholder="Nationality"
+                className="text-base lg:text-sm"
                 onChange={field.onChange}
                 hasError={errors?.nationality !== undefined}
                 helperText={errors?.nationality?.message as string}
@@ -247,6 +253,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <TelephoneInput
                 type="number"
                 placeholder="Mobile Number 1"
+                className="text-base lg:text-sm"
                 onGetNumber={field.onChange}
                 maxLength={10}
                 hasError={errors?.mobileNumber1 !== undefined}
@@ -266,6 +273,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <TelephoneInput
                 type="number"
+                className="text-base lg:text-sm"
                 placeholder="Mobile Number 2"
                 onGetNumber={field.onChange}
                 maxLength={10}
@@ -285,6 +293,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="email"
             render={({ field }) => (
               <Input
+                className="text-base lg:text-sm"
                 type="email"
                 placeholder="Email"
                 defaultValue={prevLGD?.email}

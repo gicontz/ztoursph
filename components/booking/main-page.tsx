@@ -29,14 +29,9 @@ const ContainerCard = styled.div`
   @media screen and (max-width: 821px) {
     width: 100%;
     border-radius: 0;
+    box-shadow: none;
     transform: translate(0%, 0%);
-  }
-
-  @media screen and (max-width: 821px) {
     flex-wrap: wrap;
-  }
-
-  @media screen and (max-width: 821px) {
     input,
     button,
     .ant-select-selector,
@@ -67,10 +62,7 @@ export default function MainPageBooking() {
     },
   });
 
-  const numberOfTours = data?.pages.reduce(
-    (a, d) => d.records?.length + a,
-    0
-  );
+  const numberOfTours = data?.pages.reduce((a, d) => d.records?.length + a, 0);
   const totalTours = data?.pages[0].totalRecords;
   const records = data?.pages.map(({ records }) => records);
 
@@ -115,7 +107,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <DropdownShowcase
-                className="!h-14 w-80"
+                className="h-14 w-80 [&>div>.ant-select-selector>span>input]:text-base [&>div>.ant-select>span>input]:lg:text-sm"
                 onChange={field.onChange as any}
                 showSearch
                 hasError={formState.errors.packages !== undefined}
@@ -135,6 +127,7 @@ export default function MainPageBooking() {
             control={control}
             render={({ field }) => (
               <RangePickerComponent
+                className="[&>.ant-picker-input>input]:text-base [&>.ant-picker-input>input]:lg:text-sm"
                 hasError={formState.errors.date !== undefined}
                 onChange={field.onChange}
               />
@@ -147,7 +140,7 @@ export default function MainPageBooking() {
             render={({ field }) => (
               <AutoComplete
                 onChange={field.onChange}
-                className="w-10"
+                className="w-10 [&>div>span>input]:text-base [&>div>span>input]:lg:text-sm"
                 hasError={formState.errors.pax !== undefined}
                 options={optionTravellers}
                 placeholder="Travellers"

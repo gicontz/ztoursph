@@ -174,10 +174,6 @@ const MainPageFooter = () => {
   const onSubmit: SubmitHandler<{ email: string }> = (data) =>
     console.log(data);
 
-  const pageReloader = () => {
-    window.location.reload();
-  };
-
   return (
     <FooterContainer>
       <PanelContents>
@@ -270,7 +266,7 @@ const MainPageFooter = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  className="h-10"
+                  className="h-10 text-base lg:text-sm"
                   placeholder="ztoursph@gmail.com"
                   type="email"
                 />
