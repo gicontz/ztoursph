@@ -10,6 +10,26 @@ import { classNames } from "@app/utils/helpers";
 import { disableFutureDates, getAge } from "@constants/dates";
 import Dropdown from "@components/commons/dropdown";
 import TelephoneInput from "@components/commons/telephone-input";
+import Link from "next/link";
+import React, { useState } from "react";
+import { PREV_LEAD_GUEST } from "@constants/localstorage";
+
+interface MobileNumber {
+  countryCode: string;
+  number: string;
+}
+
+interface FormData {
+  firstName: string;
+  middleInitial: string;
+  lastName: string;
+  sex: "M" | "F";
+  birthday: Date;
+  nationality: string;
+  mobileNumber1: MobileNumber;
+  mobileNumber2: MobileNumber;
+  email: string;
+}
 
 const Input = dynamic(() => import("@components/commons/input"), {
   ssr: false,
@@ -44,16 +64,27 @@ interface Props {
 }
 
 const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
+  const [saveDetail, setSaveDetail] = useState(false);
+  const [prevLGD, setPrevLGD] = useState<FormData | undefined>();
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, defaultValues },
     watch,
     trigger,
+    setValue,
   } = useForm({
     resolver: yupResolver(checkoutSchema),
   });
 
+  React.useEffect(() => {
+    const prevData = JSON.parse(
+      localStorage.getItem(PREV_LEAD_GUEST) as string
+    );
+    setPrevLGD(prevData);
+  }, []);
+
+  console.log(prevLGD);
   const handleViewItinerary = (e) => {
     e.preventDefault();
     new Promise((resolve) => {
@@ -78,7 +109,18 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       age: getAge(data.birthday),
     };
 
+    if (saveDetail && localStorage.getItem(PREV_LEAD_GUEST)) {
+      localStorage.removeItem(PREV_LEAD_GUEST);
+      localStorage.setItem(PREV_LEAD_GUEST, JSON.stringify(data));
+    } else if (saveDetail) {
+      localStorage.setItem(PREV_LEAD_GUEST, JSON.stringify(data));
+    }
+
     if (typeof onCheckout === "function") onCheckout(content);
+  };
+
+  const handleRemeberMe = (data) => {
+    setSaveDetail(data.target.checked);
   };
 
   return (
@@ -98,6 +140,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="firstName"
             render={({ field }) => (
               <Input
+                defaultValue={prevLGD?.firstName}
                 type="text"
                 className="text-base lg:text-sm"
                 placeholder="First Name"
@@ -114,6 +157,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="middleInitial"
             render={({ field }) => (
               <Input
+                defaultValue={prevLGD?.middleInitial}
                 type="text"
                 placeholder="Middle Initial"
                 className="text-base lg:text-sm"
@@ -132,6 +176,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <Input
                 type="text"
+                defaultValue={prevLGD?.lastName}
                 placeholder="Last Name"
                 className="text-base lg:text-sm"
                 onChange={field.onChange}
@@ -166,6 +211,8 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <Dropdown
                 className="!h-[47px] text-base lg:text-sm"
+                defaultValue={prevLGD?.sex}
+                className="!h-[47px]"
                 onChange={field.onChange}
                 placeholder="Sex"
                 options={[
@@ -185,6 +232,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <Input
                 type="text"
+                defaultValue={prevLGD?.nationality}
                 placeholder="Nationality"
                 className="text-base lg:text-sm"
                 onChange={field.onChange}
@@ -248,6 +296,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
                 className="text-base lg:text-sm"
                 type="email"
                 placeholder="Email"
+                defaultValue={prevLGD?.email}
                 onChange={field.onChange}
                 hasError={errors?.email !== undefined}
                 helperText={errors?.email?.message as string}
@@ -255,6 +304,23 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             )}
           />
         </FieldGroup>
+      </div>
+      <div className="text-sm text-justify space-y-3">
+        <div>
+          By proceeding with your booking or reservation, you are indicating
+          your agreement with the{" "}
+          <Link className="font-semibold" href="/faq#legals-1" target="_blank">
+            Terms and Conditions
+          </Link>{" "}
+          outlined by Z Tours.ph Travel and Tours. If you have any questions or
+          concerns, please feel free to contact us for clarification.
+        </div>
+        <div className="flex space-x-1">
+          <input onChange={handleRemeberMe} type="checkbox" />{" "}
+          <p>
+            Remember this <b>Lead Guest </b> details for future bookings.
+          </p>
+        </div>
       </div>
 
       <div className="flex space-x-3 justify-center h-10 !mt-10">
