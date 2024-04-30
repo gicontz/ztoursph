@@ -102,7 +102,7 @@ const CustomDropDown: React.ForwardRefExoticComponent<CustomDropDownProps> =
                 <InputContainer>
                   <Input
                     ref={inputRef}
-                    className={Font.className}
+                    className={`${Font.className} text-base lg:text-sm`}
                     value={name}
                     onChange={onNameChange}
                     placeholder={toAddItemPlaceholder}

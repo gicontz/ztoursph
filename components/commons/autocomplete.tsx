@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { AutoCompleteProps } from "antd";
 import { AutoComplete as AntAutoComplete } from "antd";
+import classNames from "classnames";
 import React from "react";
 import { ReactNode } from "react";
 
@@ -57,7 +58,10 @@ const AutoComplete: React.FC<AutoComplete> = ({
         {rest?.prefixicon && (
           <div className="prefix-icon-wrapper">{rest?.prefixicon}</div>
         )}
-        <StyledAutoComplete {...rest} />
+        <StyledAutoComplete
+          {...rest}
+          className={classNames(rest.className, "!text-base !lg:text-lg")}
+        />
       </AutoCompleteWrapper>
       {helperText !== undefined && (
         <p className="text-red-700 text-xs font-italized">{helperText}</p>

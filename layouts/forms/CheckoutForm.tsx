@@ -77,7 +77,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       mobileNumber2: Object.values(data.mobileNumber2).join("-"),
       age: getAge(data.birthday),
     };
-    
+
     if (typeof onCheckout === "function") onCheckout(content);
   };
 
@@ -99,6 +99,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <Input
                 type="text"
+                className="text-base lg:text-sm"
                 placeholder="First Name"
                 onChange={field.onChange}
                 hasError={errors?.firstName !== undefined}
@@ -115,6 +116,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <Input
                 type="text"
                 placeholder="Middle Initial"
+                className="text-base lg:text-sm"
                 onChange={field.onChange}
                 maxLength={2}
                 hasError={errors?.middleInitial !== undefined}
@@ -131,6 +133,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <Input
                 type="text"
                 placeholder="Last Name"
+                className="text-base lg:text-sm"
                 onChange={field.onChange}
                 hasError={errors?.lastName !== undefined}
                 helperText={errors?.lastName?.message as string}
@@ -148,7 +151,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <DatePicker
                 placeholder="Birthday"
-                className="h-12"
+                className="h-12 text-base lg:text-sm"
                 showToday={false}
                 disabledDate={disableFutureDates}
                 onChange={field.onChange}
@@ -162,7 +165,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="sex"
             render={({ field }) => (
               <Dropdown
-                className="!h-[47px]"
+                className="!h-[47px] text-base lg:text-sm"
                 onChange={field.onChange}
                 placeholder="Sex"
                 options={[
@@ -183,6 +186,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <Input
                 type="text"
                 placeholder="Nationality"
+                className="text-base lg:text-sm"
                 onChange={field.onChange}
                 hasError={errors?.nationality !== undefined}
                 helperText={errors?.nationality?.message as string}
@@ -201,6 +205,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <TelephoneInput
                 type="number"
                 placeholder="Mobile Number 1"
+                className="text-base lg:text-sm"
                 onGetNumber={field.onChange}
                 maxLength={10}
                 hasError={errors?.mobileNumber1 !== undefined}
@@ -220,6 +225,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             render={({ field }) => (
               <TelephoneInput
                 type="number"
+                className="text-base lg:text-sm"
                 placeholder="Mobile Number 2"
                 onGetNumber={field.onChange}
                 maxLength={10}
@@ -239,6 +245,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="email"
             render={({ field }) => (
               <Input
+                className="text-base lg:text-sm"
                 type="email"
                 placeholder="Email"
                 onChange={field.onChange}
