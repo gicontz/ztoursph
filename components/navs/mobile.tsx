@@ -8,7 +8,7 @@ import { useTripsContext } from "@providers/trips";
 import { getTrips } from "@app/modules/trips/actions";
 import { useCookies } from "react-cookie";
 import { Added_Trips } from "@constants/added_trips";
-import { classNames } from "@app/utils/helpers";
+import { classNames, useActivePath } from "@app/utils/helpers";
 
 const Container = styled.div`
   align-items: center;
@@ -99,8 +99,9 @@ const MobileNavs = ({ sticky }) => {
     toggle: false,
   });
   const [cookie] = useCookies([Added_Trips]);
+  const checkActivePath = useActivePath();
   const { tripStore, tripDispatch } = useTripsContext();
-  
+
   useEffect(() => {
     getTrips(tripDispatch, cookie[Added_Trips] ?? []);
   }, []);
@@ -112,8 +113,15 @@ const MobileNavs = ({ sticky }) => {
     <Container className="flex lg:hidden">
       <Tooltip label="My Trips">
         <Link href="/trips" className="relative">
-          <MdOutlineAirplaneTicket color={sticky ? 'black' : 'white'} size="2em" />
-          {tripStore.trips.length > 0 && <span className="absolute -right-1 -mt-4 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">{tripStore.trips.length}</span>}
+          <MdOutlineAirplaneTicket
+            color={sticky ? "black" : "white"}
+            size="2em"
+          />
+          {tripStore.trips.length > 0 && (
+            <span className="absolute -right-1 -mt-4 bg-red-600 rounded-full text-white text-xs w-4 h-4 text-center">
+              {tripStore.trips.length}
+            </span>
+          )}
         </Link>
       </Tooltip>
 
@@ -129,13 +137,29 @@ const MobileNavs = ({ sticky }) => {
         id="screen1_menu_check"
         onChange={(v) => handleToggle(v.target.checked)}
       />
-      <Hamburger className={classNames("hamburger-menu", sticky || state.toggle ? "bg-black [&:after]:bg-black [&:before]:bg-black" : "bg-white [&:after]:bg-white [&:before]:bg-white")} />
+      <Hamburger
+        className={classNames(
+          "hamburger-menu",
+          sticky || state.toggle
+            ? "bg-black [&:after]:bg-black [&:before]:bg-black"
+            : "bg-white [&:after]:bg-white [&:before]:bg-white"
+        )}
+      />
       <NavPanel visible={state.toggle}>
-        {MENU_LINKS.map(({ label, href }) => (
-          <li key={label}>
-            <Link href={href}>{label}</Link>
-          </li>
-        ))}
+        {MENU_LINKS.map(({ label, href }) => {
+          const isActive = checkActivePath(href)[0];
+          return (
+            <li key={label}>
+              <Link
+                href={href}
+                className={classNames(isActive && "font-bold flex items-center justify-center space-x-2")}
+              >
+                { isActive && <i className="w-2 h-2 rounded-full bg-green-700" /> }
+                <span>{label}</span>
+              </Link>
+            </li>
+          );
+        })}
       </NavPanel>
     </Container>
   );

@@ -68,7 +68,7 @@ const MainPageListing = () => {
           just for you! So, what are you waiting for? Book your exciting
           adventure with us!
         </p>
-        <Link className="w-fit lg:w-25" href={"/tours"}>
+        <Link className="w-fit lg:w-32" href={"/tours"}>
           View All Tours
         </Link>
       </Description>

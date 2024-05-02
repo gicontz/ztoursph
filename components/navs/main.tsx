@@ -8,6 +8,7 @@ import { useTripsContext } from "@providers/trips";
 import { useCookies } from "react-cookie";
 import { Added_Trips } from "@constants/added_trips";
 import { getTrips } from "@app/modules/trips/actions";
+import { classNames, useActivePath } from "@app/utils/helpers";
 
 const Container = styled.div`
   padding-top: 5px;
@@ -27,6 +28,7 @@ const Container = styled.div`
 const MainNav = ({ sticky }) => {
   const { tripStore, tripDispatch } = useTripsContext();
   const [cookie] = useCookies([Added_Trips]);
+  const checkActivePath = useActivePath();
 
   useEffect(() => {
     getTrips(tripDispatch, cookie[Added_Trips] ?? []);
@@ -35,7 +37,7 @@ const MainNav = ({ sticky }) => {
   return (
     <Container className="hidden lg:!flex">
       {MENU_LINKS.map(({ label, href }) => (
-        <Link key={label} href={href}>
+        <Link key={label} href={href} className={classNames(checkActivePath(href)[0] && "font-bold border-b-2 border-green-700")}>
           {label}
         </Link>
       ))}
