@@ -212,7 +212,6 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <Dropdown
                 className="!h-[47px] text-base lg:text-sm"
                 defaultValue={prevLGD?.sex}
-                className="!h-[47px]"
                 onChange={field.onChange}
                 placeholder="Sex"
                 options={[

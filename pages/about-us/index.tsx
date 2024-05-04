@@ -141,36 +141,17 @@ const AboutUs = () => {
     {
       name: "John Doe ",
       title: "Backend",
-      url: "https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png",
+      url: "",
     },
   ];
-
-  // const timeline_content = [
-  //   {
-  //     children:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  //   {
-  //     children: "Lorem ipsum dolor sit amet, consectetur. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  //   {
-  //     children: "Lorem ipsum dolor sit amet. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  //   {
-  //     children:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  // ];
   return (
     <Layout>
       <PageBanner
         title={bannerText.title}
         description={bannerText.description}
-        bannerImage={bannerText.bannerImage}
+        bannerImage={
+          "https://scontent.fmnl19-1.fna.fbcdn.net/v/t39.30808-6/385242088_643227361255401_1388942983329103279_n.png?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHKe-5nWihyie5gyc51moGQk-q0EDwg8qyT6rQQPCDyrFrUTxw1PvbX6Bajih82IGx6t4bikcAD35Ez_U43Idl2&_nc_ohc=Gt2dTGnz-vIQ7kNvgHgMrmu&_nc_ht=scontent.fmnl19-1.fna&cb_e2o_trans=t&oh=00_AfARcajFEB1TeCyLI1f1GqlX0oc0lMgACv6Z7sMxGe9xmw&oe=663C4AE0"
+        }
       />
       <AboutUsContainer>
         <AboutUsSection>
