@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import { Poppins, Source_Serif_4 } from "next/font/google";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { classNames } from "@app/utils/helpers";
-import CheckoutForm from "@app/layouts/forms/CheckoutForm";
 import LOCAL_STORAGE from "@constants/localstorage";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
@@ -16,6 +15,10 @@ import itineraryJson from "@constants/test/itineray.json";
 import { getAge } from "@constants/dates";
 import { useDialog } from "@providers/dialog";
 import CreateBooking from "@app/layouts/modals/CreateBooking";
+
+import dynamic from "next/dynamic";
+
+const CheckoutForm = dynamic(() => import("@app/layouts/forms/CheckoutForm"), { ssr: false });
 
 const font = Poppins({
   weight: "400",
@@ -44,7 +47,7 @@ export default function Checkout() {
 
   useEffect(() => {
     getTripsData();
-  }, [getTripsData, tripStore.trips]);
+  }, []);
 
   const pricedTrips = useMemo(() => {
     return trips.map((t) => ({

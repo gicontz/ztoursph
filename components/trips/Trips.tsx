@@ -1,20 +1,16 @@
 import styled from "@emotion/styled";
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Row, StyledDivider } from "@components/commons/common";
 import Button from "@components/commons/button";
-import PackageCard from "./packageCard";
-import { Source_Serif_4 } from "next/font/google";
+import PackageRow from "./PackageRow";
 import Loading from "@components/commons/loading";
 import { calculateTrips } from "@app/services/checkout";
 import {
   TPreCheckout,
   TPreCheckoutCalculation,
 } from "@app/modules/checkout/types";
-import { useTours } from "@app/modules/tours/actions";
 import {
   removeToTrips,
   setLoading,
-  setPaxToTrips,
 } from "@app/modules/trips/actions";
 import { useTripsContext } from "@providers/trips";
 import { set } from "lodash";
@@ -22,50 +18,12 @@ import { useRouter } from "next/router";
 import { Added_Trips } from "@constants/added_trips";
 import { useCookies } from "react-cookie";
 import { useDialog } from "@providers/dialog";
-import ConfirmationDialog from "@app/layouts/modals/ConfirmationDialog";
 import DataPrivacyPopup from "./data-privacy";
 
-const SourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  weight: ["500"],
-});
-
-const Panel = styled(Row)`
-  margin: auto;
-  h2 {
-    width: 100%;
-    color: #23432c;
-    font-size: 1.3rem;
-  }
-`;
-
-const Divider = styled(StyledDivider)`
-  margin: 5px 0;
-`;
-
-const CheckoutSection = styled.div`
-  width: 100%;
-  margin: 2.5rem 0 0 0;
-  display: flex;
-  justify-content: end;
-  h2 {
-    font-weight: 400;
-  }
-
-  .tour--total {
-    font-weight: 600;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 2.5rem;
-  font-size: 1.1rem;
-`;
 export type TData = {
   tripId: string | number;
   title: string;
-  imageUrl: string | { src: string };
+  imageUrl: string;
   date: string;
   pickup: string;
   price: number;
@@ -88,11 +46,11 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
   const [checkoutDetails, setCheckoutDetails] =
     React.useState<TPreCheckoutCalculation | null>(null);
 
-  const CheckoutDetailModal = () => {
-    route.push("/trips/checkout");
-  };
-
-  const DataPrivacyPopUp = () => {
+  const handleCheckout = () => {
+    if (localStorage.getItem('signature')) {
+      route.push("/trips/checkout");
+      return;
+    }
     openDataPrivacy({
       children: <DataPrivacyPopup onCloseItself={() => closeDataPrivacy()} />,
     });
@@ -165,7 +123,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
 
   const Trips = () =>
     checkoutData.map((e, i) => (
-      <PackageCard
+      <PackageRow
         key={`package-${i}`}
         image={e.imageUrl}
         title={e.title}
@@ -185,10 +143,8 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       />
     ));
 
-  console.log(checkoutDetails);
-
   return (
-    <Panel>
+    <div>
       <div className="flex flex-col">
         <div className="flex text-center bg-gray-50 p-2 w-full [&>h4]:text-sm [&>h4]:w-1/4 mb-4">
           <h4>Trips</h4>
@@ -205,28 +161,28 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
         )}
       </div>
 
-      <CheckoutSection>
+      <div className="w-full max-w-[350px] ml-auto">
         <div className="flex-col flex gap-3 p-2">
           {isLoading ? (
             <Loading />
           ) : (
             <div className="w-full">
-              <h4 className="tour--total">Trips Total</h4>
-              <Divider />
+              <h4 className="tour--total font-bold">Trips Total</h4>
+              <hr />
               <div className="flex justify-between">
                 <h4 className="">Subtotal</h4>
                 <h4 className="font-normal text-right">
                   ₱ {checkoutDetails?.totalAmt ?? 0}
                 </h4>
               </div>
-              <Divider />
+              <hr />
               <div className="flex justify-between ">
                 <h4 className="w-fit">Convenience Fee</h4>
                 <h4 className="w-fit text-right">
                   ₱ {checkoutDetails?.processingFee ?? 0}
                 </h4>
               </div>
-              <Divider />
+              <hr />
               <div className="flex justify-between ">
                 <h4 className="w-fit">Total</h4>
                 <h4 className="w-fit text-right">
@@ -235,16 +191,16 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
               </div>
             </div>
           )}
-          <StyledButton
+          <Button
             type="primary"
-            className={`w-full ${SourceSerif.className}`}
+            className={`w-full`}
             disabled={checkoutDetails === null}
-            onClick={DataPrivacyPopUp}>
+            onClick={handleCheckout}>
             Proceed Checkout
-          </StyledButton>
+          </Button>
         </div>
-      </CheckoutSection>
-    </Panel>
+      </div>
+    </div>
   );
 };
 

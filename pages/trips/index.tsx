@@ -4,7 +4,7 @@ import BannerImage from "@assets/images/banner.jpg";
 import Layout from "@components/pages/layout";
 import { Row } from "@components/commons/common";
 import styled from "@emotion/styled";
-import TripsTable from "@components/trips/tripsTable";
+import TripsTable from "@components/trips/Trips";
 import { useTripsContext } from "@providers/trips";
 import { getTrips, useTours } from "@app/modules/tours/actions";
 import { getTrips as getTheTrips } from "@app/modules/trips/actions";
@@ -30,14 +30,14 @@ export default function Trips() {
 
   const [store, dispatch] = useTours();
 
-  useEffect(() => {
-    getTripsData();
-  }, [tripStore.trips]);
-
   const getTripsData = useCallback(() => {
     const tripIds = tripStore.trips.map(({ tripId }) => tripId);
     if (tripIds) getTrips(dispatch, tripIds);
   }, [dispatch, tripStore.trips]);
+
+  useEffect(() => {
+    getTripsData();
+  }, [getTripsData, tripStore.trips]);
 
   const myTrips = useMemo(() => {
     const guestsData =

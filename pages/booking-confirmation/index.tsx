@@ -50,6 +50,7 @@ export default function BookingConfirmation() {
     (router.query.id as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.bookingId));
+  
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => getBookingInfo(bookingId),
@@ -116,7 +117,8 @@ export default function BookingConfirmation() {
                     : paymentStatus === "PAID"
                     ? "text-green-700"
                     : "text-yellow-600"
-                )}>
+                )}
+              >
                 {paymentStatus}
               </h2>
               <h4>
@@ -139,7 +141,8 @@ export default function BookingConfirmation() {
                 <Button
                   type="primary"
                   onClick={handlePay}
-                  loading={preparePaymentLoading}>
+                  loading={preparePaymentLoading}
+                >
                   PAY NOW
                 </Button>
               )}
