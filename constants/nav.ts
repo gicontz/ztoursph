@@ -27,6 +27,10 @@ export const MENU_LINKS = [
     label: "Contact Us",
     href: "/contact-us",
   },
+  {
+    label: "My Bookings",
+    href: "/my-bookings",
+  },
 ];
 
 export enum AppRoutes {
@@ -38,6 +42,7 @@ export enum AppRoutes {
   ABOUT_US = "/about-us",
   CONTACT_US = "/contact-us",
   BOOKING_CONFIRMATION = "/booking-confirmation",
+  MY_BOOKINGS = "/my-bookings",
 }
 
 export const PAYMENT_REDIRECT =  "/booking-confirmation";

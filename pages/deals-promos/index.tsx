@@ -4,10 +4,14 @@ import Layout from "@components/pages/layout";
 import Button from "@components/commons/button";
 import React, { useState } from "react";
 import Loading from "@components/commons/loading";
-import { getPackages, usePackages } from "@app/modules/packages/actions";
+import { getPackages as getPackagesApi } from "@app/services/packages";
 import PackageCard from "@components/listing/trip-card";
 import HeaderText from "@components/commons/header-text";
 import { TCategory } from "@app/modules/trips/types";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { Description } from "@components/listing/main-page";
+import { getTours } from "@app/services/tours";
+import TourCard from "@components/listing/trip-card";
 
 const ListCardsContainer = styled.div`
   display: flex;
@@ -19,21 +23,6 @@ const ListCardsContainer = styled.div`
   width: 100%;
   @media (max-width: 1085px) {
     width: 90%;
-  }
-`;
-
-const Description = styled.div`
-  font-size: 0.9rem;
-  display: flex;
-  color: #596363;
-  justify-content: space-between;
-
-  a {
-    text-decoration: underline;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 0.6rem;
   }
 `;
 
@@ -52,43 +41,72 @@ const LoadMoreButton = styled(Button)`
   }
 `;
 
-export default function DealsPromos() {
+const DealsAndPromos = () => {
+  const { data, fetchNextPage, isFetching } = useInfiniteQuery({
+    queryKey: ["packages"],
+    queryFn: (data) =>
+      getPackagesApi({ pageNumber: data.pageParam, pageSize: 9 }),
+    initialPageParam: 1,
+    getNextPageParam: (_, allPages) => {
+      return allPages.length + 1;
+    },
+  });
+
+  const records = data?.pages.flatMap(({ records }) => records);
+
+  const numberOfPackages = data?.pages?.reduce(
+    (a, { records }) => records.length + a,
+    0
+  );
+
+  const totalPackages = data?.pages[0].totalRecords;
+
+  const packages = records?.flatMap((packages) => ({
+    ...packages,
+    title: packages.package_title,
+    slug: packages.package_slug,
+    category: "packages" as TCategory,
+  }))?.filter((p) => p.discount > 0);
+
   const pageSize = 9;
-  const [state, setState] = useState({
+  const [toursState, setTourState] = useState({
     pageNumber: 1,
     totalItems: 0,
+    tours: [] as any[],
   });
-  const [store, dispatch] = usePackages();
+  const {
+    data: tourData,
+    isFetching: isTourFetching,
+    fetchNextPage: nextTourPage,
+  } = useInfiniteQuery({
+    queryKey: ["tours_list", toursState.pageNumber],
+    queryFn: (data) => getTours({ pageNumber: data.pageParam, pageSize }),
+    initialPageParam: 1,
+    getNextPageParam: (_, allPages) => {
+      return allPages.length + 1;
+    },
+  });
 
-  React.useEffect(() => {
-    const { pageNumber } = state;
-    getPackages(dispatch, { pageNumber, pageSize });
-    //eslint-disable-next-line
-  }, []);
+  const numberOfTours = tourData?.pages.reduce(
+    (a, { records }) => records.length + a,
+    0
+  );
+  const totalTours = tourData?.pages[0].totalRecords;
+  const tourRecords = tourData?.pages.map(({ records }) => records);
 
-  const handleLoadMore = () => {
-    if (store.totalRecords > state.totalItems) {
-      const { pageNumber } = state;
-      getPackages(dispatch, { pageNumber: pageNumber + 1, pageSize });
-      setState((s) => ({
-        ...s,
-        pageNumber: s.pageNumber + 1,
-        totalItems: s.totalItems + pageSize,
-      }));
-    }
-  };
-
-  const trips = store.packages.map((tour) => ({
-    ...tour,
-    title: tour.package_title,
-    slug: tour.package_slug,
-    category: "packages" as TCategory,
-  }));
+  const trips = tourRecords?.map((list) =>
+    list.map((tour) => ({
+      ...tour,
+      title: tour.tour_title,
+      slug: tour.tour_slug,
+      category: "tours" as TCategory,
+    }))
+  ).filter((p) => p.discount > 0);
 
   return (
     <Layout contained>
       <Row className="!mt-10">
-        <HeaderText underline>Our Deals & Promos</HeaderText>
+        <HeaderText underline>Our Package Collection</HeaderText>
       </Row>
       <Row className="!mt-5 !mb-10">
         <Description>
@@ -101,14 +119,12 @@ export default function DealsPromos() {
           </p>
         </Description>
       </Row>
-
       <Row>
-        {store?.packages.length !== 0 && (
+        <HeaderText underline>Packages</HeaderText>
+        {numberOfPackages !== 0 && records && (
           <>
             <ListCardsContainer>
-              {trips
-                ?.filter((p) => p.discount > 0)
-                .map((data, key) => (
+              {packages?.map((data, key) => (
                   <PackageCard key={key} data={data} />
                 ))}
             </ListCardsContainer>
@@ -116,14 +132,39 @@ export default function DealsPromos() {
         )}
       </Row>
       <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
-        {store.isLoading && <Loading />}
-        {store.packages.length > 0 &&
-          store.packages.length !== store.totalRecords && (
-            <LoadMoreButton onClick={handleLoadMore} type="primary">
-              Load More Tours
-            </LoadMoreButton>
-          )}
+        {isFetching && <Loading />}
+        {totalPackages && numberOfPackages !== totalPackages && (
+          <LoadMoreButton onClick={() => fetchNextPage()} type="primary">
+            Load More Packages
+          </LoadMoreButton>
+        )}
+        {packages?.length === 0 && <p>No available promos, stay tuned on our future deals.</p>}
+      </Row>
+
+
+      <Row>
+        <HeaderText underline>Tours</HeaderText>
+        {numberOfTours !== 0 && tourRecords && (
+          <>
+            <ListCardsContainer>
+              {trips?.map((data, key) => (
+                  <TourCard key={key} data={data} />
+                ))}
+            </ListCardsContainer>
+          </>
+        )}
+      </Row>
+      <Row className="flex flex-col items-center justify-center space-y-5 !my-10">
+        {isTourFetching && <Loading />}
+        {trips?.length !== 0 && totalTours && numberOfTours !== totalTours && (
+          <LoadMoreButton onClick={() => nextTourPage()} type="primary">
+            Load More Tours
+          </LoadMoreButton>
+        )}
+        {trips?.length === 0 && <p>No available promos, stay tuned on our future deals.</p>}
       </Row>
     </Layout>
   );
-}
+};
+
+export default DealsAndPromos;

@@ -6,5 +6,13 @@ const getBookingInfo = (id: string): Promise<any> => {
       .then((res) => res)
       .catch((err) => console.log(err));
 };
+
+const getUserBookings = (userEmail: string | null): Promise<any> => {
+    if (!userEmail) return Promise.reject([]);
+    return fetch(`/api/bookings?userEmail=${userEmail}`, { method: "GET" })
+      .then((res) => handleResponse(res))
+      .then((res) => res)
+      .catch((err) => console.log(err));
+}
   
-export { getBookingInfo };
+export { getBookingInfo, getUserBookings };
