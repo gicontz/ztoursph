@@ -175,9 +175,9 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
         </ActionButton>
         {
           data.discount > 0 && (
-            <div className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg">
+            <p className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg text-lg">
               PROMO
-            </div>
+            </p>
           )
         }
       </ImageContainer>

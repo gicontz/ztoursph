@@ -70,6 +70,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
   const preloadedData = lsData ? JSON.parse(lsData) : null;
   const [prevLGD, setPrevLGD] = useState<FormData | undefined>(preloadedData);
   const {
+    register,
     handleSubmit,
     control,
     formState: { errors, defaultValues },
@@ -326,16 +327,30 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       </div>
       <div className="text-sm text-justify space-y-3">
         <div>
-          By proceeding with your booking or reservation, you are indicating
-          your agreement with the{" "}
+          <input
+            type="checkbox"
+            defaultChecked={true}
+            {...register("agreeTermsAndConditions")}
+          />{" "}
+          I hereby agree with the company&apos;s{" "}
           <Link className="font-semibold" href="/faq#legals-1" target="_blank">
             Terms and Conditions
           </Link>{" "}
-          outlined by Z Tours.ph Travel and Tours. If you have any questions or
-          concerns, please feel free to contact us for clarification.
+          outlined by Z Tours.ph Travel and Tours. I understand that the company
+          will use my personal information for the purpose of booking and other
+          related services.
         </div>
+        {errors.agreeTermsAndConditions && (
+          <span className="text-red-700 text-sm">
+            {errors.agreeTermsAndConditions.message}
+          </span>
+        )}
         <div className="flex space-x-1">
-          <input onChange={handleRemeberMe} type="checkbox" defaultChecked={preloadedData !== null} />{" "}
+          <input
+            onChange={handleRemeberMe}
+            type="checkbox"
+            defaultChecked={preloadedData !== null}
+          />{" "}
           <p>
             Remember this <b>Lead Guest </b> details for future bookings.
           </p>

@@ -123,7 +123,7 @@ const DealsAndPromos = () => {
         <HeaderText underline>Packages</HeaderText>
         {numberOfPackages !== 0 && records && (
           <>
-            <ListCardsContainer>
+            <ListCardsContainer className="!mt-4">
               {packages?.map((data, key) => (
                   <PackageCard key={key} data={data} />
                 ))}
@@ -146,7 +146,7 @@ const DealsAndPromos = () => {
         <HeaderText underline>Tours</HeaderText>
         {numberOfTours !== 0 && tourRecords && (
           <>
-            <ListCardsContainer>
+            <ListCardsContainer className="!mt-4">
               {trips?.map((data, key) => (
                   <TourCard key={key} data={data} />
                 ))}

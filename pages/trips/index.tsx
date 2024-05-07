@@ -70,7 +70,7 @@ export default function Trips() {
     <Layout>
       <PageTitle title="My Trips" bgImage={BannerImage} />
       <Panel className="px-4">
-        <div className="text-base mb-3">
+        {/* <div className="text-base mb-3">
           <p>
             <span>***</span> 2yrs old children and below are subject for 50%
             discount
@@ -84,7 +84,7 @@ export default function Trips() {
             price
           </p>
           <p className="font-bold">Discounts are automatically applied</p>
-        </div>
+        </div> */}
         <TripsTable data={myTrips} isLoading={isLoading} />
         <div>
           <p>

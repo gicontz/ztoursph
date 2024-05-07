@@ -23,6 +23,9 @@ const schema = object().shape({
   email: string()
     .email("Email must be valid email")
     .required("Email is a required field."),
+  agreeTermsAndConditions: boolean().required(
+    "You must agree to the terms and conditions"
+  ),
   // isSameAsLeadGuest: boolean().required(),
   //     guests: array().when("isSameAsLeadGuest", {
   //         is: false,

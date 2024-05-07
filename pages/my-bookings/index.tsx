@@ -1,7 +1,7 @@
 import Layout from "@components/pages/layout";
 import PageTitle from "@components/pages/page-title";
 import BannerImage from "@assets/images/sunsets.jpg";
-import { Breadcrumb, Table } from "antd";
+import { Breadcrumb, Breakpoint, Table } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,6 +9,8 @@ import { AppRoutes } from "@constants/nav";
 import { useQuery } from "@tanstack/react-query";
 import { getUserBookings } from "@app/services/booking";
 import { toCurrency } from "@app/utils/helpers/strings";
+import Loading from "@components/commons/loading";
+import { format } from "date-fns";
 
 const breadCrumbItems = [
   {
@@ -28,7 +30,7 @@ const MyBookings = () => {
   const userEmail: string =
     typeof window !== "undefined" ? localStorage.getItem("email") ?? "" : "";
 
-  const { data: records } = useQuery({
+  const { data: records, isLoading } = useQuery({
     queryKey: ["bookings", userEmail],
     queryFn: () => getUserBookings(userEmail),
   });
@@ -49,14 +51,18 @@ const MyBookings = () => {
       render: (text) => <span>{text.toUpperCase()}</span>,
     },
     {
-      title: "Date",
+      title: "Booking Date",
       dataIndex: "date",
       key: "date",
+      render: (text) => <span>{format(new Date(text), "dd MMM yyyy")}</span>,
+      sorter: (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: "Total Amount",
       dataIndex: "totalAmt",
       key: "totalAmt",
+      responsive: ["md"] as Breakpoint[],
       render: (text) => <span>{toCurrency(text)}</span>,
     },
     {
@@ -86,23 +92,26 @@ const MyBookings = () => {
       <PageTitle title="My Bookings" bgImage={BannerImage} />
       <div className="p-8 w-full max-w-[1400px] mx-auto">
         <Breadcrumb items={breadCrumbItems} />
-        <div className="mt-8">
-        <p className="max-w-[67%] text-center mx-auto mb-12">
-          <strong>Disclaimer: </strong>{" "}
-          <span>
-            We save your data on your device, please do not clear your browser
-            data if you wish to retrieve your historical bookings. Otherwise, we
-            can retrieve it once you re-book with us
-          </span>
-        </p>
+        <div className="mt-8 relative">
+          <p className="max-w-[800px] text-center mx-auto mb-12 text-sm lg:text-base">
+            <strong>Disclaimer: </strong>{" "}
+            <span>
+              We save your data on your device, please do not clear your browser
+              data if you wish to retrieve your historical bookings. Otherwise,
+              we can retrieve it once you re-book with us
+            </span>
+          </p>
           <Table
             dataSource={bookings}
-            columns={columns}
+            columns={columns as any}
             onRow={(record) => ({
               accessKey: record.referenceId,
-              onDoubleClick: handleRowClick(record.id),
+              onClick: handleRowClick(record.id),
             })}
           />
+          <div className="flex justify-center absolute w-full -mt-32">
+            {isLoading && <Loading />}
+          </div>
         </div>
       </div>
     </Layout>
