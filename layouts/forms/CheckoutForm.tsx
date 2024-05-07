@@ -1,4 +1,4 @@
-import Guest from "@components/checkout/guest";
+"use client";
 import Button from "@components/commons/button";
 import { DatePicker, Divider } from "antd";
 import { Poppins, Source_Serif_4 } from "next/font/google";
@@ -6,13 +6,14 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import checkoutSchema from "@constants/validations/checkout";
 import dynamic from "next/dynamic";
-import { classNames } from "@app/utils/helpers";
+import { classNames, loadDataFromLocalStorage } from "@app/utils/helpers";
 import { disableFutureDates, getAge } from "@constants/dates";
 import Dropdown from "@components/commons/dropdown";
 import TelephoneInput from "@components/commons/telephone-input";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useOptimistic, useState } from "react";
 import { PREV_LEAD_GUEST } from "@constants/localstorage";
+import dayjs from "dayjs";
 
 interface MobileNumber {
   countryCode: string;
@@ -65,8 +66,11 @@ interface Props {
 
 const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
   const [saveDetail, setSaveDetail] = useState(false);
-  const [prevLGD, setPrevLGD] = useState<FormData | undefined>();
+  const lsData = loadDataFromLocalStorage(PREV_LEAD_GUEST);
+  const preloadedData = lsData ? JSON.parse(lsData) : null;
+  const [prevLGD, setPrevLGD] = useState<FormData | undefined>(preloadedData);
   const {
+    register,
     handleSubmit,
     control,
     formState: { errors, defaultValues },
@@ -75,16 +79,23 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
     setValue,
   } = useForm({
     resolver: yupResolver(checkoutSchema),
+    defaultValues: {
+      firstName: prevLGD?.firstName,
+      lastName: prevLGD?.lastName,
+      middleInitial: prevLGD?.middleInitial,
+      mobileNumber1: prevLGD?.mobileNumber1,
+      mobileNumber2: prevLGD?.mobileNumber2,
+      email: prevLGD?.email,
+      birthday: prevLGD?.birthday,
+      sex: prevLGD?.sex,
+      nationality: prevLGD?.nationality,
+    },
   });
 
   React.useEffect(() => {
-    const prevData = JSON.parse(
-      localStorage.getItem(PREV_LEAD_GUEST) as string
-    );
-    setPrevLGD(prevData);
-  }, []);
+    setPrevLGD(preloadedData);
+  }, [setPrevLGD]);
 
-  console.log(prevLGD);
   const handleViewItinerary = (e) => {
     e.preventDefault();
     new Promise((resolve) => {
@@ -126,7 +137,8 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
   return (
     <form
       className="flex flex-col space-y-4 lg:w-1/2 w-full lg:mx-auto my-12"
-      onSubmit={handleSubmit(handleSubmission)}>
+      onSubmit={handleSubmit(handleSubmission)}
+    >
       <h4 className={`text-2xl font-bold ${secondaryFont.className}`}>
         Checkout Details
       </h4>
@@ -140,8 +152,8 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
             name="firstName"
             render={({ field }) => (
               <Input
-                defaultValue={prevLGD?.firstName}
                 type="text"
+                defaultValue={prevLGD?.firstName}
                 className="text-base lg:text-sm"
                 placeholder="First Name"
                 onChange={field.onChange}
@@ -197,6 +209,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <DatePicker
                 placeholder="Birthday"
                 className="h-12 text-base lg:text-sm"
+                defaultValue={dayjs(prevLGD?.birthday)}
                 showToday={false}
                 disabledDate={disableFutureDates}
                 onChange={field.onChange}
@@ -252,6 +265,10 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <TelephoneInput
                 type="number"
                 placeholder="Mobile Number 1"
+                defaultVal={{
+                  countryCode: prevLGD?.mobileNumber1?.countryCode,
+                  number: prevLGD?.mobileNumber1?.number,
+                }}
                 className="text-base lg:text-sm"
                 onGetNumber={field.onChange}
                 maxLength={10}
@@ -273,6 +290,10 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
               <TelephoneInput
                 type="number"
                 className="text-base lg:text-sm"
+                defaultVal={{
+                  countryCode: prevLGD?.mobileNumber2?.countryCode,
+                  number: prevLGD?.mobileNumber2?.number,
+                }}
                 placeholder="Mobile Number 2"
                 onGetNumber={field.onChange}
                 maxLength={10}
@@ -306,16 +327,30 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       </div>
       <div className="text-sm text-justify space-y-3">
         <div>
-          By proceeding with your booking or reservation, you are indicating
-          your agreement with the{" "}
+          <input
+            type="checkbox"
+            defaultChecked={true}
+            {...register("agreeTermsAndConditions")}
+          />{" "}
+          I hereby agree with the company&apos;s{" "}
           <Link className="font-semibold" href="/faq#legals-1" target="_blank">
             Terms and Conditions
           </Link>{" "}
-          outlined by Z Tours.ph Travel and Tours. If you have any questions or
-          concerns, please feel free to contact us for clarification.
+          outlined by Z Tours.ph Travel and Tours. I understand that the company
+          will use my personal information for the purpose of booking and other
+          related services.
         </div>
+        {errors.agreeTermsAndConditions && (
+          <span className="text-red-700 text-sm">
+            {errors.agreeTermsAndConditions.message}
+          </span>
+        )}
         <div className="flex space-x-1">
-          <input onChange={handleRemeberMe} type="checkbox" />{" "}
+          <input
+            onChange={handleRemeberMe}
+            type="checkbox"
+            defaultChecked={preloadedData !== null}
+          />{" "}
           <p>
             Remember this <b>Lead Guest </b> details for future bookings.
           </p>

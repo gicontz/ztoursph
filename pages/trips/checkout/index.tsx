@@ -2,9 +2,8 @@ import { Row } from "@components/commons/common";
 import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
 import { Poppins, Source_Serif_4 } from "next/font/google";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { classNames } from "@app/utils/helpers";
-import CheckoutForm from "@app/layouts/forms/CheckoutForm";
 import LOCAL_STORAGE from "@constants/localstorage";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
@@ -16,6 +15,14 @@ import itineraryJson from "@constants/test/itineray.json";
 import { getAge } from "@constants/dates";
 import { useDialog } from "@providers/dialog";
 import CreateBooking from "@app/layouts/modals/CreateBooking";
+
+import dynamic from "next/dynamic";
+import { TTrip } from "@app/modules/trips/types";
+import Loading from "@components/commons/loading";
+
+const CheckoutForm = dynamic(() => import("@app/layouts/forms/CheckoutForm"), {
+  ssr: false,
+});
 
 const font = Poppins({
   weight: "400",
@@ -32,10 +39,11 @@ export default function Checkout() {
   const [cookies] = useCookies([Added_Trips]);
   const [store, dispatch] = useTours();
   const { tripStore, tripDispatch } = useTripsContext();
+  const [loadingItinerary, setLoadingItinerary] = useState(false);
   const [openDialog, closeDialog] = useDialog();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const trips = cookies[Added_Trips] ?? [];
+  const trips: TTrip[] = cookies[Added_Trips] ?? [];
 
   const getTripsData = useCallback(() => {
     const tripIds = trips.map(({ tripId }) => tripId);
@@ -44,7 +52,7 @@ export default function Checkout() {
 
   useEffect(() => {
     getTripsData();
-  }, [getTripsData, tripStore.trips]);
+  }, []);
 
   const pricedTrips = useMemo(() => {
     return trips.map((t) => ({
@@ -85,8 +93,19 @@ export default function Checkout() {
   }, [guests]);
 
   const handleViewItinerary = (data) => {
+    setLoadingItinerary(true);
     const mobileNumber1 = `${data.mobileNumber1.countryCode}-${data.mobileNumber1.number}`;
     const mobileNumber2 = `${data.mobileNumber2.countryCode}-${data.mobileNumber2.number}`;
+
+    const guestsPerTour = trips.reduce(
+      (acc, trip) => ({
+        ...acc,
+        [trip.tripId]: [
+          ...guests.filter(({ id }) => trip.participants.includes(id)),
+        ],
+      }),
+      {}
+    );
 
     const content = {
       ...data,
@@ -95,13 +114,17 @@ export default function Checkout() {
       age: getAge(data.birthday),
       mobileNumber1: mobileNumber1,
       mobileNumber2: mobileNumber2,
-      guests,
+      guests: guestsPerTour,
       booked_tours: pricedTrips,
     };
-    getItinerary({ content } as any).then((res) => {
-      const newTab = window.open(res.data.blobUrl, "_blank");
-      newTab?.focus();
-    });
+    getItinerary({ content } as any)
+      .then((res) => {
+        const newTab = window.open(res.data.blobUrl, "_blank");
+        newTab?.focus();
+      })
+      .finally(() => {
+        setLoadingItinerary(false);
+      });
   };
 
   const handleCheckout = (data) => {
@@ -135,13 +158,20 @@ export default function Checkout() {
       <PageBanner
         title={"Checkout"}
         bannerImage="/banner.jpg"
-        description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+        description={
+          "We are excited to have you on board! Please fill out the form below to proceed with your booking."
+        }
       />
-      <Container className={font.className}>
+      <Container className={classNames("relative", font.className)}>
         <CheckoutForm
           onViewItinerary={handleViewItinerary}
           onCheckout={handleCheckout}
         />
+        {loadingItinerary && (
+          <div className="absolute flex items-center justify-center w-full h-full top-0 left-0 bg-[rgba(0,0,0,0.5)] z-30">
+              <Loading />
+          </div>
+        )}
       </Container>
     </>
   );

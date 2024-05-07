@@ -4,7 +4,7 @@ import BannerImage from "@assets/images/banner.jpg";
 import Layout from "@components/pages/layout";
 import { Row } from "@components/commons/common";
 import styled from "@emotion/styled";
-import TripsTable from "@components/trips/tripsTable";
+import TripsTable from "@components/trips/Trips";
 import { useTripsContext } from "@providers/trips";
 import { getTrips, useTours } from "@app/modules/tours/actions";
 import { getTrips as getTheTrips } from "@app/modules/trips/actions";
@@ -30,14 +30,14 @@ export default function Trips() {
 
   const [store, dispatch] = useTours();
 
-  useEffect(() => {
-    getTripsData();
-  }, [tripStore.trips]);
-
   const getTripsData = useCallback(() => {
     const tripIds = tripStore.trips.map(({ tripId }) => tripId);
     if (tripIds) getTrips(dispatch, tripIds);
   }, [dispatch, tripStore.trips]);
+
+  useEffect(() => {
+    getTripsData();
+  }, [getTripsData, tripStore.trips]);
 
   const myTrips = useMemo(() => {
     const guestsData =
@@ -70,7 +70,7 @@ export default function Trips() {
     <Layout>
       <PageTitle title="My Trips" bgImage={BannerImage} />
       <Panel className="px-4">
-        <div className="text-base mb-3">
+        {/* <div className="text-base mb-3">
           <p>
             <span>***</span> 2yrs old children and below are subject for 50%
             discount
@@ -84,7 +84,7 @@ export default function Trips() {
             price
           </p>
           <p className="font-bold">Discounts are automatically applied</p>
-        </div>
+        </div> */}
         <TripsTable data={myTrips} isLoading={isLoading} />
         <div>
           <p>

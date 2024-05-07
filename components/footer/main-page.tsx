@@ -206,38 +206,28 @@ const MainPageFooter = () => {
           <HeaderText>Tours</HeaderText>
           <ul>
             <li>
-              <StyledLink href="/packages/expedition-tour">
                 Expedition Tour
-              </StyledLink>
             </li>
             <li>
-              <StyledLink href="/tours/el-nido-island-hopping-tour-a">
-                Elnido Island Hopping Tour A
-              </StyledLink>
+                El Nido Island Hopping Joiners
             </li>
             <li>
-              <StyledLink href="/tours/el-nido-island-hopping-tour-b">
-                Elnido Island Hopping Tour B
-              </StyledLink>
+                Private El Nido Island Hopping
             </li>
             <li>
-              <StyledLink href="/tours/el-nido-island-hopping-tour-c">
-                Elnido Island Hopping Tour C
-              </StyledLink>
+                Puerto Princesa Underground River
             </li>
+            <li>Canopy Walk Adventure</li>
           </ul>
         </Contents>
 
         <Contents>
-          <HeaderText>Our Activities</HeaderText>
+          <HeaderText>Our Services</HeaderText>
           <ul>
-            <li>El Nido Island Hopping</li>
-            <li>El Nido Expeditions</li>
-            <li>Beach Relaxation</li>
-            <li>PPC Underground River Tou</li>
-            <li>City Tour</li>
+            <li>Van Transfers</li>
+            <li>Flight Booking</li>
+            <li>Freediving</li>
             <li>Scuba- Diving</li>
-            <li>Canopy Walk Adventure</li>
           </ul>
         </Contents>
 

@@ -35,9 +35,7 @@ const HeaderText: React.FC<HeaderSectionProps> = ({
     <Combine className={link ? "pointer-events-auto " : "pointer-events-none"} href={link ? link : "none"}>
       <Text size={size} className={link ? "text-[#233d2c]" : ""}>{children}</Text>
       {underline && (
-        <svg width="110" height="2" xmlns="http://www.w3.org/2000/svg">
-          <rect width="100%" height="100%" fill="#F5B963" />
-        </svg>
+        <hr className="w-[110px] border-t-0 border-[#F5B963] border-b-2 pb-2"/>
       )}
     </Combine>
   );

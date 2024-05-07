@@ -11,7 +11,7 @@ import { TCategory } from "@app/modules/trips/types";
 
 const CardContainer = styled.div`
   position: relative;
-  height: 27rem;
+  height: 24rem;
   width: 20rem;
   min-width: 12rem;
   max-width: 20rem;
@@ -175,9 +175,9 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
         </ActionButton>
         {
           data.discount > 0 && (
-            <div className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg">
+            <p className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg text-lg">
               PROMO
-            </div>
+            </p>
           )
         }
       </ImageContainer>
@@ -194,10 +194,10 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
           <DescriptionContainer>
             {parse(data.package_details)}
           </DescriptionContainer>
-          <ReviewsContainer>
+          {/* <ReviewsContainer>
             <Rate disabled defaultValue={data.reviews} />
             <p>{data.numberReviews} Reviews</p>
-          </ReviewsContainer>
+          </ReviewsContainer> */}
         </DetailsContainer>
       </Link>
     </CardContainer>

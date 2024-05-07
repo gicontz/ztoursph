@@ -1,9 +1,11 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { AutoComplete, InputProps, Select } from "antd";
 import styled from "@emotion/styled";
 import { classNames } from "@app/utils/helpers";
 import Input from "./input";
 import CountryCode from "country-codes-list";
+import Flags from "react-world-flags";
+import _ from "lodash";
 
 const SelectWrapper = styled.div<{ hasError?: boolean }>`
   position: relative;
@@ -25,7 +27,7 @@ const SelectWrapper = styled.div<{ hasError?: boolean }>`
   }
 
   .ant-input-outlined {
-    text-indent: calc(4rem - 8px);
+    text-indent: 8px;
     border-color: ${({ hasError }) =>
       hasError ? "rgb(185 28 28)" : "#d9d9d9"};
   }
@@ -39,18 +41,15 @@ const SelectWrapper = styled.div<{ hasError?: boolean }>`
   }
 `;
 
-const StyledInput = styled(Input)`
-  height: 100%;
-  @media screen and (max-width: 821px) {
-    width: 100%;
-  }
-`;
-
 export interface DropdownProps extends InputProps {
-  onGetNumber?: (e: { countryCode: string; number: undefined }) => void;
+  onGetNumber?: (e: { countryCode: string; number?: number }) => void;
   className?: string;
   hasError?: boolean;
   helperText?: string;
+  defaultVal?: {
+    countryCode?: string;
+    number?: string;
+  };
 }
 
 const MobileNumberInput: React.FC<DropdownProps> = ({
@@ -58,21 +57,22 @@ const MobileNumberInput: React.FC<DropdownProps> = ({
   className,
   hasError,
   helperText,
+  defaultVal,
   ...rest
 }) => {
   let mutableValue = {
-    countryCode: "",
-    number: undefined,
+    countryCode: defaultVal?.countryCode ?? "",
+    number: defaultVal?.number ? parseInt(defaultVal?.number) : undefined,
   };
   const [number, setNumber] = React.useState(mutableValue);
   const countryCodeString = "countryCode";
   const myCountryCodesObject = CountryCode.customList(
-    countryCodeString && undefined, // <== just remove red line
+    countryCodeString && undefined,
     "+{countryCallingCode}"
   );
 
   const contactOption = Object.keys(myCountryCodesObject).map((e) => ({
-    label: e,
+    label: `${e} ${myCountryCodesObject[e]}`,
     value: myCountryCodesObject[e],
   }));
 
@@ -92,13 +92,24 @@ const MobileNumberInput: React.FC<DropdownProps> = ({
       return { ...prev, number: value === "" ? undefined : value };
     });
   };
+
   return (
     <React.Fragment>
       <SelectWrapper
-        className={classNames("h-fit", className)}
-        hasError={hasError}>
+        className={classNames("flex relative items-center h-fit", className)}
+        hasError={hasError}
+      >
+        <div className="absolute z-[11] left-2 top-3 w-8 h-6">
+          <Flags
+            code={_.findKey(
+              myCountryCodesObject,
+              (o) => o === number.countryCode
+            )?.toLowerCase()}
+          />
+        </div>
+
         <AutoComplete
-          className="country-calling-code-wrapper "
+          className="h-full [&>.ant-select-selector>span>input]:text-right -mr-4 z-10 [&>.ant-select-selector]:rounded-r-none !w-32"
           value={number.countryCode}
           options={contactOption}
           onChange={countryCallingCodeHandler}
@@ -108,12 +119,12 @@ const MobileNumberInput: React.FC<DropdownProps> = ({
             option.label.toLowerCase().indexOf(inputValue.toLowerCase()) >= 0
           }
         />
-        <StyledInput
+        <Input
           type="number"
           value={number.number}
           {...rest}
           onChange={onChangeInputHandler}
-          className="w-full"
+          className="w-full h-full"
         />
       </SelectWrapper>
       {helperText && (

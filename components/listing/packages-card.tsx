@@ -161,10 +161,10 @@ const PackageCard = ({ data }) => {
           <DescriptionContainer>
             {parse(data.package_details)}
           </DescriptionContainer>
-          <ReviewsContainer>
+          {/* <ReviewsContainer>
             <Rate disabled defaultValue={data.reviews} />
             <p>{data.numberReviews} Reviews</p>
-          </ReviewsContainer>
+          </ReviewsContainer> */}
         </DetailsContainer>
       </Link>
     </CardContainer>

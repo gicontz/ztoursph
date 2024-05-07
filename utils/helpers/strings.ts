@@ -15,3 +15,10 @@ export const uuidTo8Bits = (uuid) => {
   const eightCharacterValue = hash.substring(0, 8);
   return eightCharacterValue;
 };
+
+export const toCurrency = (value: number | string) => {
+  return new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+  }).format(Number(value));
+};
