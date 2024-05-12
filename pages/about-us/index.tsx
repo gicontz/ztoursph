@@ -2,15 +2,8 @@ import HeaderText from "@components/commons/header-text";
 import Layout from "@components/pages/layout";
 import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
-import { Timeline } from "antd";
-import { Poppins } from "next/font/google";
 import Image from "next/image";
 import React from "react";
-
-const PoppinsFont = Poppins({
-  weight: "400",
-  subsets: ["latin"],
-});
 
 const AboutUsContainer = styled.div`
   display: flex;
@@ -45,27 +38,6 @@ const AboutUsSection = styled.div`
       font-size: 1rem;
     }
     margin-top: 1rem;
-  }
-`;
-
-const TeamImage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  div {
-    display: flex;
-  }
-
-  .card_divider {
-    gap: 1rem;
-
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    @media screen and (max-width: 800px) {
-      flex-direction: column;
-      padding: 1.5rem;
-    }
   }
 `;
 

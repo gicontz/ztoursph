@@ -62,6 +62,8 @@ export default function MainPageBooking() {
     },
   });
 
+  if (data?.pages[0] === undefined) return <></>;
+
   const numberOfTours = data?.pages.reduce((a, d) => d.records?.length + a, 0);
   const totalTours = data?.pages[0].totalRecords;
   const records = data?.pages.map(({ records }) => records);
@@ -155,7 +157,8 @@ export default function MainPageBooking() {
           <Button
             className="px-10 h-14 font-semibold"
             type="primary"
-            htmlType="submit">
+            htmlType="submit"
+          >
             Book
           </Button>
         </ContainerCard>

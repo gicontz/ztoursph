@@ -13,6 +13,8 @@ export const Row = styled.div`
   max-width: 1444px;
   width: 100%;
   margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
 `;
 
 export const PanelSection = styled.div`
