@@ -55,6 +55,11 @@ const Services = () => {
               </h3>
               <p>2 Dives - Php4,500 per person</p>
               <p>3 Dives - Php5,500 per person</p>
+
+              <h3 className="font-bold text-md mt-3">
+                Freediving Courses
+              </h3>
+              
             </div>
           </SubSection>
           <SubSection>
@@ -112,6 +117,7 @@ const Services = () => {
             />
           </div>
           <SubSection className="space-y-2">
+            <HeaderText underline>Private and Shared Van</HeaderText>
             <p className="flex space-x-2 items-center text-lg font-bold">
               <MapPinIcon className="w-4 h-4" />
               <span>Puerto Princesa to El Nido</span>
@@ -131,6 +137,14 @@ const Services = () => {
             <p className="flex space-x-2 items-center text-lg font-bold">
               <MapPinIcon className="w-4 h-4" />
               <span>Port Barton to El Nido</span>
+            </p>
+            <p className="flex space-x-2 items-center text-lg font-bold">
+              <MapPinIcon className="w-4 h-4" />
+              <span>El Nido Town to Nacpan Beach</span>
+            </p>
+            <p className="flex space-x-2 items-center text-lg font-bold">
+              <MapPinIcon className="w-4 h-4" />
+              <span> Nacpan Beach to El Nido Town</span>
             </p>
           </SubSection>
         </Row>
@@ -159,18 +173,18 @@ const Services = () => {
               <MapPinIcon className="w-4 h-4" />
               <span>El Nido to Coron</span>
             </p>
-            <p>Everyday, Travel time: 3 hours & 30 minutes</p>
+            <p>Everyday at 12 Noon, Travel time: ~4 hours</p>
           </SubSection>
           <SubSection>
             <p className="flex space-x-2 items-center text-lg font-bold">
               <MapPinIcon className="w-4 h-4" />
               <span>Coron to El Nido</span>
             </p>
-            <p>Schedule might vary</p>
+            <p>Everyday at 7am, Travel time: ~4 hours</p>
           </SubSection>
         </Row>
         <Row className="!mt-10">
-          <HeaderText underline>Car & Motorcycle Rental</HeaderText>
+          <HeaderText underline>Private Car & Motorcycle Rental</HeaderText>
           <p>
             If you want to explore the island on your own, we offer car and
             motorcycle rental services. Our vehicles are well-maintained and
@@ -178,14 +192,25 @@ const Services = () => {
             explore the beaches, waterfalls, or other attractions, our rental
             vehicles will get you there in style and comfort.
           </p>
-          <div className="mt-3 relative h-80 w-full">
-            <Image
-              src="/motorbike.jpeg"
-              alt="Motorbike Rental"
-              fill
-              className="object-cover rounded"
-              style={{ objectPosition: "0 65%" }}
-            />
+          <div className="flex items-center space-x-2 mt-3">
+            <div className="mt-3 relative h-80 w-full">
+              <Image
+                src="/car.jpeg"
+                alt="Motorbike and Car Rental"
+                fill
+                className="object-contain rounded"
+                style={{ objectPosition: "0 30%" }}
+              />
+            </div>
+            <div className="mt-3 relative h-80 w-full">
+              <Image
+                src="/motorbike.png"
+                alt="Motorbike and Car Rental"
+                fill
+                className="object-contain rounded"
+                style={{ objectPosition: "0 30%" }}
+              />
+            </div>
           </div>
         </Row>
         <Row className="!mt-10">
@@ -194,7 +219,7 @@ const Services = () => {
             Explore the beauty of Palawan&apos;s inland attractions with our
             inland tour packages. Our tours are designed to showcase the natural
             beauty and cultural heritage of the island. Whether you want to
-            visit the underground <strong>river</strong>, explore the{" "}
+            visit the <strong>river</strong>, explore the{" "}
             <strong>waterfalls</strong>, or experience the local culture, our
             tours will take you on an unforgettable journey.
           </p>
@@ -212,6 +237,10 @@ const Services = () => {
               <li className="flex items-center space-x-1">
                 <MapPinIcon className="w-6 h-6" />
                 <span>Nagkalit-kalit Waterfalls</span>
+              </li>
+              <li className="flex items-center space-x-1">
+                <MapPinIcon className="w-6 h-6" />
+                <span>Marimegmeg Beach (Sunset)</span>
               </li>
             </ul>
           </div>

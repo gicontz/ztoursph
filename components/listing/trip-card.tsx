@@ -8,6 +8,7 @@ import { TToursResponse } from "@app/modules/tours/types";
 import { blurImageData } from "@constants/image";
 import { classNames, getDiscountedPrice } from "@app/utils/helpers";
 import { TCategory } from "@app/modules/trips/types";
+import { MapPinIcon } from "@heroicons/react/24/solid";
 
 const CardContainer = styled.div`
   position: relative;
@@ -26,7 +27,7 @@ const CardContainer = styled.div`
   }
 
   @media (max-width: 800px) {
-        font-size: 8px;
+    font-size: 8px;
     width: 15rem;
   }
 
@@ -115,12 +116,14 @@ const DescriptionContainer = styled.div`
 `;
 
 const TourTitle = styled.h3`
-  overflow: hidden;
-  max-width: 180px;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  > h2 {
+    overflow: hidden;
+    max-width: 180px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 `;
 
 const SVGHeart = ({ width, height, color }) => (
@@ -129,7 +132,8 @@ const SVGHeart = ({ width, height, color }) => (
     height={height}
     viewBox="0 0 14 14"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg">
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M7.0041 12.3826L1.52973 7.42397C-1.44548 4.44876 2.92807 -1.26363 7.0041 3.35785C11.0801 -1.26363 15.4339 4.4686 12.4785 7.42397L7.0041 12.3826Z"
       fill={color}
@@ -144,12 +148,13 @@ export type TTrip = {
   discount: number;
   location: string;
   thumbnail: string;
+  location_caption: string;
   package_details: string;
   reviews: number;
   numberReviews: number;
   slug: string;
   category: TCategory;
-}
+};
 
 interface ListingCard {
   data: TTrip;
@@ -173,22 +178,30 @@ const TourCard: React.FC<ListingCard> = ({ data }) => {
         <ActionButton onClick={() => setLike(!like)}>
           <SVGHeart width={20} height={20} color={like ? "red" : "white"} />
         </ActionButton>
-        {
-          data.discount > 0 && (
-            <p className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg text-lg">
-              PROMO
-            </p>
-          )
-        }
+        {data.discount > 0 && (
+          <p className="absolute top-0 left-0 bg-red-500 text-white p-1 rounded-br-lg text-lg">
+            PROMO
+          </p>
+        )}
       </ImageContainer>
       <Link href={`/${data.category}/${data.slug}`}>
         <DetailsContainer>
           <p className="location">{data.location}</p>
           <TitlePriceContainer>
-            <TourTitle>{data.title}</TourTitle>
+            <TourTitle>
+              <h2>{data.title}</h2>
+              <p className="text-sm text-green-700 flex items-center space-x-1">
+                <MapPinIcon className="w-4 h-4" />
+                <span>{data.location_caption}</span>
+              </p>
+            </TourTitle>
             <p className="whitespace-nowrap space-x-2">
               <span>₱ {getDiscountedPrice(data.price, data.discount)}</span>
-              {parseInt(data.discount as any, 10) > 0 && <span className="text-sm text-green-400">{data.discount}% off</span>}
+              {parseInt(data.discount as any, 10) > 0 && (
+                <span className="text-sm text-green-400">
+                  {data.discount}% off
+                </span>
+              )}
             </p>
           </TitlePriceContainer>
           <DescriptionContainer>

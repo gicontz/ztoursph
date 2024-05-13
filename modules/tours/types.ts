@@ -14,6 +14,7 @@ export enum Actions {
 
 export type TTourResponse = {
   id: number;
+  view_priority: number;
   tour_slug: string;
   tour_title: string;
   tour_banner_image: string;
@@ -22,6 +23,7 @@ export type TTourResponse = {
   price: number;
   discount: number;
   gallery: string[];
+  location_caption: string;
 };
 
 export type TToursResponse = {
