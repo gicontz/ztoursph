@@ -1,17 +1,15 @@
 import { Row } from "@components/commons/common";
 import PageBanner from "@components/pages/page-banner";
 import styled from "@emotion/styled";
-import { Poppins, Source_Serif_4 } from "next/font/google";
+import { Poppins } from "next/font/google";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { classNames } from "@app/utils/helpers";
 import LOCAL_STORAGE from "@constants/localstorage";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import { Added_Trips } from "@constants/added_trips";
-import { useTripsContext } from "@providers/trips";
 import { getTrips, useTours } from "@app/modules/tours/actions";
 import { getItinerary } from "@app/services/checkout";
-import itineraryJson from "@constants/test/itineray.json";
 import { getAge } from "@constants/dates";
 import { useDialog } from "@providers/dialog";
 import CreateBooking from "@app/layouts/modals/CreateBooking";
@@ -38,7 +36,6 @@ export default function Checkout() {
   const router = useRouter();
   const [cookies] = useCookies([Added_Trips]);
   const [store, dispatch] = useTours();
-  const { tripStore, tripDispatch } = useTripsContext();
   const [loadingItinerary, setLoadingItinerary] = useState(false);
   const [openDialog, closeDialog] = useDialog();
 
@@ -53,6 +50,13 @@ export default function Checkout() {
   useEffect(() => {
     getTripsData();
   }, []);
+
+  useEffect(() => {
+    if (trips.length === 0) {
+      alert("You do not have any trips added. Please add trips first.");
+      router.push("/trips");
+    }
+  }, [])
 
   const pricedTrips = useMemo(() => {
     return trips.map((t) => ({

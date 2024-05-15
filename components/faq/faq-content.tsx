@@ -19,13 +19,27 @@ const data_privacy = {
     "The Company reserves the right to amend this Agreement at any time. Any amendments shall be effective upon posting of the revised Agreement on the Company's website.",
 };
 
-const discount_policy = [
-  "Kids aged 0-3 years old are free of charge.",
-  "Those aged 4 to 6 years old are required to pay at least 50% of the original tour price.",
-  "Kids aged 7 years old and above are all required to pay the full amount.",
-  "Senior Citizens with a valid Office of Senior Citizen Affairs (OSCA ID) are entitled to a 20% discount from the original price. (Note: This is only applicable for Filipino Senior Citizens.)",
-  "Persons with Disabilities (PWD) are also entitled to a 20% discount from the original tour price.",
+const cancellationPolicy = [
+  "Cancellation within 72 hours before your tour is subjected to a full refund.",
+  "You can cancel your booking by sending us an email, call or message us in our contact numbers",
+  "Refund process will take 10 to 30 Calendar days depending on the bank details policy",
+  "Cancellation within 48 hours before your tour will incur 50% charge of total bill. ",
+  "Cancellation within 24 hours before your tour will be non-refundable. ",
+  "For “No Show” guest/s, the booking will be forfeited",
+  "If you prefer to rebook your trip to another day, you must inform us 12 hours prior your planned date otherwise you will be tagged as NO SHOW GUEST.",
+  "If you decided to cancel your tour due to illness, injury or emergency reasons, you must inform us thru Call or message in our contacts +63 966-442-8625/+63-962 078-7353 a night before of your tour. But you must present a prof of hard copy medical certificate in our office and your payment will be refunded fully, 100% of the total amount. If you are unable to inform us ahead of time or failed to provide the medical certificate then the full amount shall be forfeited. ",
+  "Cancellation due to weather condition is only basis to advisory of Philippine coastguard. If the tours was cancelled due to weather or any of the water activities, you have the option to receive a full refund or rebook your tour schedule to later date. Z Tours.ph will not be liable for any other inconvenience caused due to weather cancellations.",
 ];
+
+const importantReminders = [
+  "Most of the destinations are part of Marine Protected Area and there are rules and regulations that need to be follow",
+  "Guest/s should always abide to the rules and regulations during activities; thus, the company was not liable for violations committed by guest/s in accordance to local laws and regulations.",
+  "In the event of natural calamities or unavoidable circumstances, the Tour Manger has discretionary powers to amend the route or postpone the tour.",
+  "Baggage and personal belongings of tour participants are his/her own responsibility. The company shall not be liable for the loss/damage of the same.",
+  "The company shall not be responsible and/or liable for any damage/loss caused to the tour participant due to reasons beyond the control of the company.",
+  "Smoking and drinking alcohol is strictly prohibited during tours there will be some designated areas only for smoking.",
+  "If the tour participant misbehaves causing inconvenience or annoyance to any tour participant or causes damage to the property of the company, he/she will be asked to leave the tour immediately. The Tour Managers have been authorized to do so. There will not be any compensation, whatsoever, in such cases.",
+]
 
 export const collapseItems = {
   AboutUs: [
@@ -174,41 +188,34 @@ export const collapseItems = {
             <strong>A. Reservation Policies</strong>
           </p>
           <p>
-            First, at least a 50% deposit of the total amount is required for
-            confirmation of booking, and the remaining amount should be settled
-            a day before guest arrival. If full payment is not received before
-            the arrival date, Z Tours.ph Travel and Tours have the right to
-            charge the guest before going on the tour or any activities.
+            Upon reservation total amount should be settled in order to confirm
+            booking. If full payment was not received, Z TOURS.PH TRAVEL AND
+            TOURS will not confirm the reservation in the system.
           </p>
 
           <p>
-            All reservations require the quotation of tours. Partner travel
-            agencies will be given priority.
-          </p>
-
-          <p>
-            Pencil blocking is only until one (1) week before the scheduled
-            guest arrival. No confirmation until the time limit will
-            automatically forfeit from the blocking.
-          </p>
-
-          <p>
-            <strong>B. Discounted Policy</strong>
+            <strong>B. Cancelation Policy</strong>
           </p>
           <div className="list-disc pl-3 flex flex-col">
-            {discount_policy.map((d, i) => (
+            {cancellationPolicy.map((d, i) => (
               <p key={i}>
-                <b>-</b>
+                <b className="mr-2">-</b>
                 {d}
               </p>
             ))}
           </div>
 
           <p>
-            <strong>Note:</strong> This only applies to the regular rate of
-            island-hopping tours. All government fees are not included in
-            discounted rates.
+            <strong>B. Important Reminders</strong>
           </p>
+          <div className="list-disc pl-3 flex flex-col">
+            {importantReminders.map((d, i) => (
+              <p key={i}>
+                <b className="mr-2">-</b>
+                {d}
+              </p>
+            ))}
+          </div>
         </div>
       ),
     },

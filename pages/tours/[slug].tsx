@@ -117,6 +117,9 @@ export default function Tours() {
     tourId: store.selectedTour?.id,
     title: store.selectedTour?.tour_title,
     thumbnail: store.selectedTour?.thumbnail,
+    perPaxPrice: store.selectedTour?.per_pax_price || 0,
+    basePrice: parseInt(store.selectedTour?.price as any, 10) || 0,
+    minimumPax: store.selectedTour?.min_pax || 0,
   };
 
   return (

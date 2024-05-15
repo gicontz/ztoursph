@@ -57,6 +57,7 @@ export const getPackageBySlug = async (
   dispatch({ type: Actions.GET_PACKAGE_INFO_START });
   try {
     const { data } = await getPackagesBySlugApi(slug);
+    console.log(data);
     dispatch({
       type: Actions.GET_PACKAGE_INFO_FULFILLED,
       payload: { ...data },

@@ -119,6 +119,7 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       mobileNumber2: Object.values(data.mobileNumber2).join("-"),
       age: getAge(data.birthday),
     };
+    delete content.agreeTermsAndConditions;
 
     if (saveDetail && localStorage.getItem(PREV_LEAD_GUEST)) {
       localStorage.removeItem(PREV_LEAD_GUEST);
@@ -327,10 +328,12 @@ const CheckoutForm = ({ onViewItinerary, onCheckout }: Props) => {
       </div>
       <div className="text-sm text-justify space-y-3">
         <div>
-          <input
-            type="checkbox"
-            defaultChecked={true}
-            {...register("agreeTermsAndConditions")}
+          <Controller
+            control={control}
+            name="agreeTermsAndConditions"
+            render={({ field }) => (
+              <input type="checkbox" defaultChecked={true} onChange={field.onChange} />
+            )}
           />{" "}
           I hereby agree with the company&apos;s{" "}
           <Link className="font-semibold" href="/faq#legals-1" target="_blank">

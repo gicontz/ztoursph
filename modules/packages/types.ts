@@ -19,6 +19,8 @@ export type TPackageResponse = {
   price: number;
   discount: number;
   gallery: string[];
+  per_pax_price: number;
+  min_pax: number;
 };
 
 export type TPackagesResponse = {

@@ -96,7 +96,7 @@ const MobileNumberInput: React.FC<DropdownProps> = ({
   return (
     <React.Fragment>
       <SelectWrapper
-        className={classNames("flex relative items-center h-fit", className)}
+        className={classNames("flex relative items-center h-10", className)}
         hasError={hasError}
       >
         <div className="absolute z-[11] left-2 top-3 w-8 h-6">

@@ -78,7 +78,7 @@ export default function Packages() {
       : [trip];
     setBooking(Added_Trips, data);
   };
-
+  
   const parsedPackageDetails = store.selectedPackage ? (
     parse(store.selectedPackage.package_details)
   ) : (
@@ -119,6 +119,9 @@ export default function Packages() {
     tourId: store.selectedPackage?.id,
     title: store.selectedPackage?.package_title,
     thumbnail: store.selectedPackage?.thumbnail,
+    perPaxPrice: store.selectedPackage?.per_pax_price || 0,
+    basePrice: parseInt(store.selectedPackage?.price as any, 10) || 0,
+    minimumPax: store.selectedPackage?.min_pax || 0,
   };
 
   return (

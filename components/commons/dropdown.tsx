@@ -30,8 +30,6 @@ const SelectWrapper = styled.div<{ icon?: boolean; hasError?: boolean }>`
 `;
 
 const StyledSelect = styled(Select)<{ isnumber?: boolean }>`
-  height: 100%;
-
   @media screen and (max-width: 821px) {
     width: 100%;
   }
@@ -54,11 +52,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <React.Fragment>
       <SelectWrapper
-        className={classNames("h-10 !text-base !lg:text-lg", className)}
+        className={classNames("min-h-10 !text-base !lg:text-lg", className)}
         hasError={hasError}
         icon={prefixIcon ? true : false}>
         {prefixIcon && <div className="prefix-icon-wrapper">{prefixIcon}</div>}
-        <StyledSelect {...rest} className="w-full" />
+        <StyledSelect {...rest} className="h-full w-full" />
       </SelectWrapper>
       {helperText !== undefined && (
         <p className="text-red-700 text-xs font-italized">{helperText}</p>

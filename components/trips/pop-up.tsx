@@ -11,6 +11,9 @@ import { StyledDivider } from "@components/commons/common";
 import { Added_Trips } from "@constants/added_trips";
 import { useTripsContext } from "@providers/trips";
 import { getTrips } from "@app/modules/trips/actions";
+import { useRouter } from "next/router";
+import DataPrivacyPopup from "./data-privacy";
+import { useDialog } from "@providers/dialog";
 
 const font = Poppins({
   weight: "400",
@@ -35,6 +38,8 @@ const Container = styled.div`
 `;
 
 const PopupAddTrips = ({ type }) => {
+  const router = useRouter();
+  const [openDataPrivacy, closeDataPrivacy] = useDialog();
   const { tripStore, tripDispatch } = useTripsContext();
   const [cookie] = useCookies([Added_Trips]);
   
@@ -44,6 +49,16 @@ const PopupAddTrips = ({ type }) => {
 
   const bookingData = tripStore.trips.reverse();
   const currentBooking = bookingData.shift();
+
+  const handleCheckout = () => {
+    if (localStorage.getItem('signature')) {
+      router.push("/trips/checkout");
+    } else {
+      openDataPrivacy({
+        children: <DataPrivacyPopup onCloseItself={() => closeDataPrivacy()} />,
+      });
+    }
+  }
 
   return (
     <Modal open closable={false} footer={false}>
@@ -82,7 +97,7 @@ const PopupAddTrips = ({ type }) => {
               Go To Trips
             </Button>
           </Link>
-          <Button className="underline h-10 text-lg" type="primary">
+          <Button className="underline h-10 text-lg" type="primary" onClick={handleCheckout}>
             Checkout
           </Button>
         </div>

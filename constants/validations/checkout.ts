@@ -23,18 +23,7 @@ const schema = object().shape({
   email: string()
     .email("Email must be valid email")
     .required("Email is a required field."),
-  agreeTermsAndConditions: boolean().required(
-    "You must agree to the terms and conditions"
-  ),
-  // isSameAsLeadGuest: boolean().required(),
-  //     guests: array().when("isSameAsLeadGuest", {
-  //         is: false,
-  //         then: (schema) =>
-  //             schema.min(1, "Guest is required when not same as lead guest"),
-  //         otherwise: (schema) => schema.notRequired(),
-  //     }),
-  // maxParticipants: number(),
-  // guests: array().of(guestSchema),
+  agreeTermsAndConditions: boolean().oneOf([true], "You must agree to the terms and conditions"),
 });
 
 export default schema;

@@ -16,6 +16,7 @@ import ManageGuestList from "@app/layouts/forms/ManageGuestList";
 import LOCAL_STORAGE from "@constants/localstorage";
 import { classNames } from "@app/utils/helpers";
 import { disablePastDatesAndToday } from "@constants/dates";
+import PriceUpdater from "./price-updater";
 
 const CustomDropDown = dynamic(() => import("./custom-dropdown"), {
   ssr: false,
@@ -89,6 +90,9 @@ type BookingFormProps = {
     tourId?: string | number;
     title: string | undefined;
     thumbnail: string | undefined;
+    perPaxPrice: number;
+    basePrice: number;
+    minimumPax: number;
   };
 };
 
@@ -98,6 +102,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   details,
 }) => {
   const {
+    watch,
     handleSubmit,
     control,
     formState: { errors },
@@ -149,14 +154,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
     if (typeof onSubmit === "function") onSubmit(tripData);
   };
-
-  // const handleManageGuests = () => {
-  //   openDialog({
-  //     children: (
-  //       <ManageGuestList onClose={closeDialog} onChange={handleGuests} />
-  //     ),
-  //   });
-  // };
 
   return (
     <BookingContainer>
@@ -211,7 +208,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
               list&nbsp;
               <span
                 className="text-xs font-bold text-blue-400 cursor-pointer hover:opacity-70 active:opacity-50"
-                onClick={() => setManageGuest(true)}>
+                onClick={() => setManageGuest(true)}
+              >
                 here
               </span>
             </p>
@@ -229,7 +227,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
               />
             )}
           />
-
+          {details.perPaxPrice > 0 && (
+            <PriceUpdater
+              perPaxPrice={details.perPaxPrice}
+              minimumPax={details.minimumPax}
+              basePrice={details.basePrice}
+              totalPax={watch("participants")?.length || 0}
+            />
+          )}
           <StyledDivider />
           <LabelHeader>
             <h3>Pick up location</h3>

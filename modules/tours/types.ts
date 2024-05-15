@@ -24,6 +24,8 @@ export type TTourResponse = {
   discount: number;
   gallery: string[];
   location_caption: string;
+  per_pax_price: number;
+  min_pax: number;
 };
 
 export type TToursResponse = {
