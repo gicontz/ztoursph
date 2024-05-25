@@ -26,6 +26,15 @@ const BookingPdf = dynamic(() => import("@app/layouts/pdfs/booking"), {
   ssr: false,
 });
 
+export const getStaticProps = () => {
+  const domain = process.env.DOMAIN;
+  return {
+    props: {
+      domain,
+    },
+  };
+};
+
 const breadCrumbItems = [
   {
     title: (
@@ -42,7 +51,7 @@ const breadCrumbItems = [
   },
 ];
 
-export default function BookingConfirmation() {
+export default function BookingConfirmation({ domain }) {
   const [file, setFile] = useState<PDFFile>(null);
   const router = useRouter();
 
@@ -50,7 +59,7 @@ export default function BookingConfirmation() {
     (router.query.id as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.bookingId));
-  
+
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
     queryFn: () => getBookingInfo(bookingId),
@@ -160,9 +169,7 @@ export default function BookingConfirmation() {
             <div className="flex flex-col justify-center text-center">
               <QRCode
                 className="mx-auto lg:mx-0"
-                value={`${
-                  typeof window !== "undefined" ? window.location.origin : ""
-                }${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
+                value={`${domain}${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
               />
               <h4 className="text-lg font-bold mt-3">
                 {bookingDetails.reference_id.toUpperCase()}

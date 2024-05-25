@@ -10,7 +10,7 @@ const Header = ({ sticky }) => {
   return (
     <Flex w="100%" gap={4} className={`bg-transparent p-4`}>
       <Box p="2" className="flex items-center">
-        <Image src={sticky ? Logo : LogoWhite} width={150} height={100} alt="logo" />
+        <Image src={sticky ? Logo : LogoWhite} width={70} height={100} alt="logo" />
         <h1 className="hidden">Z Tours PH</h1>
       </Box>
       <Spacer />

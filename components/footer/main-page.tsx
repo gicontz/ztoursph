@@ -281,7 +281,7 @@ const MainPageFooter = () => {
             },
           }}>
           <Divider plain orientation="left">
-            <Image src={Logo} width={200} alt="ZToursPH" />
+            <Image src={Logo} width={100} alt="ZToursPH" />
           </Divider>
         </ConfigProvider>
 
