@@ -27,7 +27,7 @@ const BookingPdf = dynamic(() => import("@app/layouts/pdfs/booking"), {
 });
 
 export const getStaticProps = () => {
-  const domain = process.env.DOMAIN;
+  const domain = process.env.DOMAIN ?? "";
   return {
     props: {
       domain,
