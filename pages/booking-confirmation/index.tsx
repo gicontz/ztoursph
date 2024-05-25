@@ -67,7 +67,7 @@ export default function BookingConfirmation({ domain }) {
       localStorage.getItem(LOCAL_STORAGE.email));
 
   const { data, isLoading } = useQuery({
-    queryKey: ["booking", bookingId],
+    queryKey: ["booking", bookingId, { email, reference_id }],
     queryFn: () => getBookingInfo(bookingId, { email, reference_id }),
   });
 

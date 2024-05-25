@@ -4,12 +4,19 @@ const APIUri = process.env.API_SERVER;
 
 const __ = async (req: NextApiRequest, res: NextApiResponse) => {
   const headers = {
-    'Content-Type': 'application/json',
-  }
-  const result = await fetch(
-    `${APIUri}/bookings/info`,
-    { method: "POST", body: JSON.stringify({ booking: { id: req.query.id } }), headers }
-  );
+    "Content-Type": "application/json",
+  };
+  const result = await fetch(`${APIUri}/bookings/info`, {
+    method: "POST",
+    body: JSON.stringify({
+      booking: {
+        id: req.query.id,
+        email: req.query.email,
+        reference_id: req.query.reference_id,
+      },
+    }),
+    headers,
+  });
   if (result.status !== 201) {
     const error = result.statusText;
     return res

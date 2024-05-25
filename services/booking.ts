@@ -5,7 +5,7 @@ const getBookingInfo = (
   options?: { email: string; reference_id: string }
 ): Promise<any> => {
   let fetchUri = `/api/confirmation/booking`;
-  if (id) fetchUri = fetchUri + `?id=${id}`;
+  if (typeof id === "string") fetchUri = fetchUri + `?id=${id}`;
   else if (options)
     fetchUri =
       fetchUri + `?email=${options.email}&reference_id=${options.reference_id}`;
