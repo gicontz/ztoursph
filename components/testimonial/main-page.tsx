@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { FullWidth, PanelSection } from "@components/commons/common";
-import woman from "@assets/images/purple_woman.png";
+import sunset from "@assets/images/sunsets.jpg";
 import { Rate } from "antd";
 
 const TestimonialContainer = styled(FullWidth)`
@@ -10,10 +10,10 @@ const TestimonialContainer = styled(FullWidth)`
       rgba(0, 0, 0, 0.1),
       rgba(0, 0, 0, 0.9)
     ),
-    url(${woman.src});
+    url(${sunset.src});
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center top;
+  background-position-y: 23%;
   color: white;
 `;
 

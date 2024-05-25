@@ -100,43 +100,9 @@ const AboutUs = () => {
     title: "About Us",
     description:
       " A section of who we are and anything about us under the sun.",
-    bannerImage:
-      "https://scontent.fmnl4-2.fna.fbcdn.net/v/t39.30808-6/432734710_402700135709347_4957624482135354421_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=emqXtfNtIzcAX8tZdgH&_nc_ht=scontent.fmnl4-2.fna&cb_e2o_trans=t&oh=00_AfBmiZwXggItgEPl_QPA8QtgJR3Mme1vRnDinrCfx29EZg&oe=65FF460E",
+    bannerImage: "/about-us.jpeg",
   };
 
-  const developer = [
-    {
-      name: "John Doe ",
-      title: "Frontend",
-      url: "https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png",
-    },
-    {
-      name: "John Doe ",
-      title: "Backend",
-      url: "https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png",
-    },
-  ];
-
-  // const timeline_content = [
-  //   {
-  //     children:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  //   {
-  //     children: "Lorem ipsum dolor sit amet, consectetur. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  //   {
-  //     children: "Lorem ipsum dolor sit amet. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  //   {
-  //     children:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 2015-09-01",
-  //     color: "#233d2c",
-  //   },
-  // ];
   return (
     <Layout>
       <PageBanner
@@ -170,13 +136,6 @@ const AboutUs = () => {
             delivering high-quality and value-driven services using creative and
             innovative solutions that surpass the guest expectations.
           </p>
-          {/* <ul className="list">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Donec at condimentum nulla.</li>
-            <li>
-              Nullam ultrices tempus ligula, eget luctus magna consectetur sed.
-            </li>
-          </ul> */}
         </AboutUsSection>
         <AboutUsSection>
           <HeaderText size={2} underline>
@@ -189,10 +148,6 @@ const AboutUs = () => {
             stream of satisfied customers, we strive to provide exceptional
             hassle-free experiences that goes above beyond expectations.
           </p>
-          {/* <Timeline
-            className={PoppinsFont.className}
-            items={timeline_content}
-          /> */}
         </AboutUsSection>
         <AboutUsSection>
           <HeaderText size={2} underline>
@@ -220,30 +175,6 @@ const AboutUs = () => {
             your every journey with our agency truly unparalleled and
             exceptional.
           </p>
-
-          {/* <TeamImage>
-            <ImageTeam
-              department="CEO "
-              data={[
-                {
-                  title: "Owner",
-                  name: "Jeo Invento",
-                  url: "https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png",
-                },
-              ]}
-            />
-            <ImageTeam department="Developer" data={developer} />
-            <ImageTeam
-              department="Marketing"
-              data={[
-                {
-                  title: "Content Creator",
-                  name: "John Doe",
-                  url: "https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png",
-                },
-              ]}
-            />
-          </TeamImage> */}
         </AboutUsSection>
       </AboutUsContainer>
     </Layout>

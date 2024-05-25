@@ -147,7 +147,7 @@ const Contact = () => {
         <PageBanner
           title="Contact Us"
           description="Know the answers at your fingertips! Every queries and feedback matters to us. Yes! Our lines are always open at your most convenient time."
-          bannerImage="https://a.cdn-hotels.com/gdcs/production13/d1585/20120d80-bf76-4553-89f4-0098f94423d8.jpg"
+          bannerImage="/contact-us.jpeg"
         />
         <div className="w-10/12 flex flex-col mx-auto space-y-6 my-6">
           <Row>

@@ -10,10 +10,10 @@ const ClosingContainer = styled(FullWidth)`
       rgba(12, 16, 17, 0.2),
       rgba(0, 0, 0, 0)
     ),
-    url(${sunset.src});
+    url('/home-end-banner.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position-y: 84%;
   color: white;
 `;
 
