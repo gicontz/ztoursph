@@ -60,9 +60,15 @@ export default function BookingConfirmation({ domain }) {
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.bookingId));
 
+  const reference_id: string = router.query.reference_id as string;
+  const email: string =
+    (router.query.email as string) ??
+    (typeof localStorage !== "undefined" &&
+      localStorage.getItem(LOCAL_STORAGE.email));
+
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId],
-    queryFn: () => getBookingInfo(bookingId),
+    queryFn: () => getBookingInfo(bookingId, { email, reference_id }),
   });
 
   const paymentStatus = data?.data?.paymentStatus;
@@ -169,7 +175,7 @@ export default function BookingConfirmation({ domain }) {
             <div className="flex flex-col justify-center text-center">
               <QRCode
                 className="mx-auto lg:mx-0"
-                value={`${domain}${AppRoutes.BOOKING_CONFIRMATION}?id=${bookingDetails.id}`}
+                value={`${domain}${AppRoutes.BOOKING_CONFIRMATION}?reference_id=${reference_id}&email=${email}`}
               />
               <h4 className="text-lg font-bold mt-3">
                 {bookingDetails.reference_id.toUpperCase()}
