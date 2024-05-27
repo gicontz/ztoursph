@@ -92,6 +92,7 @@ export default function BookingConfirmation({ domain }) {
   };
 
   const handlePay = () => {
+    localStorage.setItem(LOCAL_STORAGE.bookingId, bookingDetails.id);
     mutatePayment({
       paymentData: {
         bookingId: bookingDetails.id,
