@@ -25,6 +25,16 @@ const Layout = ({ contained = false, children }) => {
     <>
     <Head>
       <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+      <meta
+        id="meta-description"
+        name="description"
+        content="Travel Way Beyond Your Borders! Z Tours Philippines, Palawan Adventures."
+        />
+        <meta
+          id="meta-keywords"
+          name="keywords"
+          content="Z Tours Philippines, Palawan Adventures, El Nido, Coron, Balabac"
+          />
     </Head>
     <main
       className={`relative flex flex-col overflow-x-hidden sm:w-[100%] ${defaultFont.className}`}>
