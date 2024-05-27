@@ -55,16 +55,23 @@ export default function BookingConfirmation({ domain }) {
   const [file, setFile] = useState<PDFFile>(null);
   const router = useRouter();
 
-  const bookingId: string =
-    (router.query.id as string) ??
-    (typeof localStorage !== "undefined" &&
-      localStorage.getItem(LOCAL_STORAGE.bookingId));
+  let bookingId: string | undefined;
 
-  const reference_id: string = router.query.reference_id as string;
-  const email: string =
+  const reference_id = router.query.reference_id as string;
+  const email =
     (router.query.email as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.email));
+
+  if (typeof reference_id === 'undefined' || typeof email === 'undefined') {
+    console.log('reference_id and email are defined')
+    bookingId =
+      (router.query.id as string) ??
+      (typeof localStorage !== "undefined" &&
+        localStorage.getItem(LOCAL_STORAGE.bookingId));
+  }
+
+  console.log(bookingId, email, reference_id);
 
   const { data, isLoading } = useQuery({
     queryKey: ["booking", bookingId, { email, reference_id }],
@@ -175,7 +182,7 @@ export default function BookingConfirmation({ domain }) {
             <div className="flex flex-col justify-center text-center">
               <QRCode
                 className="mx-auto lg:mx-0"
-                value={`${domain}${AppRoutes.BOOKING_CONFIRMATION}?reference_id=${reference_id}&email=${email}`}
+                value={`${domain}${AppRoutes.BOOKING_CONFIRMATION}?reference_id=${bookingDetails.reference_id}&email=${email}`}
               />
               <h4 className="text-lg font-bold mt-3">
                 {bookingDetails.reference_id.toUpperCase()}
