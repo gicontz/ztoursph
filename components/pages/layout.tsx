@@ -7,6 +7,7 @@ import { InView, useInView } from "react-intersection-observer";
 import CookiesPopUp from "@components/cookies/cookies-popup";
 import { classNames } from "@app/utils/helpers";
 import { useScroll } from "@app/utils/hooks";
+import Head from "next/head";
 
 const defaultFont = Poppins({
   weight: "400",
@@ -21,6 +22,10 @@ const Layout = ({ contained = false, children }) => {
     typeof window !== "undefined" && window.location.pathname === "/";
 
   return (
+    <>
+    <Head>
+      <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+    </Head>
     <main
       className={`relative flex flex-col overflow-x-hidden sm:w-[100%] ${defaultFont.className}`}>
       <Row
@@ -39,6 +44,7 @@ const Layout = ({ contained = false, children }) => {
       {contained ? <div className="grow px-3">{children}</div> : children}
       <MainPageFooter />
     </main>
+    </>
   );
 };
 
