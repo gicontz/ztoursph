@@ -1,14 +1,10 @@
 import { handleResponse } from "@app/utils/helpers";
 
-const getBookingInfo = (
-  id?: string,
-  options?: { email: string; reference_id: string }
-): Promise<any> => {
-  let fetchUri = `/api/confirmation/booking`;
-  if (typeof id === "string") fetchUri = fetchUri + `?id=${id}`;
-  else if (options)
-    fetchUri =
-      fetchUri + `?email=${options.email}&reference_id=${options.reference_id}`;
+const getBookingInfo = (options: {
+  email: string;
+  reference_id: string;
+}): Promise<any> => {
+  const fetchUri = `/api/confirmation/booking?email=${options.email}&reference_id=${options.reference_id}`;
 
   return fetch(fetchUri, { method: "GET" })
     .then((res) => handleResponse(res))

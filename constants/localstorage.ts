@@ -1,7 +1,7 @@
 const LOCAL_STORAGE = {
   guests: "guests",
   email: "email",
-  bookingId: "bookingId",
+  referenceId: "reference_id",
 };
 
 export const PREV_LEAD_GUEST = "prev_lead_guest_detail";

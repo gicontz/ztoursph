@@ -33,7 +33,7 @@ const CreateBooking = ({ bookingInfo, onClose }: Props) => {
 
   const handleCreateBooking = (d) => {
     setData(d);
-    localStorage.setItem(LOCAL_STORAGE.bookingId, d.data.id);
+    localStorage.setItem(LOCAL_STORAGE.referenceId, d.data.reference_id);
     localStorage.setItem(LOCAL_STORAGE.email, d.data.user.email);
     removeCookie(Added_Trips);
   };

@@ -1,9 +1,9 @@
 import { Row } from "@components/commons/common";
 import MainPageFooter from "@components/footer/main-page";
 import Header from "@components/header";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Poppins } from "next/font/google";
-import { InView, useInView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import CookiesPopUp from "@components/cookies/cookies-popup";
 import { classNames } from "@app/utils/helpers";
 import { useScroll } from "@app/utils/hooks";

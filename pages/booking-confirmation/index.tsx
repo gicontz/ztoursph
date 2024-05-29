@@ -55,27 +55,18 @@ export default function BookingConfirmation({ domain }) {
   const [file, setFile] = useState<PDFFile>(null);
   const router = useRouter();
 
-  let bookingId: string | undefined;
-
-  const reference_id = router.query.reference_id as string;
+  const reference_id =
+    (router.query.reference_id as string) ??
+    (typeof localStorage !== "undefined" &&
+      localStorage.getItem(LOCAL_STORAGE.referenceId));
   const email =
     (router.query.email as string) ??
     (typeof localStorage !== "undefined" &&
       localStorage.getItem(LOCAL_STORAGE.email));
 
-  if (typeof reference_id === 'undefined' || typeof email === 'undefined') {
-    console.log('reference_id and email are defined')
-    bookingId =
-      (router.query.id as string) ??
-      (typeof localStorage !== "undefined" &&
-        localStorage.getItem(LOCAL_STORAGE.bookingId));
-  }
-
-  console.log(bookingId, email, reference_id);
-
   const { data, isLoading } = useQuery({
-    queryKey: ["booking", bookingId, { email, reference_id }],
-    queryFn: () => getBookingInfo(bookingId, { email, reference_id }),
+    queryKey: ["booking", { email, reference_id }],
+    queryFn: () => getBookingInfo({ email, reference_id }),
   });
 
   const paymentStatus = data?.data?.paymentStatus;
@@ -92,7 +83,7 @@ export default function BookingConfirmation({ domain }) {
   };
 
   const handlePay = () => {
-    localStorage.setItem(LOCAL_STORAGE.bookingId, bookingDetails.id);
+    localStorage.setItem(LOCAL_STORAGE.referenceId, reference_id);
     mutatePayment({
       paymentData: {
         bookingId: bookingDetails.id,

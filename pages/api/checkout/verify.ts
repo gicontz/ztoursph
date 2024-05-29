@@ -8,7 +8,7 @@ const __ = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   const result = await fetch(
     `${APIUri}/checkout/verify`,
-    { method: "POST", body: JSON.stringify(req.body), headers }
+    { method: "POST", body: JSON.stringify({ ...req.body, source: req.headers }), headers }
   );
   if (result.status !== 200) {
     const error = result.statusText;
