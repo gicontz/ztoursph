@@ -36,7 +36,6 @@ const MyBookings = () => {
   });
 
   const bookings = records?.data?.map((record) => ({
-    id: record.id,
     referenceId: record.reference_id,
     date: record.created_date,
     paymentStatus: record.paymentStatus,
@@ -84,7 +83,7 @@ const MyBookings = () => {
   ];
 
   const handleRowClick = (id) => () => {
-    router.replace(`${AppRoutes.BOOKING_CONFIRMATION}?id=${id}`);
+    router.replace(`${AppRoutes.BOOKING_CONFIRMATION}?reference_id=${id}`);
   };
 
   return (
@@ -106,7 +105,7 @@ const MyBookings = () => {
             columns={columns as any}
             onRow={(record) => ({
               accessKey: record.referenceId,
-              onClick: handleRowClick(record.id),
+              onClick: handleRowClick(record.referenceId),
             })}
           />
           <div className="flex justify-center absolute w-full -mt-32">
