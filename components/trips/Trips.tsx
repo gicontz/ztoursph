@@ -98,7 +98,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     [data]
   );
 
-  const handleRemove = (indx: string | number) => {
+  const handleRemove = (indx: number) => {
     setCheckoutData((prev) => {
       const removedList = prev.filter((e, i) => i !== indx);
       const newData = {
