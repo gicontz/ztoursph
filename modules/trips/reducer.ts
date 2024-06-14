@@ -13,7 +13,7 @@ export const trips  = (state: TripsState = defaultState.tripStore, action: Trips
         case Actions.REMOVE_TO_TRIPS: {
             return update(state, {
                 trips: {
-                    $apply: (trips) => trips.filter(trip => trip.tripId !== action.payload)
+                    $apply: (trips) => trips.filter((_, i) => i !== action.payload)
                 }
             })
         }

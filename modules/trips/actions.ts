@@ -12,8 +12,8 @@ export const addToTrips = (dispatch: Dispatch<TripsTypes>, trip: TTrip) => {
     dispatch({ type: Actions.ADD_TO_TRIPS, payload: trip });
 }
 
-export const removeToTrips = (dispatch: Dispatch<TripsTypes>, tripId: string | number) => {
-    dispatch({ type: Actions.REMOVE_TO_TRIPS, payload: tripId });
+export const removeToTrips = (dispatch: Dispatch<TripsTypes>, tripIndex: number) => {
+    dispatch({ type: Actions.REMOVE_TO_TRIPS, payload: tripIndex });
 }
 
 export const getTrips = (dispatch: Dispatch<TripsTypes>, trips: TTrip[]) => {

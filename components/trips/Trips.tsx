@@ -8,10 +8,7 @@ import {
   TPreCheckout,
   TPreCheckoutCalculation,
 } from "@app/modules/checkout/types";
-import {
-  removeToTrips,
-  setLoading,
-} from "@app/modules/trips/actions";
+import { removeToTrips, setLoading } from "@app/modules/trips/actions";
 import { useTripsContext } from "@providers/trips";
 import { set } from "lodash";
 import { useRouter } from "next/router";
@@ -47,7 +44,7 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     React.useState<TPreCheckoutCalculation | null>(null);
 
   const handleCheckout = () => {
-    if (localStorage.getItem('signature')) {
+    if (localStorage.getItem("signature")) {
       route.push("/trips/checkout");
       return;
     }
@@ -67,10 +64,10 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       const { data: d } = calculations;
       if (d) {
         setCheckoutDetails(d);
-        const newCookieData = cookies[Added_Trips].map((e) => ({
+        const newCookieData = cookies[Added_Trips].map((e, i) => ({
           ...e,
           numberOfTraveller:
-            d.subTotals.find((s) => s.id === e.tripId)?.pax ??
+            d.subTotals.find((_, idx) => i === idx)?.pax ??
             e.numberOfTraveller,
         }));
         setCookie(Added_Trips, newCookieData);
@@ -101,9 +98,9 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
     [data]
   );
 
-  const handleRemove = (id: string | number) => {
+  const handleRemove = (indx: number) => {
     setCheckoutData((prev) => {
-      const removedList = prev.filter((e) => e.tripId !== id);
+      const removedList = prev.filter((e, i) => i !== indx);
       const newData = {
         booking: removedList.map((e) => ({
           id: e.tripId,
@@ -113,9 +110,9 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
       };
       setCookie(
         Added_Trips,
-        cookies[Added_Trips].filter((e) => e.tripId !== id)
+        cookies[Added_Trips].filter((e, i) => i !== indx)
       );
-      removeToTrips(tripDispatch, id);
+      removeToTrips(tripDispatch, indx);
       handleCalc(newData);
       return removedList;
     });
@@ -128,18 +125,17 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
         image={e.imageUrl}
         title={e.title}
         pax={
-          checkoutDetails?.subTotals.find((s) => s.id === e.tripId)?.pax ??
+          checkoutDetails?.subTotals.find((_, idx) => i === idx)?.pax ??
           e.numberOfTraveller
         }
         date={e.date}
         pickup={e.pickup}
         // discount={e.discount}
         subTotal={
-          checkoutDetails?.subTotals.find((s) => s.id === e.tripId)?.subTotal ??
-          0
+          checkoutDetails?.subTotals.find((_, idx) => i === idx)?.subTotal ?? 0
         }
         price={e.price}
-        onRemove={() => handleRemove(e.tripId)}
+        onRemove={() => handleRemove(i)}
       />
     ));
 
@@ -195,7 +191,8 @@ const TripsTable: React.FC<TripsTableProps> = ({ data, isLoading }) => {
             type="primary"
             className={`w-full`}
             disabled={checkoutDetails === null}
-            onClick={handleCheckout}>
+            onClick={handleCheckout}
+          >
             Proceed Checkout
           </Button>
         </div>
