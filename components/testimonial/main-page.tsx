@@ -83,7 +83,7 @@ const MainPageTestimonial = () => {
     <TestimonialContainer>
       <Panel>
         <TextsContainer>
-          <h1>Let the adventure begin! </h1>
+          <h2>Let the adventure begin! </h2>
           <p>
           Having a nature break is one of the best options for relaxation and self-reward; offering an escape from the unending hustle and bustle in your daily life. Take a pause, refresh your mind, and don&apos;t forget to have fun sometimes! In Z Tours.ph, your happiness and satisfaction are our priority.
           </p>

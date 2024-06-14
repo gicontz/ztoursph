@@ -26,6 +26,8 @@ export default function Trips() {
 
   useEffect(() => {
     getTheTrips(tripDispatch, cookie[Added_Trips] ?? []);
+
+    console.log(cookie[Added_Trips])
   }, []);
 
   const [store, dispatch] = useTours();
