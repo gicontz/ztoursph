@@ -204,14 +204,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
           <LabelHeader>
             <h3>Participants</h3>
             <p>
-              You must select your participants, you can manage your guest
-              list&nbsp;
-              <span
-                className="text-xs font-bold text-blue-400 cursor-pointer hover:opacity-70 active:opacity-50"
-                onClick={() => setManageGuest(true)}
-              >
-                here
-              </span>
+              You must select your participants
             </p>
           </LabelHeader>
           <Controller
@@ -227,6 +220,13 @@ const BookingForm: React.FC<BookingFormProps> = ({
               />
             )}
           />
+          <StyledButton
+            type="primary"
+            className="cursor-pointer hover:opacity-70 active:opacity-50"
+            onClick={() => setManageGuest(true)}
+          >
+            Manage Guest List
+          </StyledButton>
           {details.perPaxPrice > 0 && (
             <PriceUpdater
               perPaxPrice={details.perPaxPrice}
