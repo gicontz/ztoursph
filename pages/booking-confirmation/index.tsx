@@ -86,7 +86,7 @@ export default function BookingConfirmation({ domain }) {
     localStorage.setItem(LOCAL_STORAGE.referenceId, reference_id);
     mutatePayment({
       paymentData: {
-        bookingId: bookingDetails.id,
+        bookingId: bookingDetails.reference_id,
         amount: bookingDetails.total_amt,
         userId: mainGuest.id,
         status: "PENDING",
